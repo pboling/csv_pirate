@@ -1,7 +1,78 @@
-csv_pirate==========
-Description goes here.
+CsvPirate v1.0
+==============
+
+Easily create CSVs of any data that can be derived from your models.
+
+CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+It works better if you are wearing a tricorne!
+
+CsvPirate only works for commissions of swag OR grub!
+
+Initialize method (a.k.a new()) takes a hash of params:
+
+swag:         the ARrr collection of swag to work on (optional)
+grub:         the ARrr class that the spyglasses will be used on (optional)
+spyglasses:   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglass,
+                and order them according to the order of the spyglass (only used with grub, not swag)
+booty:        booty on your model that you want printed in the CSV
+chart:        name of directory where you want to hide your loot
+waggoner:     name of document where you will give detailed descriptions of the loot
+chronometer:  keeps track of when you hunt for treasure
+
+Avast! Here be pirates! To brush up on pirate coding naming conventions:
+see http://www.privateerdragons.com/pirate_dictionary.html
+
+Next version will have CSV importing abilities...
+
+Example
+=======
+
+Assuming a User model like this:
+
+class User < ActiveRecord::Base
+  named_scope :active, :conditions => ["active IS TRUE"]
+  named_scope :inactive, :conditions => ["active IS NOT TRUE"]
+  named_scope :logged_in, :conditions => ["logged_in IS TRUE"]
+  named_scope :logged_out, :conditions => ["logged_in IS NOT TRUE"]
+end
+
+To create a csv of users with given booty,
+ and only users visible with specified spyglasses (conditions, ordering, etc) then:
+
+csv_pirate = CsvPirate.new({
+  :grub => User,
+  :spyglasses => [:active,:logged_in],
+  :waggoner => 'active_users_logged_in',
+  :booty => ["id","number","login","created_at"],
+  :chart => 'log/csv/'
+})
+csv_pirate.hoist_mainstay()
+
+Another Example using swag instead of grub:
+
+users = User.logged_out.inactive
+csv_pirate = CsvPirate.new({
+  :swag => users,
+  :waggoner => 'inactive_users_not_logged_in',
+  :booty => ["id","number","login","created_at"],
+  :chart => 'log/csv/'
+})
+csv_pirate.hoist_mainstay()
+
+Then if you want to get your hands on the loot immediately:
+
+csv_pirate.weigh_anchor()
+
+For those who can't help but copy/paste into console and then edit:
+
+csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+
+OR
+
+csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+
 
 COPYRIGHT
 =========
 
-Copyright (c) 2008 pboling. See LICENSE for details.
+Copyright (c) 2009 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
