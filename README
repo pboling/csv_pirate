@@ -24,6 +24,22 @@ see http://www.privateerdragons.com/pirate_dictionary.html
 
 Next version will have CSV importing abilities...
 
+On The Web
+==========
+
+Source:
+http://github.com/pboling/csv_pirate/tree/master
+
+Release Announcement:
+http://galtzo.blogspot.com/2009/03/csv-pirate.html
+
+Installation
+============
+
+sudo gem install pboling-csv_pirate -s http://gems.github.com
+
+ruby script/plugin install git://github.com/pboling/csv_pirate.git
+
 Example
 =======
 
