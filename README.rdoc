@@ -162,7 +162,7 @@ The following two sets of code are identical:
     :spyglasses => [:active,:logged_in],
     :waggoner => 'active_users_logged_in',
     :booty => ["id","number","login","created_at"],
-    :chart => 'log/csv/'
+    :chart => ['log','csv']
   })
   csv_pirate.hoist_mainstay() # creates CSV file and writes out the rows
 
@@ -171,7 +171,7 @@ The following two sets of code are identical:
     :spyglasses => [:active,:logged_in],
     :waggoner => 'active_users_logged_in',
     :booty => ["id","number","login","created_at"],
-    :chart => 'log/csv/'
+    :chart => ['log','csv']
   })# creates CSV file and writes out the rows
 
 Another example using swag instead of grub:
@@ -181,7 +181,7 @@ Another example using swag instead of grub:
     :swag => users,
     :waggoner => 'inactive_users_not_logged_in',
     :booty => ["id","number","login","created_at"],
-    :chart => 'log/csv/'
+    :chart => ['log','csv']
   })
   csv_pirate.hoist_mainstay()
 
@@ -191,11 +191,11 @@ Then if you want to get your hands on the loot immediately:
 
 For those who can't help but copy/paste into console and then edit:
 
-  csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+  csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
 
 OR
 
-  csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+  csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
 
 
 == Downloading the CSV
