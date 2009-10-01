@@ -46,6 +46,7 @@ class CsvPirate
   attr_accessor :mop              # default is :clean (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   attr_accessor :swabbie          # value of the counter / timestamp
   attr_accessor :maroon           # text of csv
+  attr_accessor :nocturnal        # basename of the filepath (i.e. filename)
 
   cattr_accessor :parlay          # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
 
@@ -117,6 +118,9 @@ class CsvPirate
 
     # Once the traverse_board (dir) exists, then check if the rhumb_lines (file) already exists, and set our rhumb_lines counter
     @swabbie = self.insult_swabbie
+
+    @nocturnal = File.basename(self.poop_deck)
+
     # Then open the rhumb_lines
     self.rhumb_lines = File.open(File.expand_path(self.poop_deck),self.astrolabe ? "r" : "a")
   end
@@ -241,55 +245,17 @@ class CsvPirate
     "#{self.analemma}#{self.swabbie}#{self.aft}"
   end
 
+  def merchantman
+    "#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
+  end
+
   def analemma
-    "#{self.traverse_board}#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
-  end
-
-  def lantern
-    "#{self.analemma}.*"
-  end
-
-  def filibuster(flotsam)
-    base = File.basename(flotsam, self.aft)
-    index = base.rindex('.')
-    tail = index.nil? ? nil : base[index+1,base.length]
-    # Ensure numbers
-    counter = tail.nil? ? 0 : tail[/\d*/].to_i
-  end
-
-  def boatswain
-    return self.swabbie unless self.swabbie.nil?
-    counter = 0
-    bowspirit = Dir.glob(self.lantern)
-    highval = 0
-    bowspirit.each do |flotsam|
-      counter = self.filibuster(flotsam)
-      highval = ((highval <=> counter) == 1) ? highval : counter
-      counter = 0
-    end
-    self.swabbie = ".#{highval + 1}"
-  end
-
-  def coxswain
-    return self.swabbie unless self.swabbie.nil?
-    self.swabbie = ".#{Time.now.strftime("%I%M%S")}"
+    "#{self.traverse_board}#{self.merchantman}"
   end
 
   # Swabs the poop_deck if the mop is clean. (!)
   def swab_poop_deck
     self.rhumb_lines.truncate(0) if self.swab == :none && self.mop == :clean && File.size(self.poop_deck) > 0
-  end
-
-  # Sets the swabby file counter
-  def insult_swabbie
-    return case self.swab
-      when :counter
-        self.boatswain
-      when :timestamp
-        self.coxswain
-      else
-        self.swabbie = ""
-    end
   end
 
   # Must be done on order to rummage through the loot found by the pirate ship
@@ -304,6 +270,52 @@ class CsvPirate
       yield careen
     end
   end
+
+  protected
+
+  def lantern
+    "#{self.analemma}.*"
+  end
+  
+  def filibuster(flotsam)
+    base = File.basename(flotsam, self.aft)
+    index = base.rindex('.')
+    tail = index.nil? ? nil : base[index+1,base.length]
+    # Ensure numbers
+    counter = tail.nil? ? 0 : tail[/\d*/].to_i
+  end
+  
+  def boatswain
+    return self.swabbie unless self.swabbie.nil?
+    counter = 0
+    bowspirit = Dir.glob(self.lantern)
+    highval = 0
+    bowspirit.each do |flotsam|
+      counter = self.filibuster(flotsam)
+      highval = ((highval <=> counter) == 1) ? highval : counter
+      counter = 0
+    end
+    ".#{highval + 1}"
+  end
+
+  def coxswain
+    return self.swabbie unless self.swabbie.nil?
+    ".#{Time.now.strftime("%I%M%S")}"
+  end
+
+  # Sets the swabby file counter
+  def insult_swabbie
+    return case self.swab
+      when :counter
+        self.boatswain
+      when :timestamp
+        self.coxswain
+      else
+        ""
+    end
+  end
+
+  public
 
   ########################################
   ############ CLASS METHODS #############

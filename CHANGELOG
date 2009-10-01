@@ -1,3 +1,7 @@
+Version 2.4.0 2009-10-01
+- Added blindfold to pirate_ship
+- Added say_your_last_words to pirate_ship which is hash for send_data
+
 Version 2.3.0 2009-10-01
 - No longer requires rails at all
 - hoise_mainstay now returns the exported text

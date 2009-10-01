@@ -46,10 +46,35 @@ module NinthBit
         base.class_inheritable_accessor :piratey_options
       end
 
+      # intended for use with send_data for downloading the text of the csv:
+      # send_data Make.say_your_last_words
+      def say_your_last_words(charset = 'utf-8', args = {})
+        csv_pirate = self.blindfold(args)
+        return [ csv_pirate.maroon,
+          :type => "text/csv; charset=#{charset}; header=present",
+          :disposition => "attachment; filename=#{csv_pirate.nocturnal}" ]
+      end
+      
       #returns the text of the csv export (not the file - this is important if you are appending)
+      # warning if using from console: if you are exporting a large csv this will all print in your console.
+      # intended for use with send_data for downloading the text of the csv:
+      # send_data Make.walk_the_plank,
+      #          :type => 'text/csv; charset=iso-8859-1; header=present',
+      #          :disposition => "attachment; filename=Data.csv"
       def walk_the_plank(args = {})
+        csv_pirate = self.blindfold(args)
+        csv_pirate.hoist_mainstay()
+      end
+
+      #returns the csv_pirate object so you have access to everything
+      # If using in a download action it might look like this:
+      # csv_pirate = Make.blindfold
+      # send_data csv_pirate.maroon,
+      #          :type => 'text/csv; charset=iso-8859-1; header=present',
+      #          :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
+      def blindfold(args = {})
         CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
-        CsvPirate.new({
+        CsvPirate.create({
           :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
@@ -64,10 +89,9 @@ module NinthBit
           :booty => args[:booty] || self.piratey_options[:booty],
           :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure]
         })
-        csv_pirate.hoist_mainstay()
       end
-
     end
+
 
   end
 end
