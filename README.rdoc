@@ -1,4 +1,4 @@
-== CsvPirate v2.0.1 (20090930)
+== CsvPirate v2.0.1 (20091001)
 
 Easily create CSVs of any data that can be derived from your models.
 
@@ -45,9 +45,26 @@ Release Announcement:
 
 == Installation
 
-sudo gem install pboling-csv_pirate -s http://gems.github.com
+Gem Using Git building from source:
 
-ruby script/plugin install git://github.com/pboling/csv_pirate.git
+  mkdir -p ~/src
+  cd ~/src
+  git clone git://github.com/pboling/csv_pirate.git
+  cd csv_pirate
+  gem build csv_pirate.gemspec
+  sudo gem install csv_pirate-2.0.1.gem # (Or whatever version gets built)
+
+Then cd to your rails app to optionally freeze the gem into your app:
+
+  rake gems:freeze GEM=csv_pirate
+
+Installing Gem from Github's Gem Server:
+
+  sudo gem install pboling-csv_pirate -s http://gems.github.com
+
+Plugin using Git:
+
+  ruby script/plugin install git://github.com/pboling/csv_pirate.git
 
 
 == Example & Usage
