@@ -1,4 +1,4 @@
-== CsvPirate v2.0.1 (20091001)
+== CsvPirate
 
 Easily create CSVs of any data that can be derived from your models.
 
@@ -28,6 +28,7 @@ Initialize method (a.k.a new()) takes a hash of params:
   # :mop          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   #   :clear - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+  # There are others too, check the source for a complete picture!
 
 The create method has the same parameters, and actually creates the CSV.
 
@@ -92,7 +93,7 @@ Assuming a Make (as in manufacturers of automobiles) model like this:
                         :booty => [:id, :name]
   end
 
-To create a csv of the names and ids of makes with factories in germany:
+To create a csv of the names and ids of makes with factories in germany and return the text of the export:
 
   Make.walk_the_plank  # Get it? HA! If you can't believe I wrote this whole thing JUST to be able to make jokes like that... check ma sources :)
 

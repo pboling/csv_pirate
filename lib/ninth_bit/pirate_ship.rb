@@ -46,9 +46,10 @@ module NinthBit
         base.class_inheritable_accessor :piratey_options
       end
 
+      #returns the text of the csv export (not the file - this is important if you are appending)
       def walk_the_plank(args = {})
         CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
-        CsvPirate.create({
+        CsvPirate.new({
           :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
@@ -63,6 +64,7 @@ module NinthBit
           :booty => args[:booty] || self.piratey_options[:booty],
           :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure]
         })
+        csv_pirate.hoist_mainstay()
       end
 
     end

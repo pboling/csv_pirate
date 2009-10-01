@@ -1,3 +1,8 @@
+Version 2.3.0 2009-10-01
+- No longer requires rails at all
+- hoise_mainstay now returns the exported text
+- Better documentation in Readme and source
+
 Version 2.2.0 2009-10-01
 - Use FasterCSV for all backend work
 - Added shrouds for creating tsv and psv files

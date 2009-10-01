@@ -32,7 +32,7 @@ class CsvPirate
   attr_accessor :booty            # methods / columns
 
   attr_accessor :bury_treasure    # should we store the csv data in an array for later inspection, or just write the CSV?
-                                  # default is true
+                                  # default is false
   # The array that gets built as we write the CSV... could be useful?
   attr_accessor :buried_treasure  # info array
   
@@ -45,28 +45,30 @@ class CsvPirate
   attr_accessor :swab             # default is :counter
   attr_accessor :mop              # default is :clean (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   attr_accessor :swabbie          # value of the counter / timestamp
+  attr_accessor :maroon           # text of csv
 
   cattr_accessor :parlay          # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
 
   # CsvPirate only works for commissions of swag OR grub!
-  # :swag         the ARrr collection of swag to work on (optional)
-  # :grub         the ARrr class that the spyglasses will be used on (optional)
-  # :spyglasses   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
-  #                 and order them according to the order of the spyglasses (optional)
-  # :booty        booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
-  # :chart        name of directory where you want to hide your loot
-  # :wagonner     name of document where you will give detailed descriptions of the loot
-  # :aft          filename extention ('.csv')
-  # :shrouds      CSV column separator, default is ','. For tsv, tab-delimited, "\t"
-  # :chronometer  keeps track of when you hunt for treasure
-  # :gibbet       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
-  # :swab         can be :counter, :timestamp, or :none
+  # :swag           the ARrr collection of swag to work on (optional)
+  # :grub           the ARrr class that the spyglasses will be used on (optional)
+  # :spyglasses     named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
+  #                   and order them according to the order of the spyglasses (optional)
+  # :booty          booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
+  # :chart          name of directory where you want to hide your loot
+  # :wagonner       name of document where you will give detailed descriptions of the loot
+  # :aft            filename extention ('.csv')
+  # :shrouds        CSV column separator, default is ','. For tsv, tab-delimited, "\t"
+  # :chronometer    keeps track of when you hunt for treasure
+  # :gibbet         filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
+  # :swab           can be :counter, :timestamp, or :none
   #   :counter - default, each successive run will create a new file using a counter
   #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
   #   :none - no iterative file naming convention, just use waggoner and aft
-  # :mop          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
+  # :mop            can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   #   :clear - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+  # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
   # See README for examples
   
   def initialize(*args)
@@ -103,12 +105,15 @@ class CsvPirate
 
     @astrolabe = args.first[:astrolabe] || false
 
-    @bury_treasure = args.first[:astrolabe] || true
+    @bury_treasure = args.first[:astrolabe] || false
     @buried_treasure = []
 
     # Initialize doesn't write anything to a CSV, 
     #   but does create the traverse_board and opens the waggoner for reading / writing
     Dir.mkdir(self.traverse_board) if !self.astrolabe && Dir.glob(self.traverse_board).empty?
+
+    # This will contain the text of the csv from this particular execution
+    @maroon = ""
 
     # Once the traverse_board (dir) exists, then check if the rhumb_lines (file) already exists, and set our rhumb_lines counter
     @swabbie = self.insult_swabbie
@@ -182,29 +187,32 @@ class CsvPirate
 
     self.swab_poop_deck
 
-    self.bury_treasure ? self.buried_treasure = self.dead_mans_chest : self.dead_mans_chest
+    self.dead_mans_chest
 
     self.rhumb_lines.close
 
     self.jolly_roger if CsvPirate.parlay > 1
 
-    # returns the array that was created before exporting it to CSV
-    return self.bury_treasure ? self.buried_treasure : true
+    # returns the text of this CSV export
+    return self.maroon
   end
 
   def dead_mans_chest
-    csv_string = FasterCSV.generate(:col_sep => self.shrouds) do |csv|
+    self.maroon = FasterCSV.generate(:col_sep => self.shrouds) do |csv|
       self.sounding(csv)
     end
-    self.scrivener(csv_string)
+    self.scrivener(self.maroon)
+    self.maroon
   end
 
   def jolly_roger
-    if self.buried_treasure.is_a?(Array)
-      puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.poop_deck}'" if CsvPirate.parlay > 1
-      puts "You must weigh_anchor to review your plunder!" if CsvPirate.parlay > 1
-    else
-      puts "Failed to locate treasure" if CsvPirate.parlay > 1
+    if self.bury_treasure
+      if self.buried_treasure.is_a?(Array)
+        puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.poop_deck}'" if CsvPirate.parlay > 1
+        puts "You must weigh_anchor to review your plunder!" if CsvPirate.parlay > 1
+      else
+        puts "Failed to locate treasure" if CsvPirate.parlay > 1
+      end
     end
   end
 
@@ -213,12 +221,15 @@ class CsvPirate
     csv << self.booty
     # create the data for the csv
     self.dig_for_treasure do |treasure|
-      csv << treasure.map {|x| "#{x}"} # |x| marks the spot!
+      moidore = treasure.map {|x| "#{x}"}
+      csv << moidore # |x| marks the spot!
+      self.buried_treasure << moidore if self.bury_treasure
     end
   end
 
   def traverse_board
-    "#{RAILS_ROOT}/#{self.chart}"
+    #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
+    "#{defined?(Rails) ? Rails.root + '/' : defined?(RAILS_ROOT) ? RAILS_ROOT + '/' : ''}#{self.chart}"
   end
   
   def sand_glass
