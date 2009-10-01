@@ -96,7 +96,7 @@ class CsvPirate
     raise ArgumentError, ":waggoner is #{args.first[:waggoner].inspect}, and must be a string at least one character long" if args.first[:waggoner].nil? || args.first[:waggoner].length < 1
 
     @booty = args.first[:booty] || []
-    raise ArgumentError, ":booty is #{args.first[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if args.first[:booty].nil? || !args.first[:chart].is_a?(Array) || args.first[:booty].empty?
+    raise ArgumentError, ":booty is #{args.first[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if args.first[:booty].nil? || !args.first[:booty].is_a?(Array) || args.first[:booty].empty?
 
     @chart = args.first[:chart] || ['log','csv']
     raise ArgumentError, ":chart is #{args.first[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if args.first[:chart].nil? || !args.first[:chart].is_a?(Array) || args.first[:booty].empty?

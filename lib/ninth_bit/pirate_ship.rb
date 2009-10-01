@@ -30,8 +30,8 @@ module NinthBit
         raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(options[:mop])
         raise ArgumentError, ":gibbet is #{options[:gibbet].inspect}, and does not contain a '.' character, which is required for iterative filenames" if options[:gibbet].nil? || !options[:gibbet].include?('.')
         raise ArgumentError, ":waggoner is #{options[:waggoner].inspect}, and must be a string at least one character long" if options[:waggoner].nil? || options[:waggoner].length < 1
-        raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if options[:booty].nil? || !options.is_a?(Array) || options[:booty].empty?
-        raise ArgumentError, ":chart is #{options[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if options[:chart].nil? || !options.is_a?(Array) || options.empty?
+        raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if options[:booty].nil? || !options[:booty].is_a?(Array) || options[:booty].empty?
+        raise ArgumentError, ":chart is #{options[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if options[:chart].nil? || !options[:chart].is_a?(Array) || options[:chart].empty?
 
         extend ClassMethods unless (class << self; included_modules; end).include?(ClassMethods)
 
