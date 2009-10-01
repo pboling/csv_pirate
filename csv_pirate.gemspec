@@ -1,29 +1,37 @@
 # -*- encoding: utf-8 -*-
-
 Gem::Specification.new do |s|
-  s.name = %q{csv_pirate}
-  s.version = "0.0.2"
+  s.name = 'csv_pirate'
+  s.version = '2.0.0'
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["pboling"]
-  s.date = %q{2009-03-04}
-  s.description = %q{TODO}
-  s.email = %q{peter.boling@peterboling.com}
-  s.files = ["VERSION.yml", "lib/csv_pirate.rb", "spec/csv_pirate_spec.rb", "spec/spec_helper.rb"]
+  s.authors = ['Peter Boling']
+  s.date = '2009-09-29'
+  s.summary = %q{Easily create CSVs of any data that can be derived from your models.}
+  s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+It works better if you are wearing a tricorne!}
+  s.email = 'peter.boling@gmail.com'
+  s.homepage = 'http://github.com/pboling/capistrano_mailer'
+  s.require_paths = ["lib"]
+
   s.has_rdoc = true
+
   s.homepage = %q{http://github.com/pboling/csv_pirate}
   s.rdoc_options = ["--inline-source", "--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.1}
-  s.summary = %q{TODO}
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 2
+  s.files = ["README.rdoc",
+             "csv_pirate.gemspec",
+             "init.rb",
+             "rails/init.rb",
+             "install.rb",
+             "about.yml",
+             "lib/csv_pirate.rb",
+             "lib/ninth_bit/pirate_ship.rb",
+             "Rakefile",
+             "LICENSE",
+             "CHANGELOG",
+             "VERSION.yml"]
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
+  s.test_files = []
+  
 end

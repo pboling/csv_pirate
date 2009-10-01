@@ -7,3 +7,5 @@ require 'ninth_bit/pirate_ship'
 #   class MyClass
 #     extend NinthBit::PirateShip::ActMethods
 #   end
+# If you are using ActiveRecord then it is done for you :)
+ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)

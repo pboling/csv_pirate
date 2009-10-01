@@ -2,6 +2,6 @@ author:
   name: Peter H. Boling
   homepage: http://www.peterboling.com
 summary: How does a Pirate create CSVs?  With the waggoner, charts, spyglasses, chronometers, swag, and grub.
-version: 0.0.1
+version: 2.0.0
 rails_version: 1.0+
 license: MIT
