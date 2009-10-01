@@ -5,30 +5,33 @@ Easily create CSVs of any data that can be derived from your models.
 CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
 It works better if you are wearing a tricorne!
 
+My goal is to have it do EVERYTHING it possibly can for me, since almost every project I do needs CSV exports.
+
 CsvPirate only works for commissions of swag OR grub!
 
 Initialize method (a.k.a new()) takes a hash of params:
 
   # CsvPirate only works for commissions of swag OR grub!
-  # :swag         the ARrr collection of swag to work on (optional)
-  # :grub         the ARrr class that the spyglasses will be used on (optional)
-  # :spyglasses   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
-  #                 and order them according to the order of the spyglasses (optional)
-  # :booty        booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
-  # :chart        name of directory where you want to hide your loot
-  # :wagonner     name of document where you will give detailed descriptions of the loot
-  # :aft          filename extention ('.csv')
-  # :shrouds      CSV column separator, default is ','. For tsv, tab-delimited, "\t"
-  # :chronometer  keeps track of when you hunt for treasure
-  # :gibbet       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
-  # :swab         can be :counter, :timestamp, or :none
+  # :swag           the ARrr collection of swag to work on (optional)
+  # :grub           the ARrr class that the spyglasses will be used on (optional)
+  # :spyglasses     named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
+  #                   and order them according to the order of the spyglasses (optional)
+  # :booty          booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
+  # :chart          array of directory names (relative to rails root if using rails) which will be the filepath where you want to hide your loot
+  # :wagonner       name of document where you will give detailed descriptions of the loot
+  # :aft            filename extention ('.csv')
+  # :shrouds        CSV column separator, default is ','. For tsv, tab-delimited, "\t"
+  # :chronometer    keeps track of when you hunt for treasure
+  # :gibbet         filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
+  # :swab           can be :counter, :timestamp, or :none
   #   :counter - default, each successive run will create a new file using a counter
   #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
   #   :none - no iterative file naming convention, just use waggoner and aft
-  # :mop          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
+  # :mop            can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   #   :clear - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
-  # There are others too, check the source for a complete picture!
+  # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
+  # check the source to see if there anything else hiding in there!
 
 The create method has the same parameters, and actually creates the CSV.
 
@@ -70,6 +73,13 @@ Plugin using Git:
 
   ruby script/plugin install git://github.com/pboling/csv_pirate.git
 
+
+== Upgrading
+
+  In older versions :chart was a string which indicated where you wanted to hide the loot (write the csv file)
+  Now it must be an array of directory names.  So if you want your loot in "log/csv/pirates/model_name", then chart is:
+  ['log','csv','pirates','model_name']
+  CsvPirate ensures that whatever you choose as your chart exists in the filesystem, and creates the directories if need be.
 
 == Example & Usage
 

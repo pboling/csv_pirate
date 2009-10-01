@@ -15,7 +15,7 @@ class CsvPirate
   MOP_HEADS = [:clean, :dirty]
 
   attr_accessor :waggoner         #filename
-  attr_accessor :chart            #directory, default is ('log/')
+  attr_accessor :chart            #directory, default is (['log','csv'])
   attr_accessor :aft              #extension, default is ('.csv')
   attr_accessor :gibbet           #part of the filename after waggoner and date, before swabbie and aft
   attr_accessor :chronometer
@@ -56,7 +56,7 @@ class CsvPirate
   # :spyglasses     named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
   #                   and order them according to the order of the spyglasses (optional)
   # :booty          booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
-  # :chart          name of directory where you want to hide your loot
+  # :chart          array of directory names (relative to rails root if using rails) which will be the filepath where you want to hide your loot
   # :wagonner       name of document where you will give detailed descriptions of the loot
   # :aft            filename extention ('.csv')
   # :shrouds        CSV column separator, default is ','. For tsv, tab-delimited, "\t"
@@ -92,13 +92,15 @@ class CsvPirate
     @gibbet = args.first[:gibbet] || '.export'
     raise ArgumentError, ":gibbet is #{args.first[:gibbet].inspect}, and does not contain a '.' character, which is required for iterative filenames" if args.first[:gibbet].nil? || !args.first[:gibbet].include?('.')
 
-    @waggoner = args.first[:waggoner] || "#{self.grub}"
+    @waggoner = args.first[:waggoner] || "#{self.grub || self.swag}"
     raise ArgumentError, ":waggoner is #{args.first[:waggoner].inspect}, and must be a string at least one character long" if args.first[:waggoner].nil? || args.first[:waggoner].length < 1
 
     @booty = args.first[:booty] || []
-    raise ArgumentError, ":booty is #{args.first[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if args.first[:booty].nil? || args.first[:booty].empty?
+    raise ArgumentError, ":booty is #{args.first[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if args.first[:booty].nil? || !args.first[:chart].is_a?(Array) || args.first[:booty].empty?
 
-    @chart = args.first[:chart] || 'log/'
+    @chart = args.first[:chart] || ['log','csv']
+    raise ArgumentError, ":chart is #{args.first[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if args.first[:chart].nil? || !args.first[:chart].is_a?(Array) || args.first[:booty].empty?
+
     @aft = args.first[:aft] || '.csv'
     @chronometer = args.first[:chronometer] || Date.today
 
@@ -112,7 +114,7 @@ class CsvPirate
 
     # Initialize doesn't write anything to a CSV, 
     #   but does create the traverse_board and opens the waggoner for reading / writing
-    Dir.mkdir(self.traverse_board) if !self.astrolabe && Dir.glob(self.traverse_board).empty?
+    self.northwest_passage unless self.astrolabe
 
     # This will contain the text of the csv from this particular execution
     @maroon = ""
@@ -232,26 +234,9 @@ class CsvPirate
     end
   end
 
-  def traverse_board
-    #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
-    "#{defined?(Rails) ? Rails.root + '/' : defined?(RAILS_ROOT) ? RAILS_ROOT + '/' : ''}#{self.chart}"
-  end
-  
-  def sand_glass
-    "#{self.chronometer.respond_to?(:strftime) ? '.' + self.chronometer.strftime("%Y%m%d") : ''}"
-  end
-  
   #complete file path
   def poop_deck
     "#{self.analemma}#{self.swabbie}#{self.aft}"
-  end
-
-  def merchantman
-    "#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
-  end
-
-  def analemma
-    "#{self.traverse_board}#{self.merchantman}"
   end
 
   # Swabs the poop_deck if the mop is clean. (!)
@@ -273,6 +258,34 @@ class CsvPirate
   end
 
   protected
+
+  def traverse_board
+    #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
+    "#{self.north_pole}#{self.chart.join('/')}/"
+  end
+
+  def sand_glass
+    "#{self.chronometer.respond_to?(:strftime) ? '.' + self.chronometer.strftime("%Y%m%d") : ''}"
+  end
+
+  def merchantman
+    "#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
+  end
+
+  def analemma
+    "#{self.traverse_board}#{self.merchantman}"
+  end
+
+  def north_pole
+    "#{defined?(Rails) ? Rails.root + '/' : defined?(RAILS_ROOT) ? RAILS_ROOT + '/' : ''}"
+  end
+
+  def northwest_passage
+    self.chart.length.times do |i|
+      north_star = self.north_pole + self.chart[0..i].join('/')
+      Dir.mkdir(north_star) if Dir.glob(north_star).empty?
+    end
+  end
 
   def lantern
     "#{self.analemma}.*"
@@ -372,7 +385,7 @@ class CsvPirate
   #   :spyglasses => is the column to load ("find_by_#{booty}") the ARrr object for each row on the first CSV
   #                  (swag OR spyglasses can be specified, but code defers to swag if provided)
   #   :waggoner   => where the capn's loot was stashed (filename)
-  #   :chart      => directory where capn's waggoner is located
+  #   :chart      => array of directory names where capn's waggoner is located
   #   :astrolabe  => true (file is opened at top of file in read only mode when true)
   # The first_mate hash is:
   #   :grub       => is the class on which to make booty [method] calls, or 
@@ -382,23 +395,23 @@ class CsvPirate
   #   :spyglasses => is the column to load ("find_by_#{booty}") the ARrr object for each row on the second CSV (if grub is a class)
   #   :booty      => is the methods to call on the ARrr object for each row on the second CSV
   #   :waggoner   => where to stash the first mate's loot (filename)
-  #   :chart      => directory where first mate's waggoner is located
+  #   :chart      => array of directory names where first mate's waggoner is located
   #   :astrolabe  => false (false is the default for astrolabe, so we could leave it off the first_mate)
   #
   # Example:
-#   capn      = {:grub => User,:spyglasses => [:inactive],:booty => ['id','login','status'],:waggoner => 'orig',:chart => 'log/csv/',:astrolabe => false}
+#   capn      = {:grub => User,:spyglasses => [:inactive],:booty => ['id','login','status'],:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => false}
 #   make_orig = CsvPirate.new(capn)
 #   make_orig.hoist_mainstay
 #   make_orig.weigh_anchor
 #
-#   first_mate = {:grub => 'account',:booty => ["id","number","name","created_at"],:waggoner => 'fake',:chart => 'log/csv/'}
+#   first_mate = {:grub => 'account',:booty => ["id","number","name","created_at"],:waggoner => 'fake',:chart => ['log','csv']}
 #  OR
 #   # for same class, we re-use the object loaded from first CSV and make the booty [method] calls on it
-#   first_mate = {:grub => User,:booty => ["id","login","visits_count"],:waggoner => 'fake',:chart => 'log/csv/'}
+#   first_mate = {:grub => User,:booty => ["id","login","visits_count"],:waggoner => 'fake',:chart => ['log','csv']}
 #  OR
-#   first_mate = {:grub => Account,:spyglasses => 'id',:swag=>'user_id',:booty => ["id","name","number"],:waggoner => 'fake',:chart => 'log/csv/'}
+#   first_mate = {:grub => Account,:spyglasses => 'id',:swag=>'user_id',:booty => ["id","name","number"],:waggoner => 'fake',:chart => ['log','csv']}
 #  AND
-#   capn       = {:grub => User,:spyglasses => 'login',:swag => 1,:waggoner => 'orig',:chart => 'log/csv/',:astrolabe => true}
+#   capn       = {:grub => User,:spyglasses => 'login',:swag => 1,:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => true}
 #   after_mutiny = CsvPirate.mutiny(capn, first_mate)
 #
   def self.mutiny(capn, first_mate)
