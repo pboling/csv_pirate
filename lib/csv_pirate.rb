@@ -234,6 +234,31 @@ class CsvPirate
     end
   end
 
+  #complete file path
+  def poop_deck
+    "#{self.analemma}#{self.swabbie}#{self.aft}"
+  end
+
+  # Swabs the poop_deck if the mop is clean. (!)
+  def swab_poop_deck
+    self.rhumb_lines.truncate(0) if self.swab == :none && self.mop == :clean && File.size(self.poop_deck) > 0
+  end
+
+  # Must be done on order to rummage through the loot found by the pirate ship
+  def weigh_anchor
+    CsvPirate.rinse(self.poop_deck)
+  end
+
+  # Sink your own ship! Or run a block of code on each row of the current CSV
+  def scuttle(&block)
+    return false unless block_given?
+    CsvPirate.broadside(self.poop_deck) do |careen|
+      yield careen
+    end
+  end
+
+  protected
+
   def traverse_board
     #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
     "#{self.north_pole}#{self.chart.join('/')}/"
@@ -261,31 +286,6 @@ class CsvPirate
       Dir.mkdir(north_star) if Dir.glob(north_star).empty?
     end
   end
-
-  #complete file path
-  def poop_deck
-    "#{self.analemma}#{self.swabbie}#{self.aft}"
-  end
-
-  # Swabs the poop_deck if the mop is clean. (!)
-  def swab_poop_deck
-    self.rhumb_lines.truncate(0) if self.swab == :none && self.mop == :clean && File.size(self.poop_deck) > 0
-  end
-
-  # Must be done on order to rummage through the loot found by the pirate ship
-  def weigh_anchor
-    CsvPirate.rinse(self.poop_deck)
-  end
-
-  # Sink your own ship! Or run a block of code on each row of the current CSV
-  def scuttle(&block)
-    return false unless block_given?
-    CsvPirate.broadside(self.poop_deck) do |careen|
-      yield careen
-    end
-  end
-
-  protected
 
   def lantern
     "#{self.analemma}.*"
