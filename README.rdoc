@@ -203,26 +203,12 @@ OR
 You have the same Make class as above, and you have a MakeController:
 
   class MakeController < ApplicationController
-
     def download_csv
-      send_data Make.say_your_last_words  # "utf-8" is default, and uses options from has_csv_pirate_ship
+      csv_pirate = Make.blindfold
+      send_data csv_pirate.maroon,
+        :type => 'text/csv; charset=iso-8859-1; header=present',
+        :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
     end
-
-    # OR you can customize it just like walk_the_plank
-
-    def download_csv
-      send_data Make.say_your_last_words("iso-8859-1", {:booty => [:id, :name]})
-    end
-
-  end
-
-Too easy?  I wrote this for two reasons... pirate jokes and to make my life easier.  If you need more flexibility then:
-
-  def download_csv
-    csv_pirate = Make.blindfold
-    send_data csv_pirate.maroon,
-      :type => 'text/csv; charset=iso-8859-1; header=present',
-      :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
   end
 
 

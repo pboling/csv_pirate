@@ -48,12 +48,13 @@ module NinthBit
 
       # intended for use with send_data for downloading the text of the csv:
       # send_data Make.say_your_last_words
-      def say_your_last_words(charset = 'utf-8', args = {})
-        csv_pirate = self.blindfold(args)
-        return [ csv_pirate.maroon,
-          {:type => "text/csv; charset=#{charset}; header=present"},
-          {:disposition => "attachment; filename=#{csv_pirate.nocturnal}"} ]
-      end
+      # TODO: Fix say_yourr_last_words so it works! Use send_data args
+      #def say_your_last_words(charset = 'utf-8', args = {})
+      #  csv_pirate = self.blindfold(args)
+      #  return [ csv_pirate.maroon,
+      #    {:type => "text/csv; charset=#{charset}; header=present"},
+      #    {:disposition => "attachment; filename=#{csv_pirate.nocturnal}"} ]
+      #end
       
       #returns the text of the csv export (not the file - this is important if you are appending)
       # warning if using from console: if you are exporting a large csv this will all print in your console.
