@@ -101,11 +101,23 @@ Where Make is the class, 20090930 is today's date, .export is the gibbet, and 13
 
 All of those filename parts are customizable to a degree.
 
-You can also customize it, for example if you want to add a column to the csv:
+You can also customize the CSV, for example if you want to add a column to the csv:
 
   Make.walk_the_plank({:booty => [:id, :name, :sales]})
-  Make.walk_the_plank({:booty => [:id,:name,:sales], :spyglasses => [:all], :swab => :timestamp})
-  Make.walk_the_plank({:booty => [:id,:name,:sales], :spyglasses => [:all], :swab => :none, :mop => :dirty})
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:all], :swab => :timestamp})
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:all], :swab => :none, :mop => :dirty})
+
+If you have a method in the Make class like this:
+
+  def to_slug
+    "#{self.name}_#{self.id}"
+  end
+
+getting it in the CSV is easy peasy:
+
+  Make.walk_the_plank({:booty => [:id, :name, :to_slug]})
+
+Add whatever methods you want to the booty array.  Write new methods, adn add them!  Make lots of glorious CSVs full of data to impress the pointy ones in the office.
 
 You can also use the raw CsvPirate class itself directly wherever you want.  These are the available options to methods:
 new, create, or walk_the_plank
