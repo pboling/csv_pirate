@@ -117,7 +117,7 @@ getting it in the CSV is easy peasy:
 
   Make.walk_the_plank({:booty => [:id, :name, :to_slug]})
 
-Add whatever methods you want to the booty array.  Write new methods, adn add them!  Make lots of glorious CSVs full of data to impress the pointy ones in the office.
+Add whatever methods you want to the :booty array.  Write new methods, and add them!  Make lots of glorious CSVs full of data to impress the pointy ones in the office.
 
 You can also use the raw CsvPirate class itself directly wherever you want.  These are the available options to methods:
 new, create, or walk_the_plank
