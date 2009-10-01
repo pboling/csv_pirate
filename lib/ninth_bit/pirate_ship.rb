@@ -62,7 +62,7 @@ module NinthBit
       #          :type => 'text/csv; charset=iso-8859-1; header=present',
       #          :disposition => "attachment; filename=Data.csv"
       def walk_the_plank(args = {})
-        csv_pirate = self.blindfold(args)
+        csv_pirate = CsvPirate.new(self.piratey_args(args))
         csv_pirate.hoist_mainstay()
       end
 
@@ -74,8 +74,13 @@ module NinthBit
       #          :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
       def blindfold(args = {})
         CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
-        CsvPirate.create({
-          :chart => args[:chart] || self.piratey_options[:chart],
+        CsvPirate.create(self.piratey_args(args))
+      end
+
+      protected
+
+      def piratey_args(args = {})
+        { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
           :chronometer => args[:chronometer] || Date.today,
@@ -87,11 +92,10 @@ module NinthBit
           :grub => args[:grub] || self.piratey_options[:grub],
           :spyglasses => args[:spyglasses] || self.piratey_options[:spyglasses],
           :booty => args[:booty] || self.piratey_options[:booty],
-          :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure]
-        })
+          :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure] }
       end
-    end
 
+    end
 
   end
 end
