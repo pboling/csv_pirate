@@ -1,5 +1,4 @@
-CsvPirate v2.0.0 (20090930)
-==============
+== CsvPirate v2.0.1 (20090930)
 
 Easily create CSVs of any data that can be derived from your models.
 
@@ -10,72 +9,72 @@ CsvPirate only works for commissions of swag OR grub!
 
 Initialize method (a.k.a new()) takes a hash of params:
 
-swag:         the ARrr collection of swag to work on (optional)
-grub:         the ARrr class that the spyglasses will be used on (optional)
-spyglasses:   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglass,
-                and order them according to the order of the spyglass (only used with grub, not swag)
-booty:        booty on your model that you want printed in the CSV
-chart:        name of directory where you want to hide your loot
-waggoner:     name of document where you will give detailed descriptions of the loot
-chronometer:  keeps track of when you hunt for treasure
-gibbet:       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
-swab:         can be :counter, :timestamp, or :none
-  :counter    - default, each successive run will create a new file using a counter
-  :timestamp  - each successive run will create a new file using a HHMMSS time stamp
-  :none       - no iterative file naming convention, just use waggoner and aft
-mop:          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
-  :clear      - do not use :counter or :timestamp, and instead overwrite the file
-  :dirty      - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+  swag:         the ARrr collection of swag to work on (optional)
+  grub:         the ARrr class that the spyglasses will be used on (optional)
+  spyglasses:   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglass,
+                  and order them according to the order of the spyglass (only used with grub, not swag)
+  booty:        booty on your model that you want printed in the CSV
+  chart:        name of directory where you want to hide your loot
+  waggoner:     name of document where you will give detailed descriptions of the loot
+  chronometer:  keeps track of when you hunt for treasure
+  gibbet:       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
+  swab:         can be :counter, :timestamp, or :none
+    :counter    - default, each successive run will create a new file using a counter
+    :timestamp  - each successive run will create a new file using a HHMMSS time stamp
+    :none       - no iterative file naming convention, just use waggoner and aft
+  mop:          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
+    :clear      - do not use :counter or :timestamp, and instead overwrite the file
+    :dirty      - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
 
 The create method has the same parameters, and actually creates the CSV.
 
 Avast! Here be pirates! To brush up on pirate coding naming conventions:
-http://www.privateerdragons.com/pirate_dictionary.html
+
+  http://www.privateerdragons.com/pirate_dictionary.html
 
 Perhaps the next version will have CSV importing abilities...
 
-On The Web
-==========
+== On The Web
 
 Source:
-http://github.com/pboling/csv_pirate/tree/master
+  http://github.com/pboling/csv_pirate
 
 Release Announcement:
-http://galtzo.blogspot.com/2009/03/csv-pirate.html
+  http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
-Installation
-============
+
+== Installation
 
 sudo gem install pboling-csv_pirate -s http://gems.github.com
 
 ruby script/plugin install git://github.com/pboling/csv_pirate.git
 
-Example
-=======
+
+== Example & Usage
 
 Assuming a Make (as in manufacturers of automobiles) model like this:
 
-# == Schema Information
-#
-# Table name: makes
-#
-#  id      :integer(4)      not null, primary key
-#  name    :string(255)
-#  factory :string(255)
-#  sales   :integer(4)
-#
+  # == Schema Information
+  #
+  # Table name: makes
+  #
+  #  id      :integer(4)      not null, primary key
+  #  name    :string(255)
+  #  factory :string(255)
+  #  sales   :integer(4)
+  #
 
-class Make < ActiveRecord::Base
-  has_many :vehicle_models
-  named_scope :factory_in_germany, :conditions => ["factory = ?", "Germany"]
+  class Make < ActiveRecord::Base
+    has_many :vehicle_models
+    named_scope :factory_in_germany, :conditions => ["factory = ?", "Germany"]
 
-  has_csv_pirate_ship :spyglasses => [:factory_in_germany],
-                      :booty => [:id, :name]
-end
+    has_csv_pirate_ship :spyglasses => [:factory_in_germany],
+                        :booty => [:id, :name]
+  end
 
 To create a csv of the names and ids of makes with factories in germany:
 
-  Make.walk_the_plank  # Get it? HA!
+  Make.walk_the_plank  # Get it? HA! If you can't believe I wrote this whole thing JUST to be able to make jokes like that... check ma sources :)
 
 The name of the csv that comes out will be (by defualt located in log directory):
 
@@ -115,48 +114,47 @@ new, create, or walk_the_plank
 
 The following two sets of code are identical:
 
-csv_pirate = CsvPirate.new({
-  :grub => User,
-  :spyglasses => [:active,:logged_in],
-  :waggoner => 'active_users_logged_in',
-  :booty => ["id","number","login","created_at"],
-  :chart => 'log/csv/'
-})
-csv_pirate.hoist_mainstay() # creates CSV file and writes out the rows
+  csv_pirate = CsvPirate.new({
+    :grub => User,
+    :spyglasses => [:active,:logged_in],
+    :waggoner => 'active_users_logged_in',
+    :booty => ["id","number","login","created_at"],
+    :chart => 'log/csv/'
+  })
+  csv_pirate.hoist_mainstay() # creates CSV file and writes out the rows
 
-CsvPirate.create({
-  :grub => User,
-  :spyglasses => [:active,:logged_in],
-  :waggoner => 'active_users_logged_in',
-  :booty => ["id","number","login","created_at"],
-  :chart => 'log/csv/'
-})# creates CSV file and writes out the rows
+  CsvPirate.create({
+    :grub => User,
+    :spyglasses => [:active,:logged_in],
+    :waggoner => 'active_users_logged_in',
+    :booty => ["id","number","login","created_at"],
+    :chart => 'log/csv/'
+  })# creates CSV file and writes out the rows
 
 Another example using swag instead of grub:
 
-users = User.logged_out.inactive
-csv_pirate = CsvPirate.new({
-  :swag => users,
-  :waggoner => 'inactive_users_not_logged_in',
-  :booty => ["id","number","login","created_at"],
-  :chart => 'log/csv/'
-})
-csv_pirate.hoist_mainstay()
+  users = User.logged_out.inactive
+  csv_pirate = CsvPirate.new({
+    :swag => users,
+    :waggoner => 'inactive_users_not_logged_in',
+    :booty => ["id","number","login","created_at"],
+    :chart => 'log/csv/'
+  })
+  csv_pirate.hoist_mainstay()
 
 Then if you want to get your hands on the loot immediately:
 
-csv_pirate.weigh_anchor()
+  csv_pirate.weigh_anchor()
 
 For those who can't help but copy/paste into console and then edit:
 
-csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+  csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
 
 OR
 
-csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
+  csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => 'log/csv/'})
 
 
-COPYRIGHT
-=========
-
-Copyright (c) 2009 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
+----------------------------------------------------------------------------------
+  Author: Peter Boling, peter.boling at gmail dot com
+  Copyright (c) 2009 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.

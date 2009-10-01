@@ -1,4 +1,7 @@
 Version 2.0.0 2009-09-30
+- Fixed Readme formatting
+
+Version 2.0.0 2009-09-30
 - Added a new API a la attachment_fu
 - Fixed bug: now works when specifying grub with no spyglasses
 - Fixed rails/init.rb for use as gem with rails
