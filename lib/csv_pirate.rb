@@ -158,7 +158,12 @@ class CsvPirate
   def prize(spoils)
     gold_doubloons = []
     self.booty.each do |plunder|
-      gold_doubloons << spoils.send(plunder.to_sym)
+      # Check for nestedness
+      if plunder.is_a?(Hash)
+        gold_doubloons << CsvPirate.marlinespike(spoils, plunder)
+      else
+        gold_doubloons << spoils.send(plunder.to_sym)
+      end
     end
     gold_doubloons
   end
@@ -285,6 +290,26 @@ class CsvPirate
   ########################################
   ############ CLASS METHODS #############
   ########################################
+
+  # if this is your booty:
+  # {:booty => [
+  #   :id,
+  #   {:region => {:country => :name }, :state => :name },
+  #   :name
+  # ]}
+  # so nested_hash = {:region => {:country => :name }, :state => :name }
+  def self.marlinespike(spoils, navigation)
+    navigation.map do |east,west|
+      spoils = spoils.send(east.to_sym)
+      if west.is_a?(Hash)
+        # Recursive nadness is here!
+        spoils = CsvPirate.marlinespike(spoils, west)
+      else
+        spoils = spoils.send(west.to_sym)
+      end
+      spoils
+    end.join(' - ')
+  end
 
   # Used to read any loot found by any pirate
   def self.rinse(quarterdeck)

@@ -35,7 +35,7 @@ It works better if you are wearing a tricorne!}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Easily create CSVs of any data that can be derived from your models (using pirates!).}
+  s.summary = %q{Easily create CSVs of any data that can be derived from your classes or models using pirates.}
   s.test_files = [
     "spec/csv_pirate_spec.rb",
      "spec/spec_helper.rb"
