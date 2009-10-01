@@ -1,3 +1,7 @@
+Version 2.2.0 2009-10-01
+- Use FasterCSV for all backend work
+- Added shrouds for creating tsv and psv files
+
 Version 2.1.0 2009-10-01
 - Added handling of nested methods!
 

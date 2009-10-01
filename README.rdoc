@@ -9,22 +9,25 @@ CsvPirate only works for commissions of swag OR grub!
 
 Initialize method (a.k.a new()) takes a hash of params:
 
-  swag:         the ARrr collection of swag to work on (optional)
-  grub:         the ARrr class that the spyglasses will be used on (optional)
-  spyglasses:   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglass,
-                  and order them according to the order of the spyglass (only used with grub, not swag)
-  booty:        booty on your model that you want printed in the CSV
-  chart:        name of directory where you want to hide your loot
-  waggoner:     name of document where you will give detailed descriptions of the loot
-  chronometer:  keeps track of when you hunt for treasure
-  gibbet:       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
-  swab:         can be :counter, :timestamp, or :none
-    :counter    - default, each successive run will create a new file using a counter
-    :timestamp  - each successive run will create a new file using a HHMMSS time stamp
-    :none       - no iterative file naming convention, just use waggoner and aft
-  mop:          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
-    :clear      - do not use :counter or :timestamp, and instead overwrite the file
-    :dirty      - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+  # CsvPirate only works for commissions of swag OR grub!
+  # :swag         the ARrr collection of swag to work on (optional)
+  # :grub         the ARrr class that the spyglasses will be used on (optional)
+  # :spyglasses   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
+  #                 and order them according to the order of the spyglasses (optional)
+  # :booty        booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
+  # :chart        name of directory where you want to hide your loot
+  # :wagonner     name of document where you will give detailed descriptions of the loot
+  # :aft          filename extention ('.csv')
+  # :shrouds      CSV column separator, default is ','. For tsv, tab-delimited, "\t"
+  # :chronometer  keeps track of when you hunt for treasure
+  # :gibbet       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
+  # :swab         can be :counter, :timestamp, or :none
+  #   :counter - default, each successive run will create a new file using a counter
+  #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
+  #   :none - no iterative file naming convention, just use waggoner and aft
+  # :mop          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
+  #   :clear - do not use :counter or :timestamp, and instead overwrite the file
+  #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
 
 The create method has the same parameters, and actually creates the CSV.
 
@@ -104,8 +107,23 @@ All of those filename parts are customizable to a degree.
 You can also customize the CSV, for example if you want to add a column to the csv:
 
   Make.walk_the_plank({:booty => [:id, :name, :sales]})
+
+Youw want a timestamp file counter instead of the integer default:
+
   Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:all], :swab => :timestamp})
+
+If you want to append each export to the end of the same file (on a per day basis):
+
   Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:all], :swab => :none, :mop => :dirty})
+
+If you want to restrict the csv to a particular set of named scopes:
+
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:with_abs, :with_esc, :with_heated_seats]})
+
+If you want to create a tsv (tab-delimited) or psv (pipe-delimited) instead of a csv:
+
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :shrouds => '\t'})
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :shrouds => '|'})
 
 If you have a method in the Make class like this:
 
@@ -117,29 +135,14 @@ getting it in the CSV is easy peasy:
 
   Make.walk_the_plank({:booty => [:id, :name, :to_slug]})
 
+If you want to traverse Active Record Associations, or call a method on the return value of another method (unlimited nesting):
+
+  Make.walk_the_plank({:booty => [:id, :name, :to_slug, {:to_slug => :hash}]})  #will call .hash on the result of make.to_slug
+  Make.walk_the_plank({:booty => [:id, :name, :to_slug, {:to_slug => {:hash => :abs}}]})  #returns make.to_slug.hash.abs
+
 Add whatever methods you want to the :booty array.  Write new methods, and add them!  Make lots of glorious CSVs full of data to impress the pointy ones in the office.
 
-You can also use the raw CsvPirate class itself directly wherever you want.  These are the available options to methods:
-new, create, or walk_the_plank
-
-  # CsvPirate only works for commissions of swag OR grub!
-  # :swag         the ARrr collection of swag to work on (optional)
-  # :grub         the ARrr class that the spyglasses will be used on (optional)
-  # :spyglasses   named scopes in your model that will refine the rows in the CSV according to conditions of the spyglasses,
-  #                 and order them according to the order of the spyglasses (optional)
-  # :booty        booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
-  # :chart        name of directory where you want to hide your loot
-  # :wagonner     name of document where you will give detailed descriptions of the loot
-  # :aft          filename extention ('.csv')
-  # :chronometer  keeps track of when you hunt for treasure
-  # :gibbet       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
-  # :swab         can be :counter, :timestamp, or :none
-  #   :counter - default, each successive run will create a new file using a counter
-  #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
-  #   :none - no iterative file naming convention, just use waggoner and aft
-  # :mop          can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
-  #   :clear - do not use :counter or :timestamp, and instead overwrite the file
-  #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+You can also use the raw CsvPirate class itself directly wherever you want.
 
 The following two sets of code are identical:
 

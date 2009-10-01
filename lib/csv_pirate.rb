@@ -40,6 +40,8 @@ class CsvPirate
   
   attr_accessor :astrolabe        # when true then read only CsvPirate instance for loading of CSVs
 
+  attr_accessor :shrouds          # CSV column separator
+
   attr_accessor :swab             # default is :counter
   attr_accessor :mop              # default is :clean (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   attr_accessor :swabbie          # value of the counter / timestamp
@@ -55,6 +57,7 @@ class CsvPirate
   # :chart        name of directory where you want to hide your loot
   # :wagonner     name of document where you will give detailed descriptions of the loot
   # :aft          filename extention ('.csv')
+  # :shrouds      CSV column separator, default is ','. For tsv, tab-delimited, "\t"
   # :chronometer  keeps track of when you hunt for treasure
   # :gibbet       filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
   # :swab         can be :counter, :timestamp, or :none
@@ -96,7 +99,7 @@ class CsvPirate
     @chronometer = args.first[:chronometer] || Date.today
 
     @spyglasses = (args.first[:spyglasses] || [:all]) if self.grub
-
+    @shrouds = args.first[:shrouds] || ','  # for tsv, tab-delimited, "\t"
 
     @astrolabe = args.first[:astrolabe] || false
 
@@ -122,6 +125,7 @@ class CsvPirate
       :waggoner => args.first[:waggoner],
       :swag => args.first[:swag],
       :swab => args.first[:swab],
+      :shrouds => args.first[:shrouds],
       :mop => args.first[:mop],
       :grub => args.first[:grub],
       :spyglasses => args.first[:spyglasses],
@@ -178,8 +182,6 @@ class CsvPirate
 
     self.swab_poop_deck
 
-    self.figurehead
-  
     self.bury_treasure ? self.buried_treasure = self.dead_mans_chest : self.dead_mans_chest
 
     self.rhumb_lines.close
@@ -191,9 +193,10 @@ class CsvPirate
   end
 
   def dead_mans_chest
-    self.dig_for_treasure do |treasure|
-      self.scrivener(treasure.map {|x| "#{x}"}.to_csv) # |x| marks the spot!
+    csv_string = FasterCSV.generate(:col_sep => self.shrouds) do |csv|
+      self.sounding(csv)
     end
+    self.scrivener(csv_string)
   end
 
   def jolly_roger
@@ -205,11 +208,15 @@ class CsvPirate
     end
   end
 
-  # write the header of the CSV (column/method names)
-  def figurehead
-    self.scrivener(self.booty.to_csv)
+  def sounding(csv)
+    # create the header of the CSV (column/method names)
+    csv << self.booty
+    # create the data for the csv
+    self.dig_for_treasure do |treasure|
+      csv << treasure.map {|x| "#{x}"} # |x| marks the spot!
+    end
   end
-  
+
   def traverse_board
     "#{RAILS_ROOT}/#{self.chart}"
   end

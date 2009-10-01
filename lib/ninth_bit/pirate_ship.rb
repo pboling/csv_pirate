@@ -16,6 +16,7 @@ module NinthBit
         options[:swag]          ||= nil
         options[:swab]          ||= :counter
         options[:mop]           ||= :clean
+        options[:shrouds]       ||= ','
         options[:grub]          ||= self if options[:swag].nil?
         options[:spyglasses]    ||= [:all]
         options[:booty]         ||= self.column_names
@@ -56,6 +57,7 @@ module NinthBit
           :swag => args[:swag] || self.piratey_options[:swag],
           :swab => args[:swab] || self.piratey_options[:swab],
           :mop => args[:mop] || self.piratey_options[:mop],
+          :shrouds => args[:swab] || self.piratey_options[:shrouds],
           :grub => args[:grub] || self.piratey_options[:grub],
           :spyglasses => args[:spyglasses] || self.piratey_options[:spyglasses],
           :booty => args[:booty] || self.piratey_options[:booty],
