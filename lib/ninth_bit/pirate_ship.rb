@@ -4,9 +4,8 @@ module NinthBit
     module ActMethods
       #coding tyle is adopted from attachment_fu
       def has_csv_pirate_ship(options = {})
-        if options.blank?
-          raise ArgumentError, "must provide required options"
-        end
+        raise ArgumentError, "must provide required options" if options.blank?
+
         options[:chart]         ||= 'log/'
         options[:aft]           ||= '.csv'
         options[:gibbet]        ||= '.export'
@@ -24,9 +23,9 @@ module NinthBit
         options[:parlay]        ||= 1
 
         # if they provide both
-        raise ArgumentError, "must provide either specify :swag or :grub" if !options[:swag].blank? && !options[:grub].blank?
+        raise ArgumentError, "must provide either :swag or :grub" if !options[:swag].blank? && !options[:grub].blank?
         # if they provide neither
-        raise ArgumentError, "must provide either specify :swag or :grub, not both" if options[:swag].blank? && options[:grub].blank?
+        raise ArgumentError, "must provide either :swag or :grub, not both" if options[:swag].blank? && options[:grub].blank?
         raise ArgumentError, ":swab is #{options[:swab].inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(options[:swab])
         raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(options[:mop])
         raise ArgumentError, ":gibbet is #{options[:gibbet].inspect}, and does not contain a '.' character, which is required for iterative filenames" if options[:gibbet].nil? || !options[:gibbet].include?('.')

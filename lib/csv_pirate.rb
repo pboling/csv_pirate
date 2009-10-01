@@ -73,14 +73,15 @@ class CsvPirate
   # See README for examples
   
   def initialize(*args)
+    raise ArgumentError, "must provide required options" if !args.blank?
 
     @swag = args.first[:swag]
     @grub = args.first[:grub]
 
     # if they provide both
-    raise ArgumentError, "must provide either specify :swag or :grub" if !args.first[:swag].blank? && !args.first[:grub].blank?
+    raise ArgumentError, "must provide either :swag or :grub" if !args.first[:swag].blank? && !args.first[:grub].blank?
     # if they provide neither
-    raise ArgumentError, "must provide either specify :swag or :grub, not both" if args.first[:swag].blank? && args.first[:grub].blank?
+    raise ArgumentError, "must provide either :swag or :grub, not both" if args.first[:swag].blank? && args.first[:grub].blank?
 
     @swab = args.first[:swab] || :counter
     raise ArgumentError, ":swab is #{args.first[:swab].inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(args.first[:swab])
