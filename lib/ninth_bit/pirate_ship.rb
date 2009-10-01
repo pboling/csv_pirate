@@ -51,8 +51,8 @@ module NinthBit
       def say_your_last_words(charset = 'utf-8', args = {})
         csv_pirate = self.blindfold(args)
         return [ csv_pirate.maroon,
-          :type => "text/csv; charset=#{charset}; header=present",
-          :disposition => "attachment; filename=#{csv_pirate.nocturnal}" ]
+          {:type => "text/csv; charset=#{charset}; header=present"},
+          {:disposition => "attachment; filename=#{csv_pirate.nocturnal}"} ]
       end
       
       #returns the text of the csv export (not the file - this is important if you are appending)
