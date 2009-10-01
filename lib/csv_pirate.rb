@@ -301,14 +301,16 @@ class CsvPirate
   def self.marlinespike(spoils, navigation)
     navigation.map do |east,west|
       spoils = spoils.send(east.to_sym)
-      if west.is_a?(Hash)
-        # Recursive nadness is here!
-        spoils = CsvPirate.marlinespike(spoils, west)
-      else
-        spoils = spoils.send(west.to_sym)
+      unless spoils.nil?
+        if west.is_a?(Hash)
+          # Recursive nadness is here!
+          spoils = CsvPirate.marlinespike(spoils, west)
+        else
+          spoils = spoils.send(west.to_sym)
+        end
       end
       spoils
-    end.join(' - ')
+    end.compact.join(' - ')
   end
 
   # Used to read any loot found by any pirate
