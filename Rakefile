@@ -15,7 +15,6 @@ It works better if you are wearing a tricorne!}
              "init.rb",
              "rails/init.rb",
              "install.rb",
-             "about.yml",
              "lib/csv_pirate.rb",
              "lib/ninth_bit/pirate_ship.rb",
              "Rakefile",
