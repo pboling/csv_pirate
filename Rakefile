@@ -2,13 +2,26 @@ require 'rake'
 
 begin
   require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "csv_pirate"
-    s.summary = %Q{TODO}
-    s.email = "peter.boling@peterboling.com"
-    s.homepage = "http://github.com/pboling/csv_pirate"
-    s.description = "TODO"
-    s.authors = ["pboling"]
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "csv_pirate"
+    gemspec.summary = "Easily create CSVs of any data that can be derived from your models (using pirates!)."
+    gemspec.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+It works better if you are wearing a tricorne!}
+    gemspec.email = "peter.boling@gmail.com"
+    gemspec.homepage = "http://github.com/pboling/csv_pirate"
+    gemspec.authors = ["Peter Boling"]
+    gemspec.files = ["README.rdoc",
+             "csv_pirate.gemspec",
+             "init.rb",
+             "rails/init.rb",
+             "install.rb",
+             "about.yml",
+             "lib/csv_pirate.rb",
+             "lib/ninth_bit/pirate_ship.rb",
+             "Rakefile",
+             "LICENSE",
+             "CHANGELOG",
+             "VERSION.yml"]
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
