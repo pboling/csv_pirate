@@ -73,7 +73,7 @@ class CsvPirate
   # See README for examples
   
   def initialize(*args)
-    raise ArgumentError, "must provide required options" if !args.blank?
+    raise ArgumentError, "must provide required options" if args.blank?
 
     @swag = args.first[:swag]
     @grub = args.first[:grub]
