@@ -267,7 +267,7 @@ You have a VehicleModel class and the same Make class as up above:
 
 Then to create the CSV:
 
-  a = VehicleModel.walk_the_plank
+  a = VehicleModel.blindfold
 
 Then check the output from the console:
 

@@ -1,3 +1,6 @@
+Version 2.5.1 2009-10-01
+- Fixed bug with handling of Rails.root & RAILS_ROOT
+
 Version 2.5.0 2009-10-01
 - Added northwest_passage to create all the directories in :chart
 

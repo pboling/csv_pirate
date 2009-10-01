@@ -234,6 +234,34 @@ class CsvPirate
     end
   end
 
+  def traverse_board
+    #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
+    "#{self.north_pole}#{self.chart.join('/')}/"
+  end
+
+  def sand_glass
+    "#{self.chronometer.respond_to?(:strftime) ? '.' + self.chronometer.strftime("%Y%m%d") : ''}"
+  end
+
+  def merchantman
+    "#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
+  end
+
+  def analemma
+    "#{self.traverse_board}#{self.merchantman}"
+  end
+
+  def north_pole
+    "#{defined?(Rails) ? "#{Rails.root}/" : defined?(RAILS_ROOT) ? "#{RAILS_ROOT}/" : ''}"
+  end
+
+  def northwest_passage
+    self.chart.length.times do |i|
+      north_star = self.north_pole + self.chart[0..i].join('/')
+      Dir.mkdir(north_star) if Dir.glob(north_star).empty?
+    end
+  end
+
   #complete file path
   def poop_deck
     "#{self.analemma}#{self.swabbie}#{self.aft}"
@@ -258,34 +286,6 @@ class CsvPirate
   end
 
   protected
-
-  def traverse_board
-    #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
-    "#{self.north_pole}#{self.chart.join('/')}/"
-  end
-
-  def sand_glass
-    "#{self.chronometer.respond_to?(:strftime) ? '.' + self.chronometer.strftime("%Y%m%d") : ''}"
-  end
-
-  def merchantman
-    "#{self.waggoner}#{self.sand_glass}#{self.gibbet}"
-  end
-
-  def analemma
-    "#{self.traverse_board}#{self.merchantman}"
-  end
-
-  def north_pole
-    "#{defined?(Rails) ? Rails.root + '/' : defined?(RAILS_ROOT) ? RAILS_ROOT + '/' : ''}"
-  end
-
-  def northwest_passage
-    self.chart.length.times do |i|
-      north_star = self.north_pole + self.chart[0..i].join('/')
-      Dir.mkdir(north_star) if Dir.glob(north_star).empty?
-    end
-  end
 
   def lantern
     "#{self.analemma}.*"
