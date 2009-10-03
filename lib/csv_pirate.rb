@@ -67,7 +67,7 @@ class CsvPirate
   #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
   #   :none - no iterative file naming convention, just use waggoner and aft
   # :mop            can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
-  #   :clear - do not use :counter or :timestamp, and instead overwrite the file
+  #   :clean - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
   # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
   # See README for examples

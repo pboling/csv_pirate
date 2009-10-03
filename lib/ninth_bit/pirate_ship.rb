@@ -48,26 +48,26 @@ module NinthBit
 
       # intended for use with send_data for downloading the text of the csv:
       # send_data Make.say_your_last_words
-      # TODO: Fix say_yourr_last_words so it works! Use send_data args
+      # TODO: Fix say_yourr_last_words so it works! Use send_data args for real
       #def say_your_last_words(charset = 'utf-8', args = {})
       #  csv_pirate = self.blindfold(args)
       #  return [ csv_pirate.maroon,
       #    {:type => "text/csv; charset=#{charset}; header=present"},
       #    {:disposition => "attachment; filename=#{csv_pirate.nocturnal}"} ]
       #end
-      
-      #returns the text of the csv export (not the file - this is important if you are appending)
+
+      # returns the text of the csv export (not the file - this is important if you are appending)
       # warning if using from console: if you are exporting a large csv this will all print in your console.
       # intended for use with send_data for downloading the text of the csv:
       # send_data Make.walk_the_plank,
       #          :type => 'text/csv; charset=iso-8859-1; header=present',
       #          :disposition => "attachment; filename=Data.csv"
       def walk_the_plank(args = {})
-        csv_pirate = CsvPirate.new(self.piratey_args(args))
-        csv_pirate.hoist_mainstay()
+        self.land_ho(args).hoist_mainstay()
       end
 
-      #returns the csv_pirate object so you have access to everything
+      # returns the csv_pirate object so you have access to everything
+      # warning if using from console: if you are exporting a large csv this will all print in your console.
       # If using in a download action it might look like this:
       # csv_pirate = Make.blindfold
       # send_data csv_pirate.maroon,
@@ -76,6 +76,16 @@ module NinthBit
       def blindfold(args = {})
         CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
         CsvPirate.create(self.piratey_args(args))
+      end
+
+      # returns the csv_pirate object so you have access to everything
+      # Does not actually create the csv, so you need to do this in your code:
+      #   csv_pirate = Klass.land_ho({:booty => [:id, :name, :dragons, :created_at]})
+      # This allows you to modify the csv_pirate object before creating the csv like this:
+      #   csv_pirate.booty -= [:id, :name]
+      #   csv_pirate.hoist_mainstay()
+      def land_ho(args = {})
+        CsvPirate.new(self.piratey_args(args))
       end
 
       protected

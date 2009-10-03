@@ -1,3 +1,7 @@
+Version 3.2.0 2009-10-01
+- Fixed typo in documentation
+- Added land_ho method!
+
 Version 3.1.1 2009-10-01
 - Readme Cleanup
 - Removing broken say_your_last_words method
