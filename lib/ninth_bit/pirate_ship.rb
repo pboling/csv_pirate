@@ -74,7 +74,6 @@ module NinthBit
       #          :type => 'text/csv; charset=iso-8859-1; header=present',
       #          :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
       def blindfold(args = {})
-        CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
         CsvPirate.create(self.piratey_args(args))
       end
 
@@ -91,7 +90,8 @@ module NinthBit
       protected
 
       def piratey_args(args = {})
-        { :chart => args[:chart] || self.piratey_options[:chart],
+        CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
+        return { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
           :chronometer => args[:chronometer] || Date.today,

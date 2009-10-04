@@ -1,3 +1,6 @@
+Version 3.2.1 2009-10-04
+- Fixed bug in parlay by creating method parlance
+
 Version 3.2.0 2009-10-01
 - Fixed typo in documentation
 - Added land_ho method!

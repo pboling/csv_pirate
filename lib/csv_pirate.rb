@@ -198,7 +198,7 @@ class CsvPirate
 
     self.rhumb_lines.close
 
-    self.jolly_roger if CsvPirate.parlay > 1
+    self.jolly_roger if CsvPirate.parlay && CsvPirate.parlance(1)
 
     # returns the text of this CSV export
     return self.maroon
@@ -215,10 +215,10 @@ class CsvPirate
   def jolly_roger
     if self.bury_treasure
       if self.buried_treasure.is_a?(Array)
-        puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.poop_deck}'" if CsvPirate.parlay > 1
-        puts "You must weigh_anchor to review your plunder!" if CsvPirate.parlay > 1
+        puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.poop_deck}'" if CsvPirate.parlay && CsvPirate.parlance(1)
+        puts "You must weigh_anchor to review your plunder!" if CsvPirate.parlay && CsvPirate.parlance(1)
       else
-        puts "Failed to locate treasure" if CsvPirate.parlay > 1
+        puts "Failed to locate treasure" if CsvPirate.parlay && CsvPirate.parlance(1)
       end
     end
   end
@@ -371,7 +371,7 @@ class CsvPirate
     return false unless block_given?
     count = 1 if report_kills
     FasterCSV.foreach(galley, {:headers => :first_row, :return_headers => false}) do |gun|
-      puts "Galleys sunk: #{count+=1}" if CsvPirate.parlay > 1
+      puts "Galleys sunk: #{count+=1}" if CsvPirate.parlance(1)
       yield gun
     end
   end
@@ -421,13 +421,13 @@ class CsvPirate
     cutthroat.figurehead
 
     carrack.scuttle do |cutlass|
-      puts "CUTLASS: #{cutlass.inspect}" if CsvPirate.parlay > 2
-      puts "CARRACK.SWAG: #{carrack.swag.inspect}" if CsvPirate.parlay > 2
+      puts "CUTLASS: #{cutlass.inspect}" if CsvPirate.parlance(2)
+      puts "CARRACK.SWAG: #{carrack.swag.inspect}" if CsvPirate.parlance(2)
       backstaff = cutlass[carrack.swag] || cutlass["#{carrack.spyglasses}"]
-      puts "BACKSTAFF: #{backstaff}" if CsvPirate.parlay > 2
-      puts "CARRACK.SPYGLASSES: #{carrack.spyglasses.inspect}" if CsvPirate.parlay > 2
+      puts "BACKSTAFF: #{backstaff}" if CsvPirate.parlance(2)
+      puts "CARRACK.SPYGLASSES: #{carrack.spyglasses.inspect}" if CsvPirate.parlance(2)
       gully = carrack.grub.send("find_by_#{carrack.spyglasses}".to_sym, backstaff)
-      puts "GULLY: #{gully.inspect}" if CsvPirate.parlay > 2
+      puts "GULLY: #{gully.inspect}" if CsvPirate.parlance(2)
       if gully
         flotsam = cutthroat.grub.is_a?(String) ? 
           gully.send(cutthroat.grub.to_sym) : 
@@ -438,16 +438,16 @@ class CsvPirate
               cutthroat.grub.class == Class ? 
                 cutthroat.grub.send("find_by_#{cutthroat.swag}", gully.send(cutthroat.spyglasses)) : 
                 nil
-        puts "FLOTSAM: #{flotsam.inspect}" if CsvPirate.parlay > 2
+        puts "FLOTSAM: #{flotsam.inspect}" if CsvPirate.parlance(2)
         if flotsam
           plunder = cutthroat.prize(flotsam)
           cutthroat.buried_treasure << plunder
           cutthroat.scrivener(plunder.map {|bulkhead| "#{bulkhead}"}.join(','))
         else
-          puts "Unable to locate: #{cutthroat.grub} related to #{carrack.grub}.#{carrack.spyglasses} '#{gully.send(carrack.spyglasses)}'" if CsvPirate.parlay > 1
+          puts "Unable to locate: #{cutthroat.grub} related to #{carrack.grub}.#{carrack.spyglasses} '#{gully.send(carrack.spyglasses)}'" if CsvPirate.parlance(1)
         end
       else
-        puts "Unable to locate: #{carrack.grub}.#{carrack.spyglasses} '#{gully.send(carrack.spyglasses)}'" if CsvPirate.parlay > 1
+        puts "Unable to locate: #{carrack.grub}.#{carrack.spyglasses} '#{gully.send(carrack.spyglasses)}'" if CsvPirate.parlance(1)
       end
     end
     
@@ -458,6 +458,11 @@ class CsvPirate
 
     # returns the array that is created before exporting it to CSV
     return cutthroat
+  end
+
+  # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
+  def self.parlance(level = 1)
+    self.parlay.is_a?(Numeric) && self.parlay >= level
   end
 
 end
