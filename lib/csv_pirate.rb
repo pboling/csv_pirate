@@ -14,15 +14,15 @@ class CsvPirate
   BOOKIE = [:counter, :timestamp, :none]
   MOP_HEADS = [:clean, :dirty]
 
-  attr_accessor :waggoner         #filename
-  attr_accessor :chart            #directory, default is (['log','csv'])
-  attr_accessor :aft              #extension, default is ('.csv')
-  attr_accessor :gibbet           #part of the filename after waggoner and date, before swabbie and aft
-  attr_accessor :chronometer
+  attr_accessor :waggoner         # First part of filename
+  attr_accessor :chart            # directory, default is (['log','csv'])
+  attr_accessor :aft              # extension, default is ('.csv')
+  attr_accessor :gibbet           # part of the filename after waggoner and date, before swabbie and aft
+  attr_accessor :chronometer      # Date object or false
 
   # Must provide swag or grub (not both)
-  attr_accessor :swag             # ARrr array of objects
-  attr_accessor :grub             # ARrr class
+  attr_accessor :swag             # Array of objects
+  attr_accessor :grub             # Class
   # spyglasses is only used with grub, not swag
   attr_accessor :spyglasses       # named_scopes
   
@@ -60,12 +60,12 @@ class CsvPirate
   # :wagonner       name of document where you will give detailed descriptions of the loot
   # :aft            filename extention ('.csv')
   # :shrouds        CSV column separator, default is ','. For tsv, tab-delimited, "\t"
-  # :chronometer    keeps track of when you hunt for treasure
+  # :chronometer    keeps track of when you hunt for treasure, can be false if you don't want to keep track.
   # :gibbet         filename spacer after the date, and before the iterative counter/timestamp.  MuST contain a '.'
   # :swab           can be :counter, :timestamp, or :none
   #   :counter - default, each successive run will create a new file using a counter
   #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
-  #   :none - no iterative file naming convention, just use waggoner and aft
+  #   :none - no iterative file naming convention, just use waggoner, aft and gibbet 
   # :mop            can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
   #   :clean - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
@@ -79,33 +79,34 @@ class CsvPirate
     @grub = args.first[:grub]
 
     # if they provide both
-    raise ArgumentError, "must provide either :swag or :grub" if !args.first[:swag].blank? && !args.first[:grub].blank?
+    raise ArgumentError, "must provide either :swag or :grub, not both" if !self.swag.blank? && !self.grub.blank?
     # if they provide neither
-    raise ArgumentError, "must provide either :swag or :grub, not both" if args.first[:swag].blank? && args.first[:grub].blank?
+    raise ArgumentError, "must provide either :swag or :grub" if self.swag.blank? && self.grub.blank?
 
     @swab = args.first[:swab] || :counter
-    raise ArgumentError, ":swab is #{args.first[:swab].inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(args.first[:swab])
+    raise ArgumentError, ":swab is #{self.swab.inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(self.swab)
 
     @mop = args.first[:mop] || :clean
-    raise ArgumentError, ":mop is #{args.first[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(args.first[:mop])
+    raise ArgumentError, ":mop is #{self.mop.inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(self.mop)
 
     @gibbet = args.first[:gibbet] || '.export'
-    raise ArgumentError, ":gibbet is #{args.first[:gibbet].inspect}, and does not contain a '.' character, which is required for iterative filenames" if args.first[:gibbet].nil? || !args.first[:gibbet].include?('.')
+    raise ArgumentError, ":gibbet is #{self.gibbet.inspect}, and does not contain a '.' character, which is required when using iterative filenames (set :swab => :none to turn off iterative filenames)" if self.swab != :none && (self.gibbet.nil? || !self.gibbet.include?('.'))
 
     @waggoner = args.first[:waggoner] || "#{self.grub || self.swag}"
-    raise ArgumentError, ":waggoner is #{args.first[:waggoner].inspect}, and must be a string at least one character long" if args.first[:waggoner].nil? || args.first[:waggoner].length < 1
+    raise ArgumentError, ":waggoner is #{self.waggoner.inspect}, and must be a string at least one character long" if self.waggoner.nil? || self.waggoner.length < 1
 
     @booty = args.first[:booty] || []
-    raise ArgumentError, ":booty is #{args.first[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if args.first[:booty].nil? || !args.first[:booty].is_a?(Array) || args.first[:booty].empty?
+    raise ArgumentError, ":booty is #{self.booty.inspect}, and must be an array of methods to call on a class for CSV data" if self.booty.nil? || !self.booty.is_a?(Array) || self.booty.empty?
 
     @chart = args.first[:chart] || ['log','csv']
-    raise ArgumentError, ":chart is #{args.first[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if args.first[:chart].nil? || !args.first[:chart].is_a?(Array) || args.first[:booty].empty?
+    raise ArgumentError, ":chart is #{self.chart.inspect}, and must be an array of directory names, which will become the filepath for the csv file" if self.chart.nil? || !self.chart.is_a?(Array) || self.chart.empty?
 
     @aft = args.first[:aft] || '.csv'
-    @chronometer = args.first[:chronometer] || Date.today
+    @chronometer = args.first[:chronometer] == false ? false : args.first[:chronometer] || Date.today
 
     @spyglasses = (args.first[:spyglasses] || [:all]) if self.grub
     @shrouds = args.first[:shrouds] || ','  # for tsv, tab-delimited, "\t"
+    raise ArgumentError, ":shrouds is #{self.shrouds.inspect}, and must be a string (e.g. ',' or '\t'), which will be used as the delimeter for the csv file" if self.shrouds.nil? || !self.shrouds.is_a?(String)
 
     @astrolabe = args.first[:astrolabe] || false
 

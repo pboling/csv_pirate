@@ -1,3 +1,9 @@
+Version 3.3.0 2009-10-05
+- Fixed ArgumentError bugs in Initializer and has_csv_pirate_ship
+- Fixed typo in piratey_args
+- Major enhancements to documentation
+- Now complete control over filename is possible
+
 Version 3.2.1 2009-10-04
 - Fixed bug in parlay by creating method parlance
 

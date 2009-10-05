@@ -52,6 +52,10 @@ Release Announcement:
 
 == Installation
 
+Gem from Gemcutter (after setting up your machine to use the gemcutter repo, see http://gemcutter.org):
+
+  sudo gem install csv_pirate
+
 Gem Using Git building from source:
 
   mkdir -p ~/src
@@ -59,7 +63,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-2.0.1.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-3.3.0.gem # (Or whatever version gets built)
 
 Then cd to your rails app to optionally freeze the gem into your app:
 
@@ -73,6 +77,7 @@ Plugin using Git:
 
   ruby script/plugin install git://github.com/pboling/csv_pirate.git
 
+If installed as a gem load it with config.gem 'csv_pirate' # or 'pboling-csv_pirate' if from github
 
 == Upgrading
 
@@ -81,7 +86,73 @@ Plugin using Git:
   ['log','csv','pirates','model_name']
   CsvPirate ensures that whatever you choose as your chart exists in the filesystem, and creates the directories if need be.
 
-== Example & Usage
+== Usage with ActiveRecord
+
+What's the simplest thing that'll work?
+
+  class MyClass < ActiveRecord::Base
+    has_csv_pirate_ship   # defaults to csv of all columns of all records
+  end
+
+  MyClass.blindfold       # creates the csv, and returns the CsvPirate instance
+  MyClass.walk_the_plank  # creates the csv, and returns contents of the exported data (that was written into the csv) (as a string)
+  MyClass.land_ho         # Does Not create the csv, sets up the CsvPirate instance.  You can manipulate it and then call .hoist_mainstay on it to create the csv
+
+== Usage without ActiveRecord
+
+Since the defaults assume an active record class you need to override some of them:
+
+  class Star
+    extend NinthBit::PirateShip::ActMethods
+    has_csv_pirate_ship :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels],
+                        :spyglasses => [:get_stars]
+
+    attr_accessor :name, :distance, :spectral_type
+
+    def initialize(*args)
+      @name = args.first[:name]
+      @distance = args.first[:distance]
+      @spectral_type = args.first[:spectral_type]
+    end
+    
+    def star_vowels
+      self.name.tr('aeiou', '*')
+    end
+
+    def self.get_stars
+      [
+        Star.new(:name => "Proxima Centauri", :distance => "4.2 LY", :spectral_type => "M5.5Vc"),
+        Star.new(:name => "Rigil Kentaurus", :distance => "4.3 LY", :spectral_type => "G2V"),
+        Star.new(:name => "Barnard's Star", :distance => "5.9 LY", :spectral_type => "M3.8V"),
+        Star.new(:name => "Wolf 359", :distance => "7.7 LY", :spectral_type => "M5.8Vc"),
+        Star.new(:name => "Lalande 21185", :distance => "8.26 LY", :spectral_type => "M2V"),
+        Star.new(:name => "Luyten 726-8A and B", :distance => "8.73 LY", :spectral_type => "M5.5 de & M6 Ve"),
+        Star.new(:name => "Sirius A and B", :distance => "8.6 LY", :spectral_type => "A1Vm"),
+        Star.new(:name => "Ross 154", :distance => "9.693 LY", :spectral_type => "M3.5"),
+        Star.new(:name => "Ross 248", :distance => "10.32 LY", :spectral_type => "M5.5V"),
+        Star.new(:name => "Epsilon Eridani", :distance => "10.5 LY", :spectral_type => "K2V")
+      ]
+    end
+  end
+
+
+  rails development  >a = Star.blindfold
+    => #<CsvPirate:0x2209098 @buried_treasure=[], @mop=:clean, @spyglasses=[:get_stars], @swabbie=".3", @booty=[:name, :distance, :spectral_type, {:name=>:hash}, {:name=>:next}, {:name=>:upcase}, :star_vowels], @bury_treasure=false, @swab=:counter, @chronometer=Sun, 04 Oct 2009, @maroon="name,distance,spectral_type,namehash,namenext,nameupcase,star_vowels\nProxima Centauri,4.2 LY,M5.5Vc,971295636,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,-231389024,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,429493790,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,-886693495,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,-969980943,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,-26506942,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,-18054910,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n", @waggoner="Star", @astrolabe=false, @grub=Star, @rhumb_lines=#<File:/Users/pboling/RubymineProjects/empty_csv_pirate_app/log/csv/Star.20091004.export.3.csv (closed)>, @nocturnal="Star.20091004.export.3.csv", @aft=".csv", @gibbet=".export", @shrouds=",", @swag=[#<Star:0x2202db0 @spectral_type="M5.5Vc", @distance="4.2 LY", @name="Proxima Centauri">, #<Star:0x2202d10 @spectral_type="G2V", @distance="4.3 LY", @name="Rigil Kentaurus">, #<Star:0x2202c98 @spectral_type="M3.8V", @distance="5.9 LY", @name="Barnard's Star">, #<Star:0x2202c20 @spectral_type="M5.8Vc", @distance="7.7 LY", @name="Wolf 359">, #<Star:0x2202ba8 @spectral_type="M2V", @distance="8.26 LY", @name="Lalande 21185">, #<Star:0x2202b30 @spectral_type="M5.5 de & M6 Ve", @distance="8.73 LY", @name="Luyten 726-8A and B">, #<Star:0x2202ab8 @spectral_type="A1Vm", @distance="8.6 LY", @name="Sirius A and B">, #<Star:0x2202a40 @spectral_type="M3.5", @distance="9.693 LY", @name="Ross 154">, #<Star:0x22029c8 @spectral_type="M5.5V", @distance="10.32 LY", @name="Ross 248">, #<Star:0x2202950 @spectral_type="K2V", @distance="10.5 LY", @name="Epsilon Eridani">], @chart=["log", "csv"]>
+  rails development  >a.weigh_anchor
+    name,distance,spectral_type,namehash,namenext,nameupcase,star_vowels
+    Proxima Centauri,4.2 LY,M5.5Vc,971295636,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*
+    Rigil Kentaurus,4.3 LY,G2V,-231389024,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s
+    Barnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r
+    Wolf 359,7.7 LY,M5.8Vc,429493790,Wolf 360,WOLF 359,W*lf 359
+    Lalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185
+    Luyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,-886693495,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B
+    Sirius A and B,8.6 LY,A1Vm,-969980943,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B
+    Ross 154,9.693 LY,M3.5,-26506942,Ross 155,ROSS 154,R*ss 154
+    Ross 248,10.32 LY,M5.5V,-18054910,Ross 249,ROSS 248,R*ss 248
+    Epsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*
+    => #<File:/Users/pboling/RubymineProjects/empty_csv_pirate_app/log/csv/Star.20091004.export.3.csv (closed)>
+
+== Advanced Usage & Examples
 
 Assuming a Make (as in manufacturers of automobiles) model like this:
 
@@ -99,8 +170,29 @@ Assuming a Make (as in manufacturers of automobiles) model like this:
     has_many :vehicle_models
     named_scope :factory_in_germany, :conditions => ["factory = ?", "Germany"]
 
-    has_csv_pirate_ship :spyglasses => [:factory_in_germany],
-                        :booty => [:id, :name]
+    # Showing all available options with their default values
+    has_csv_pirate_ship :chart          => ['log','csv']        # Array of Strings: directory where csv will be created (Yes, it creates all of them if they do not already exist)
+                        :aft            => '.csv'               # String: filename extension, usually this would be '.csv', but can be whatever you want.
+                        :gibbet         => '.export'            # String: Middle part of the filename {the '.' is required for iterative filenames, set :swab => :none to turn off iterative filenames}
+                                                                # Comes after waggoner and chronometer, before swabbie and aft
+                        :waggoner       => "#{Make}"            # String: First part of filename
+
+                        # Must provide :swag or :grub (not both)
+                        :swag           => nil                  # Array of objects: to use to create the CSV (i.e. you've already done the query and have the results you want a CSV of)
+                        :grub           => Make                 # Class:  on which to call the method chain in :spyglasses that will return the array of objects to be placed in :swag by CsvPirate (See description of swag above).
+                        :spyglasses     => [:all]               # Array of symbols/strings: Methods that will be chained together and called on :grub in order to get the :swag records which will become the rows of the CSV.
+                        :booty          => Make.column_names    # Array of symbols/strings or nested hashes of symbols/strings: Methods to call on each object in :swag.  These become the columns of the CSV.  The method names become the CSV column headings.  Methods can be chained to dig deep (e.g. traverse several ActiveRecord associations) to get at a value for the CSV.
+
+                        :swab           => :counter             # Symbol: What kind of file counter to use to avoid overwtiting the CSV file, :counter is Integer, :timestamp is HHMMSS, :none is no file counter, increasing the liklihood of duplicate filenames on successive csv exports.
+                        :mop            => :clean               # Symbol: If we DO end up writing to a preexisting file (by design or accident) should we overwrite (:clean) or append (:dirty)?
+                        :shrouds        => ','                  # String: Delimiter for CSV.  '\t' will create a tab delimited file (tsv), '|' will create a pipe delimited file.
+                        :bury_treasure  => true                 # Boolean: Should the array of objects in :swag be stored in the CsvPirate object for later inspection?
+
+    # A customized version to create a tab delimited file for this class might look like this:
+    # has_csv_pirate_ship   :spyglasses => [:factory_in_germany],
+    #                       :booty      => [:id, :name],
+    #                       :shrouds    => '\t'
+    #                       # kepping the rest of the options at the default values, so they don't need to be defined.
   end
 
 To create a csv of the names and ids of makes with factories in germany and return the text of the export:
@@ -113,15 +205,28 @@ The name of the csv that comes out will be (by defualt located in log directory)
 
 Where Make is the class, 20090930 is today's date, .export is the gibbet, and 13 is the iterative file counter, meaning I've run this export 13 times today.
 
-All of those filename parts are customizable to a degree.
+All of those filename parts are customizable to a degree.  For example if you want to have the date NOT be today's date you can supply your own date:
 
-You can also customize the CSV, for example if you want to add a column to the csv:
+  Make.walk_the_plank({:chronometer => Date.parse("December 21, 2012") })
+  # Filename would be: Make.20121221.export.13.csv
+
+  Make.walk_the_plank({:chronometer => false })
+  # Filename would be: Make.export.13.csv
+
+What if you want the file name to be always the same and to always append to the end of it?
+  #Example: I want the file to be named "data", with no extension, both of the following accomplish that:
+  Make.walk_the_plank({:chronometer => false, :gibbet => "", :aft => "", :swab => :none, :waggoner => 'data'})
+  Make.blindfold(:chronometer => false, :gibbet => "", :aft => "", :swab => :none, :waggoner => 'data')
+
+All of the options to has_csv_pirate_ship are available to walk_the_plank, land_ho, and blindfold, as well as to the raw class methods CsvPirate.new and CsvPirate.create, but not neccessarily the other way around.
+
+You can also customize the CSV, for example if you want to customize which columns are in the csv:
 
   Make.walk_the_plank({:booty => [:id, :name, :sales]})
 
-Youw want a timestamp file counter instead of the integer default:
+You want a timestamp file counter instead of the integer default:
 
-  Make.walk_the_plank({:booty => [:id, :name, :sales], :spyglasses => [:all], :swab => :timestamp})
+  Make.walk_the_plank({:booty => [:id, :name, :sales], :swab => :timestamp})
 
 If you want to append each export to the end of the same file (on a per day basis):
 
@@ -280,6 +385,12 @@ This allows you to modify the csv_pirate object before creating the csv like thi
   csv_pirate.booty -= [:id, :name]
   csv_pirate.hoist_mainstay()
 
+== Thanks
+
+Thanks go to
+9thBit LLC (http://www.9thBit.net)
+Sagebit LLC (http://www.sagebit.com) - Sagebit has been very supportive of my open source efforts, thanks Ben!
+TimePerks LLC (http://www.timeperks.com) - Many useful enhancements were requested and paid for by TimePerks
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
