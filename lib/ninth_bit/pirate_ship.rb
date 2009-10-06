@@ -4,7 +4,6 @@ module NinthBit
     module ActMethods
       #coding tyle is adopted from attachment_fu
       def has_csv_pirate_ship(options = {})
-        raise ArgumentError, "must provide required options" if options.blank?
 
         options[:chart]         ||= ['log','csv']
         options[:aft]           ||= '.csv'
