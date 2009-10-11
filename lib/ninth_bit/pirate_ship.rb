@@ -1,9 +1,14 @@
+require 'faster_csv' unless defined?(FasterCSV)
+
 module NinthBit
   module PirateShip
 
     module ActMethods
       #coding tyle is adopted from attachment_fu
       def has_csv_pirate_ship(options = {})
+        # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
+        # If you are using ActiveRecord then you only want ot check for booty if the table exists so it won't fail pre-migration
+        check_booty = defined?(ActiveRecord) && self.is_a?(ActiveRecord::Base) ? ActiveRecord::Base.connection.tables.include?(self.table_name) : true
 
         options[:chart]         ||= ['log','csv']
         options[:aft]           ||= '.csv'
@@ -17,7 +22,8 @@ module NinthBit
         options[:shrouds]       ||= ','
         options[:grub]          ||= self if options[:swag].nil?
         options[:spyglasses]    ||= [:all]
-        options[:booty]         ||= self.column_names
+        # Have to protect against model definitions pre-migration, since column names will fail if
+        options[:booty]         ||= check_booty ? self.column_names : []
         options[:bury_treasure] ||= true
         options[:parlay]        ||= 1
 
@@ -29,7 +35,7 @@ module NinthBit
         raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(options[:mop])
         raise ArgumentError, ":gibbet is #{options[:gibbet].inspect}, and does not contain a '.' character, which is required when using iterative filenames (set :swab => :none to turn off iterative filenames)" if options[:swab] != :none && (options[:gibbet].nil? || !options[:gibbet].include?('.'))
         raise ArgumentError, ":waggoner is #{options[:waggoner].inspect}, and must be a string at least one character long" if options[:waggoner].nil? || options[:waggoner].length < 1
-        raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if options[:booty].nil? || !options[:booty].is_a?(Array) || options[:booty].empty?
+        raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if check_booty && (options[:booty].nil? || !options[:booty].is_a?(Array) || options[:booty].empty?)
         raise ArgumentError, ":chart is #{options[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if options[:chart].nil? || !options[:chart].is_a?(Array) || options[:chart].empty?
         raise ArgumentError, ":shrouds is #{options[:shrouds].inspect}, and must be a string (e.g. ',' or '\t'), which will be used as the delimeter for the csv file" if options[:shrouds].nil? || !options[:shrouds].is_a?(String)
 

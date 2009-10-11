@@ -1,3 +1,7 @@
+Version 3.3.2 2009-10-11
+- You can now declare has_csv_pirate_ship in a model whose migration has not been run yet without making the app barf.
+- Cleaned up Gem Dependency (faster_csv)
+
 Version 3.3.1 2009-10-06
 - Oops! Declaring has_csv_pirate_ship with no options was broken.
 

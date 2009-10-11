@@ -10,6 +10,7 @@ It works better if you are wearing a tricorne!}
     gemspec.email = "peter.boling@gmail.com"
     gemspec.homepage = "http://github.com/pboling/csv_pirate"
     gemspec.authors = ["Peter Boling"]
+    gemspec.add_dependency 'faster_csv'
     gemspec.files = ["README.rdoc",
              "csv_pirate.gemspec",
              "init.rb",

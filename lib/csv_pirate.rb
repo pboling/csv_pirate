@@ -7,7 +7,7 @@
 #Version:  1.0
 #Project owners:
 #    peter.boling (The Cap'n)
-require 'fastercsv'
+require 'faster_csv' unless defined?(FasterCSV)
 
 class CsvPirate
 

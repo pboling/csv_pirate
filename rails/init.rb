@@ -1,3 +1,4 @@
+require 'faster_csv'
 require 'csv_pirate'
 require 'ninth_bit/pirate_ship'
 
