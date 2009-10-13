@@ -1,3 +1,7 @@
+Version 3.4.1 2009-10-12
+- :blackjack option :join is now working.
+- Added warnings, and improved Readme
+
 Version 3.4.0 2009-10-12
 - Now the auto generated columns based on the booty array print nicely, with customization options
 - You are now able to specify your own array of strings to use as the CSV header, in case you don't want to use the booty methods.

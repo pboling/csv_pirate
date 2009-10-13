@@ -161,6 +161,7 @@ class CsvPirate
       :spyglasses => args.first[:spyglasses],
       :booty => args.first[:booty],
       :astrolabe => args.first[:astrolabe],
+      :blackjack => args.first[:blackjack],
       :bury_treasure => args.first[:bury_treasure]
     })
     csv_pirate.hoist_mainstay()

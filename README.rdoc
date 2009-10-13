@@ -9,7 +9,7 @@ My goal is to have it do EVERYTHING it possibly can for me, since almost every p
 
 CsvPirate only works for commissions of swag OR grub!
 
-Initialize method (a.k.a new()) takes a hash of params:
+Initialize method (a.k.a new()) takes a hash of parameters:
 
   # CsvPirate only works for commissions of swag OR grub!
   # :swag           the ARrr collection of swag to work on (optional)
@@ -67,7 +67,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-3.3.1.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-3.4.1.gem # (Or whatever version gets built)
 
 Then cd to your rails app to optionally freeze the gem into your app:
 
@@ -372,7 +372,7 @@ Then check the output from the console:
 
   a.weigh_anchor
 
-  id,name,year,makename,tiressizewidthinches
+  Id,Name,Year,Make name,Tires size width inches
   1,Cavalier,1999,Chevrolet,13
   2,Trailblazer,2006,Chevrolet,13
   3,Corvette,2010,Chevrolet,13
