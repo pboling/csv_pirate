@@ -25,6 +25,7 @@ module NinthBit
         # Have to protect against model definitions pre-migration, since column names will fail if
         options[:booty]         ||= check_booty ? self.column_names : []
         options[:bury_treasure] ||= true
+        options[:blackjack]     ||= {:humanize => '_'}
         options[:parlay]        ||= 1
 
         # if they provide both
@@ -38,6 +39,7 @@ module NinthBit
         raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if check_booty && (options[:booty].nil? || !options[:booty].is_a?(Array) || options[:booty].empty?)
         raise ArgumentError, ":chart is #{options[:chart].inspect}, and must be an array of directory names, which will become the filepath for the csv file" if options[:chart].nil? || !options[:chart].is_a?(Array) || options[:chart].empty?
         raise ArgumentError, ":shrouds is #{options[:shrouds].inspect}, and must be a string (e.g. ',' or '\t'), which will be used as the delimeter for the csv file" if options[:shrouds].nil? || !options[:shrouds].is_a?(String)
+        raise ArgumentError, ":blackjack is #{options[:blackjack].inspect}, and must be a hash (e.g. {:humanize => '_'}), which defines how the header of the CSV will be created" if options[:blackjack].nil? || !options[:blackjack].is_a?(Hash)
 
         extend ClassMethods unless (class << self; included_modules; end).include?(ClassMethods)
 
@@ -54,7 +56,7 @@ module NinthBit
 
       # intended for use with send_data for downloading the text of the csv:
       # send_data Make.say_your_last_words
-      # TODO: Fix say_yourr_last_words so it works! Use send_data args for real
+      # TODO: Fix say_your_last_words so it works! Use send_data args for real
       #def say_your_last_words(charset = 'utf-8', args = {})
       #  csv_pirate = self.blindfold(args)
       #  return [ csv_pirate.maroon,
@@ -109,6 +111,7 @@ module NinthBit
           :grub => args[:grub] || self.piratey_options[:grub],
           :spyglasses => args[:spyglasses] || self.piratey_options[:spyglasses],
           :booty => args[:booty] || self.piratey_options[:booty],
+          :blackjack => args[:blackjack] || self.piratey_options[:blackjack],
           :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure] }
       end
 

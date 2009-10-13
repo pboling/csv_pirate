@@ -47,6 +47,10 @@ class CsvPirate
   attr_accessor :swabbie          # value of the counter / timestamp
   attr_accessor :maroon           # text of csv
   attr_accessor :nocturnal        # basename of the filepath (i.e. filename)
+  attr_accessor :blackjack        # Hash: Specify how you want your CSV header
+                                  #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
+                                  #   {:humanize => '-'} first joins as above, then humanizes the string
+                                  #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
   cattr_accessor :parlay          # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
 
@@ -70,6 +74,10 @@ class CsvPirate
   #   :clean - do not use :counter or :timestamp, and instead overwrite the file
   #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
   # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
+  # :blackjack      Specify how you want your CSV header
+  #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
+  #   {:humanize =>'-'} first joins as above, then humanizes the string
+  #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array provided is too short defaults to :humanize =>'_'
   # See README for examples
   
   def initialize(*args)
@@ -112,6 +120,9 @@ class CsvPirate
 
     @bury_treasure = args.first[:astrolabe] || false
     @buried_treasure = []
+
+    #Default is different than default for has_csv_pirate because this might gem wants to be clean for use outside rails, and humanize may not always be defined for String class
+    @blackjack = args.first[:blackjack] || {:join => '_'}
 
     # Initialize doesn't write anything to a CSV, 
     #   but does create the traverse_board and opens the waggoner for reading / writing
@@ -225,14 +236,57 @@ class CsvPirate
   end
 
   def sounding(csv)
-    # create the header of the CSV (column/method names)
-    csv << self.booty
+    csv = self.block_and_tackle(csv)
     # create the data for the csv
     self.dig_for_treasure do |treasure|
       moidore = treasure.map {|x| "#{x}"}
       csv << moidore # |x| marks the spot!
       self.buried_treasure << moidore if self.bury_treasure
     end
+  end
+
+  # create the header of the CSV (column/method names)
+  def block_and_tackle(csv)
+    csv << self.blackjack.map do |k,v|
+      case k
+        #Joining is only relevant when the booty contains a nested hash of method calls as at least one of the booty array elements
+        #Use the booty (methods) as the column headers
+        when :join then self.binnacle(v, false)
+        #Use the humanized booty (methods) as the column headers
+        when :humanize then self.binnacle(v, true)
+        when :array then v
+      end
+    end.first
+    csv
+  end
+
+  #returns an array of strings for CSV header based on booty
+  def binnacle(join_value, humanize = true)
+    self.booty.map do |compass|
+      string = compass.is_a?(Hash) ?
+        self.run_through(compass, join_value) :
+        compass.is_a?(String) ?
+          compass :
+          compass.is_a?(Symbol) ?
+            compass.to_s :
+            compass.to_s
+      string.humanize if humanize
+    end
+  end
+
+  #Takes a potentially nested hash element of a booty array and turns it into a string for a column header
+  # hash = {:a => {:b => {:c => {:d => {"e" => "fghi"}}}}}
+  # run_through(hash, '_')
+  # => "a_b_c_d_e_fghi"
+  # Ooooh so recursive!
+  def run_through(hash, join_value)
+    hash.map do |k,v|
+      if v.is_a?(Hash)
+        [k,run_through(v, join_value)].join(join_value)
+      else #works for Symbols and Strings
+        [k,v].join(join_value)
+      end
+    end.first
   end
 
   #complete file path

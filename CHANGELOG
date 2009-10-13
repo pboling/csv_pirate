@@ -1,3 +1,7 @@
+Version 3.4.0 2009-10-12
+- Now the auto generated columns based on the booty array print nicely, with customization options
+- You are now able to specify your own array of strings to use as the CSV header, in case you don't want to use the booty methods.
+
 Version 3.3.2 2009-10-11
 - You can now declare has_csv_pirate_ship in a model whose migration has not been run yet without making the app barf.
 - Cleaned up Gem Dependency (faster_csv)

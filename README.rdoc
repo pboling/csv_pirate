@@ -28,9 +28,13 @@ Initialize method (a.k.a new()) takes a hash of params:
   #   :timestamp - each successive run will create a new file using a HHMMSS time stamp
   #   :none - no iterative file naming convention, just use waggoner and aft
   # :mop            can be :clean or :dirty (:overwrite or :append) (only has an effect if :swab is :none) since overwriting is irrelevant for a new file
-  #   :clean - do not use :counter or :timestamp, and instead overwrite the file
-  #   :dirty - do not use :counter, or :timestamp, or :overwrite.  Just keep adding on.
+  #   :clean - do not use :swab above (:counter or :timestamp), and instead overwrite the file
+  #   :dirty - do not use :swab above (:counter, or :timestamp), and do not overwrite.  Just keep adding on.
   # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
+  # :blackjack      Specify how you want your CSV header
+  #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
+  #   {:humanize =>'-'} first joins as above, then humanizes the string
+  #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array provided is too short defaults to :humanize =>'_'
   # check the source to see if there anything else hiding in there!
 
 The create method has the same parameters, and actually creates the CSV.
@@ -187,19 +191,23 @@ Assuming a Make (as in manufacturers of automobiles) model like this:
                         :mop            => :clean               # Symbol: If we DO end up writing to a preexisting file (by design or accident) should we overwrite (:clean) or append (:dirty)?
                         :shrouds        => ','                  # String: Delimiter for CSV.  '\t' will create a tab delimited file (tsv), '|' will create a pipe delimited file.
                         :bury_treasure  => true                 # Boolean: Should the array of objects in :swag be stored in the CsvPirate object for later inspection?
+                        :blackjack      => {:humanize => '-'}   # Hash: Specify how you want your CSV header
+                                                                #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
+                                                                #   {:humanize => '-'} first joins as above, then humanizes the string
+                                                                #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
     # A customized version to create a tab delimited file for this class might look like this:
     # has_csv_pirate_ship   :spyglasses => [:factory_in_germany],
     #                       :booty      => [:id, :name],
     #                       :shrouds    => '\t'
-    #                       # kepping the rest of the options at the default values, so they don't need to be defined.
+    #                       # keeping the rest of the options at the default values, so they don't need to be defined.
   end
 
 To create a csv of the names and ids of makes with factories in germany and return the text of the export:
 
   Make.walk_the_plank  # Get it? HA! If you can't believe I wrote this whole thing JUST to be able to make jokes like that... check ma sources :)
 
-The name of the csv that comes out will be (by defualt located in log directory):
+The name of the csv that comes out will be (by default located in log directory):
 
   Make.20090930.export.13.csv
 
@@ -208,10 +216,10 @@ Where Make is the class, 20090930 is today's date, .export is the gibbet, and 13
 All of those filename parts are customizable to a degree.  For example if you want to have the date NOT be today's date you can supply your own date:
 
   Make.walk_the_plank({:chronometer => Date.parse("December 21, 2012") })
-  # Filename would be: Make.20121221.export.13.csv
+  # File name would be: Make.20121221.export.13.csv
 
   Make.walk_the_plank({:chronometer => false })
-  # Filename would be: Make.export.13.csv
+  # File name would be: Make.export.13.csv
 
 What if you want the file name to be always the same and to always append to the end of it?
   #Example: I want the file to be named "data", with no extension, both of the following accomplish that:
