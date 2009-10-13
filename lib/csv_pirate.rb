@@ -124,6 +124,12 @@ class CsvPirate
     #Default is different than default for has_csv_pirate because this might gem wants to be clean for use outside rails, and humanize may not always be defined for String class
     @blackjack = args.first[:blackjack] || {:join => '_'}
 
+    #Make sure the header array is the same length as the booty columns
+    if self.blackjack.keys.first == :array && (self.blackjack.values.first.length != self.booty.length)
+      @blackjack = {:join => '_'}
+      puts "Warning: :blackjack reset to {:join => '_'} because the length of the :booty is different than the length of the array provided to :blackjack" if CsvPirate.parlance(2)
+    end
+
     # Initialize doesn't write anything to a CSV, 
     #   but does create the traverse_board and opens the waggoner for reading / writing
     self.northwest_passage unless self.astrolabe
@@ -236,7 +242,7 @@ class CsvPirate
   end
 
   def sounding(csv)
-    csv = self.block_and_tackle(csv)
+    csv << self.block_and_tackle
     # create the data for the csv
     self.dig_for_treasure do |treasure|
       moidore = treasure.map {|x| "#{x}"}
@@ -246,8 +252,9 @@ class CsvPirate
   end
 
   # create the header of the CSV (column/method names)
-  def block_and_tackle(csv)
-    csv << self.blackjack.map do |k,v|
+  # returns an array of strings for CSV header based on blackjack
+  def block_and_tackle
+    self.blackjack.map do |k,v|
       case k
         #Joining is only relevant when the booty contains a nested hash of method calls as at least one of the booty array elements
         #Use the booty (methods) as the column headers
@@ -257,7 +264,6 @@ class CsvPirate
         when :array then v
       end
     end.first
-    csv
   end
 
   #returns an array of strings for CSV header based on booty
@@ -270,7 +276,7 @@ class CsvPirate
           compass.is_a?(Symbol) ?
             compass.to_s :
             compass.to_s
-      string.humanize if humanize
+      humanize ? string.humanize : string
     end
   end
 

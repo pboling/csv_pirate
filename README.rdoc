@@ -34,7 +34,7 @@ Initialize method (a.k.a new()) takes a hash of params:
   # :blackjack      Specify how you want your CSV header
   #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
   #   {:humanize =>'-'} first joins as above, then humanizes the string
-  #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array provided is too short defaults to :humanize =>'_'
+  #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array's length is less than the booty array's length it reverts to :humanize =>'_'
   # check the source to see if there anything else hiding in there!
 
 The create method has the same parameters, and actually creates the CSV.
