@@ -7,8 +7,8 @@ module NinthBit
       #coding tyle is adopted from attachment_fu
       def has_csv_pirate_ship(options = {})
         # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
-        # If you are using ActiveRecord then you only want ot check for booty if the table exists so it won't fail pre-migration
-        check_booty = defined?(ActiveRecord) && self.is_a?(ActiveRecord::Base) ? ActiveRecord::Base.connection.tables.include?(self.table_name) : true
+        # If you are using ActiveRecord then you only want to check for booty if the table exists so it won't fail pre-migration
+        check_booty = defined?(ActiveRecord) && self.is_a?(ActiveRecord::Base) ? ActiveRecord::Base.connection.tables.include?(self.table_name) : false
 
         options[:chart]         ||= ['log','csv']
         options[:aft]           ||= '.csv'
