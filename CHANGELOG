@@ -1,3 +1,9 @@
+Version 3.4.3 2009-11-03
+- Fixed has_csv_pirate_ship to allow models to load pre-migration, so rake tasks will still run.
+
+Version 3.4.2 2009-10-15
+- fixed has_csv_pirate_ship to work with any non-ActiveRecord (i.e. standard Ruby) classes... for real.
+
 Version 3.4.1 2009-10-12
 - :blackjack option :join is now working.
 - Added warnings, and improved Readme

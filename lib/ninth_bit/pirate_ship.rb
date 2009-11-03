@@ -4,11 +4,9 @@ module NinthBit
   module PirateShip
 
     module ActMethods
-      #coding tyle is adopted from attachment_fu
+      #coding style is adopted from attachment_fu
       def has_csv_pirate_ship(options = {})
-        # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
-        # If you are using ActiveRecord then you only want to check for booty if the table exists so it won't fail pre-migration
-        check_booty = defined?(ActiveRecord) && self.is_a?(ActiveRecord::Base) ? ActiveRecord::Base.connection.tables.include?(self.table_name) : false
+        check_booty = prevent_from_failing_pre_migration
 
         options[:chart]         ||= ['log','csv']
         options[:aft]           ||= '.csv'
@@ -46,6 +44,16 @@ module NinthBit
         self.piratey_options = options
 
       end
+
+      #return true if we can access the tables, return false if we'd better not.
+      def prevent_from_failing_pre_migration
+        # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
+        # If you are using ActiveRecord then you only want ot check for booty if the table exists so it won't fail pre-migration
+        defined?(ActiveRecord) && ActiveRecord::Base.connection ?
+                ActiveRecord::Base.connection.tables.include?(self.table_name) :
+                true
+      end
+
     end
 
     module ClassMethods
