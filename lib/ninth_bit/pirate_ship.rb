@@ -49,7 +49,7 @@ module NinthBit
       def prevent_from_failing_pre_migration
         # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
         # If you are using ActiveRecord then you only want ot check for booty if the table exists so it won't fail pre-migration
-        defined?(ActiveRecord) && ActiveRecord::Base.connection ?
+        defined?(ActiveRecord) && ActiveRecord::Base.connected? ?
                 ActiveRecord::Base.connection.tables.include?(self.table_name) :
                 true
       end
