@@ -54,11 +54,13 @@ Release Announcement:
   http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
 
-== Installation
+== Install as a RubyGem
 
-Gem from Gemcutter (after setting up your machine to use the gemcutter repo, see http://gemcutter.org):
+Gemcutter is the hot new gem host, and you can use it like this (see http://gemcutter.org):
 
-  sudo gem install csv_pirate
+  [sudo] gem install gemcutter
+  [sudo] gem tumble # makes gemcutter gem source first in line
+  [sudo] gem install csv_pirate
 
 Gem Using Git building from source:
 
@@ -67,21 +69,25 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-3.4.1.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-3.4.4.gem # (Or whatever version gets built)
 
-Then cd to your rails app to optionally freeze the gem into your app:
+Then in your environment.rb (if you are just going to use it from the console, you can require it as needed there, and skip the config.gem):
+
+  config.gem 'csv_pirate'
+
+Then cd to your rails app to optionally freeze the gem into your app (if you roll this way):
 
   rake gems:freeze GEM=csv_pirate
 
-Installing Gem from Github's Gem Server:
-
-  sudo gem install pboling-csv_pirate -s http://gems.github.com
+== Install as a Plugin
 
 Plugin using Git:
 
   ruby script/plugin install git://github.com/pboling/csv_pirate.git
 
-If installed as a gem load it with config.gem 'csv_pirate' # or 'pboling-csv_pirate' if from github
+== Install as a Git Submodule (plugin)
+
+  git submodule add git://github.com/pboling/sanitize_email.git vendor/plugins/sanitize_email
 
 == Upgrading
 
@@ -92,7 +98,7 @@ If installed as a gem load it with config.gem 'csv_pirate' # or 'pboling-csv_pir
 
 == Usage with ActiveRecord
 
-What's the simplest thing that'll work?
+What's the simplest thing that will work?
 
   class MyClass < ActiveRecord::Base
     has_csv_pirate_ship   # defaults to csv of all columns of all records
