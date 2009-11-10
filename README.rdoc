@@ -399,6 +399,16 @@ This allows you to modify the csv_pirate object before creating the csv like thi
   csv_pirate.booty -= [:id, :name]
   csv_pirate.hoist_mainstay()
 
+== BUGS (Not mine, Micrsoft's)
+
+Microsoft Office (Excel) "SYLK Invalid Format" Error will occur if the string "ID" (without quotes)
+is at the beginning of the CSV file.  This is strangely inconvenient for rails CSVs since every table
+in rails starts with an id column.  So buyer beware... make your first column lower case 'id'
+if you need to export the id field.
+
+Micrsoft... I loathe you.
+http://www.bradino.com/misc/sylk-file-format-is-not-valid/
+
 == Thanks
 
 Thanks go to
