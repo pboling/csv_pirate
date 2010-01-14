@@ -324,9 +324,9 @@ class CsvPirate
 
   def data_hash_from_row(row, exclude_id = true, example = nil)
     data_hash = {}
-    my_booty = exclude_id ? self.booty.reject {|x| x.to_sym == :id} : self.booty
-    my_booty = my_booty.reject {|x| x.is_a?(Hash)}
-    my_booty = my_booty.reject {|x| example.respond_to?("#{x}=".to_sym)} unless example.nil?
+    my_booty = self.booty.reject {|x| x.is_a?(Hash)}
+    my_booty = exclude_id ? my_booty.reject {|x| x.to_sym == :id} : self.booty
+    my_booty = my_booty.reject {|x| !example.respond_to?("#{x}=".to_sym)} unless example.nil?
     my_booty.each do |method|
       #puts "#{self.pinnacle[index]}"
       data_hash = data_hash.merge({method => row[self.pinnacle[self.booty.index(method)]]})

@@ -4,8 +4,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
     gemspec.name = "csv_pirate"
-    gemspec.summary = "Easily create CSVs of any data that can be derived from your models (using pirates!)."
-    gemspec.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+    gemspec.summary = "Easily create CSVs of any data that can be derived from instance methods on your classes."
+    gemspec.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
 It works better if you are wearing a tricorne!}
     gemspec.email = "peter.boling@gmail.com"
     gemspec.homepage = "http://github.com/pboling/csv_pirate"
@@ -18,6 +18,12 @@ It works better if you are wearing a tricorne!}
              "install.rb",
              "lib/csv_pirate.rb",
              "lib/ninth_bit/pirate_ship.rb",
+             "spec/csv_pirate_spec.rb",
+             "spec/pirate_ship_spec.rb",
+             "spec/spec.opts",
+             "spec/spec_helper.rb",
+             "spec/spec_helpers/glowing_gas_ball.rb",
+             "spec/spec_helpers/star.rb",
              "Rakefile",
              "LICENSE",
              "CHANGELOG",
