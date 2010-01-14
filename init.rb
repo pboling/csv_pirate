@@ -1,9 +1,1 @@
-require 'csv_pirate'
-require 'ninth_bit/pirate_ship'
-
-# If you are using this on a vanilla Ruby class (no rails or active record) then extend your class like this:
-#  MyClass.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(MyClass)
-# Alternatively you can do this inside your class definition:
-#   class MyClass
-#     extend NinthBit::PirateShip::ActMethods
-#   end
+require 'rails/init'

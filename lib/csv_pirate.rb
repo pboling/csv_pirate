@@ -7,12 +7,12 @@
 #Version:  1.0
 #Project owners:
 #    peter.boling (The Cap'n)
-require 'faster_csv' unless defined?(FasterCSV)
 
 class CsvPirate
 
   BOOKIE = [:counter, :timestamp, :none]
   MOP_HEADS = [:clean, :dirty]
+  BRIGANTINE = [:first, :last]
 
   attr_accessor :waggoner         # First part of filename
   attr_accessor :chart            # directory, default is (['log','csv'])
@@ -52,7 +52,10 @@ class CsvPirate
                                   #   {:humanize => '-'} first joins as above, then humanizes the string
                                   #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
-  cattr_accessor :parlay          # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
+  attr_accessor :brigantine       # the complete file path
+  class << self
+     attr_accessor :parlay        # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
+   end
 
   # CsvPirate only works for commissions of swag OR grub!
   # :swag           the ARrr collection of swag to work on (optional)
@@ -81,15 +84,15 @@ class CsvPirate
   # See README for examples
   
   def initialize(*args)
-    raise ArgumentError, "must provide required options" if args.blank?
+    raise ArgumentError, "must provide required options" if args.nil?
 
     @swag = args.first[:swag]
     @grub = args.first[:grub]
 
     # if they provide both
-    raise ArgumentError, "must provide either :swag or :grub, not both" if !self.swag.blank? && !self.grub.blank?
+    raise ArgumentError, "must provide either :swag or :grub, not both" if !self.swag.nil? && !self.grub.nil?
     # if they provide neither
-    raise ArgumentError, "must provide either :swag or :grub" if self.swag.blank? && self.grub.blank?
+    raise ArgumentError, "must provide either :swag or :grub" if self.swag.nil? && self.grub.nil?
 
     @swab = args.first[:swab] || :counter
     raise ArgumentError, ":swab is #{self.swab.inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(self.swab)
@@ -103,7 +106,7 @@ class CsvPirate
     @waggoner = args.first[:waggoner] || "#{self.grub || self.swag}"
     raise ArgumentError, ":waggoner is #{self.waggoner.inspect}, and must be a string at least one character long" if self.waggoner.nil? || self.waggoner.length < 1
 
-    @booty = args.first[:booty] || []
+    @booty = args.first[:booty] || [] # would like to use Class#instance_variables for generic classes
     raise ArgumentError, ":booty is #{self.booty.inspect}, and must be an array of methods to call on a class for CSV data" if self.booty.nil? || !self.booty.is_a?(Array) || self.booty.empty?
 
     @chart = args.first[:chart] || ['log','csv']
@@ -112,7 +115,8 @@ class CsvPirate
     @aft = args.first[:aft] || '.csv'
     @chronometer = args.first[:chronometer] == false ? false : args.first[:chronometer] || Date.today
 
-    @spyglasses = (args.first[:spyglasses] || [:all]) if self.grub
+    @spyglasses = (args.first[:spyglasses] || (self.respond_to?(:all) ? [:all] : nil)) if self.grub
+
     @shrouds = args.first[:shrouds] || ','  # for tsv, tab-delimited, "\t"
     raise ArgumentError, ":shrouds is #{self.shrouds.inspect}, and must be a string (e.g. ',' or '\t'), which will be used as the delimeter for the csv file" if self.shrouds.nil? || !self.shrouds.is_a?(String)
 
@@ -140,10 +144,12 @@ class CsvPirate
     # Once the traverse_board (dir) exists, then check if the rhumb_lines (file) already exists, and set our rhumb_lines counter
     @swabbie = self.insult_swabbie
 
-    @nocturnal = File.basename(self.poop_deck)
+    @brigantine = self.poop_deck(args.first[:brigantine])
+    
+    @nocturnal = File.basename(self.brigantine)
 
     # Then open the rhumb_lines
-    self.rhumb_lines = File.open(File.expand_path(self.poop_deck),self.astrolabe ? "r" : "a")
+    self.rhumb_lines = File.open(File.expand_path(self.brigantine),self.astrolabe ? "r" : "a")
   end
 
   def self.create(*args)
@@ -234,7 +240,7 @@ class CsvPirate
   def jolly_roger
     if self.bury_treasure
       if self.buried_treasure.is_a?(Array)
-        puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.poop_deck}'" if CsvPirate.parlay && CsvPirate.parlance(1)
+        puts "Found #{self.buried_treasure.length} deniers buried here: '#{self.brigantine}'" if CsvPirate.parlay && CsvPirate.parlance(1)
         puts "You must weigh_anchor to review your plunder!" if CsvPirate.parlay && CsvPirate.parlance(1)
       else
         puts "Failed to locate treasure" if CsvPirate.parlay && CsvPirate.parlance(1)
@@ -277,7 +283,7 @@ class CsvPirate
           compass.is_a?(Symbol) ?
             compass.to_s :
             compass.to_s
-      humanize ? string.humanize : string
+      humanize ? string.to_s.gsub(/_id$/, "").gsub(/_/, " ").capitalize : string
     end
   end
 
@@ -297,30 +303,43 @@ class CsvPirate
   end
 
   #complete file path
-  def poop_deck
-    "#{self.analemma}#{self.swabbie}#{self.aft}"
+  def poop_deck(brig)
+    if BRIGANTINE.include?(brig)
+      self.old_csv_dump(brig)
+    elsif brig.is_a?(String)
+      brig
+    else
+      "#{self.analemma}#{self.swabbie}#{self.aft}"
+    end
   end
 
-  # Swabs the poop_deck if the mop is clean. (!)
+  # Swabs the poop_deck (of the brigantine) if the mop is clean. (!)
   def swab_poop_deck
-    self.rhumb_lines.truncate(0) if self.swab == :none && self.mop == :clean && File.size(self.poop_deck) > 0
+    self.rhumb_lines.truncate(0) if self.swab == :none && self.mop == :clean && File.size(self.brigantine) > 0
   end
 
   # Must be done on order to rummage through the loot found by the pirate ship
   def weigh_anchor
-    CsvPirate.rinse(self.poop_deck)
+    CsvPirate.rinse(self.brigantine)
   end
 
   # Sink your own ship! Or run a block of code on each row of the current CSV
   def scuttle(&block)
     return false unless block_given?
-    CsvPirate.broadside(self.poop_deck) do |careen|
+    CsvPirate.broadside(self.brigantine) do |careen|
       yield careen
     end
   end
 
+  # Grab an old CSV dump (first or last)
+  def old_csv_dump(brig)
+    file = Dir.entries(self.traverse_board).reject {|x| x.match(/^\./)}.sort.send(brig)
+    "#{self.traverse_board}#{file}"
+  end
+
   protected
 
+  # The directory path to the csv
   def traverse_board
     #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
     "#{self.north_pole}#{self.chart.join('/')}/"
@@ -360,12 +379,17 @@ class CsvPirate
     # Ensure numbers
     tail.nil? ? 0 : tail[/\d*/].to_i
   end
-  
+
+  # Get all the files in the dir
+  def axe
+    Dir.glob(self.lantern)
+  end
+
+  # File increment for next CSV to dump
   def boatswain
     return self.swabbie unless self.swabbie.nil?
-    bowspirit = Dir.glob(self.lantern)
     highval = 0
-    bowspirit.each do |flotsam|
+    self.axe.each do |flotsam|
       counter = self.filibuster(flotsam)
       highval = ((highval <=> counter) == 1) ? highval : counter
     end

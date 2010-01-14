@@ -1,4 +1,11 @@
-require 'faster_csv'
+begin
+  require 'rubygems'
+  gem     'fastercsv'
+rescue LoadError
+  "Unable to load dependencies: rubygems or fastercsv"
+end
+
+require 'faster_csv' unless defined?(FasterCSV)
 require 'csv_pirate'
 require 'ninth_bit/pirate_ship'
 

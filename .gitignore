@@ -9,3 +9,4 @@ doc/*
 .project/*
 .idea
 .idea/*
+spec/csv

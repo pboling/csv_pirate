@@ -19,7 +19,7 @@ module NinthBit
         options[:mop]           ||= :clean
         options[:shrouds]       ||= ','
         options[:grub]          ||= self if options[:swag].nil?
-        options[:spyglasses]    ||= [:all]
+        options[:spyglasses]    ||= (self.respond_to?(:all) ? [:all] : nil) if options[:grub]
         # Have to protect against model definitions pre-migration, since column names will fail if
         options[:booty]         ||= check_booty ? self.column_names : []
         options[:bury_treasure] ||= true
@@ -27,9 +27,9 @@ module NinthBit
         options[:parlay]        ||= 1
 
         # if they provide both
-        raise ArgumentError, "must provide either :swag or :grub, not both" if !options[:swag].blank? && !options[:grub].blank?
+        raise ArgumentError, "must provide either :swag or :grub, not both" if !options[:swag].nil? && !options[:grub].nil?
         # if they provide neither
-        raise ArgumentError, "must provide either :swag or :grub" if options[:swag].blank? && options[:grub].blank?
+        raise ArgumentError, "must provide either :swag or :grub" if options[:swag].nil? && options[:grub].nil?
         raise ArgumentError, ":swab is #{options[:swab].inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(options[:swab])
         raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(options[:mop])
         raise ArgumentError, ":gibbet is #{options[:gibbet].inspect}, and does not contain a '.' character, which is required when using iterative filenames (set :swab => :none to turn off iterative filenames)" if options[:swab] != :none && (options[:gibbet].nil? || !options[:gibbet].include?('.'))
@@ -40,6 +40,10 @@ module NinthBit
         raise ArgumentError, ":blackjack is #{options[:blackjack].inspect}, and must be a hash (e.g. {:humanize => '_'}), which defines how the header of the CSV will be created" if options[:blackjack].nil? || !options[:blackjack].is_a?(Hash)
 
         extend ClassMethods unless (class << self; included_modules; end).include?(ClassMethods)
+
+        class << self
+          attr_accessor :piratey_options
+        end
 
         self.piratey_options = options
 
@@ -57,10 +61,6 @@ module NinthBit
     end
 
     module ClassMethods
-
-      def self.extended(base)
-        base.class_inheritable_accessor :piratey_options
-      end
 
       # intended for use with send_data for downloading the text of the csv:
       # send_data Make.say_your_last_words
