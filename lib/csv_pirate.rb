@@ -308,21 +308,21 @@ class CsvPirate
 
   def to_memory(exclude_id = true)
     return nil unless self.grub
-    buccaneers = []
-    self.scuttle do |row|
-      #puts "#{self.pinnacle.first.inspect} #{row[self.pinnacle.first].inspect}"
-      buccaneers << self.grub.new(self.data_hash_from_row(row, exclude_id))
-    end
-    buccaneers
-  end
-
-  def data_hash_from_row(row, exclude_id = true)
     begin
       example = self.grub.new
     rescue Exception
       puts "cannot instantiate instance of #{self.grub} with #{self.grub}.new.  CsvPirate#to_memory works most reliably when #{self.grub}.new works with no arguments." if CsvPirate.parlance(1)
       example = nil
     end
+    buccaneers = []
+    self.scuttle do |row|
+      #puts "#{self.pinnacle.first.inspect} #{row[self.pinnacle.first].inspect}"
+      buccaneers << self.grub.new(self.data_hash_from_row(row, exclude_id, example))
+    end
+    buccaneers
+  end
+
+  def data_hash_from_row(row, exclude_id = true, example = nil)
     data_hash = {}
     my_booty = exclude_id ? self.booty.reject {|x| x.to_sym == :id} : self.booty
     my_booty = my_booty.reject {|x| x.is_a?(Hash)}
@@ -331,7 +331,7 @@ class CsvPirate
       #puts "#{self.pinnacle[index]}"
       data_hash = data_hash.merge({method => row[self.pinnacle[self.booty.index(method)]]})
     end
-    puts "#{data_hash.inspect}"
+    #puts "#{data_hash.inspect}"
     data_hash
   end
 
