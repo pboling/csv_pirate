@@ -326,12 +326,19 @@ You have the same Make class as above, and you have a MakeController:
   class MakeController < ApplicationController
     def download_csv
       csv_pirate = Make.blindfold
-      send_data csv_pirate.maroon,
-        :type => 'text/csv; charset=iso-8859-1; header=present',
-        :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
+
+      # maroon saves the read to the file system, by using the text of the csv stored in the CsvPirate object.
+      send_data csv_pirate.maroon, ...
+          :type => 'text/csv; charset=iso-8859-1; header=present',
+          :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
+
+      # However if CSVs are created using multiple CsvPirate objects that all append to a single file,
+      #   we need to read the final product from the fs.
+      #send_file csv_pirate.brigantine,
+      #  :type => 'text/csv; charset=utf-8; header=present',
+      #  :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
     end
   end
-
 
 == Advanced Example with Nested Methods
 

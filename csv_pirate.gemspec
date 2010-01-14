@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Boling"]
   s.date = %q{2010-01-14}
-  s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+  s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
 It works better if you are wearing a tricorne!}
   s.email = %q{peter.boling@gmail.com}
   s.extra_rdoc_files = [
@@ -28,13 +28,19 @@ It works better if you are wearing a tricorne!}
      "install.rb",
      "lib/csv_pirate.rb",
      "lib/ninth_bit/pirate_ship.rb",
-     "rails/init.rb"
+     "rails/init.rb",
+     "spec/csv_pirate_spec.rb",
+     "spec/pirate_ship_spec.rb",
+     "spec/spec.opts",
+     "spec/spec_helper.rb",
+     "spec/spec_helpers/glowing_gas_ball.rb",
+     "spec/spec_helpers/star.rb"
   ]
   s.homepage = %q{http://github.com/pboling/csv_pirate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Easily create CSVs of any data that can be derived from your models (using pirates!).}
+  s.summary = %q{Easily create CSVs of any data that can be derived from instance methods on your classes.}
   s.test_files = [
     "spec/csv_pirate_spec.rb",
      "spec/pirate_ship_spec.rb",
