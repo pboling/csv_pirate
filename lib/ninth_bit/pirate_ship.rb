@@ -11,8 +11,9 @@ module NinthBit
         options[:chart]         ||= ['log','csv']
         options[:aft]           ||= '.csv'
         options[:gibbet]        ||= '.export'
-        #Needs to be defined at runtime, doesn't make sense here
-        #options[:chronometer]   ||= Date.today
+        #Needs to be defined at runtime, doesn't make sense here unless set to false, except to be overridden at runtime
+        # Default is nil so that the CsvPirate default will kick-in.
+        options[:chronometer]   ||= nil
         options[:waggoner]      ||= "#{self}"
         options[:swag]          ||= nil
         options[:swab]          ||= :counter
@@ -110,7 +111,7 @@ module NinthBit
         return { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
-          :chronometer => args[:chronometer] == false ? false : args[:chronometer] || Date.today,
+          :chronometer => args[:chronometer] == false ? false : (args[:chronometer] || Date.today),
           :waggoner => args[:waggoner] || self.piratey_options[:waggoner] || "#{self}",
           :swag => args[:swag] || self.piratey_options[:swag],
           :swab => args[:swab] || self.piratey_options[:swab],

@@ -7,7 +7,14 @@ describe "CsvPirate" do
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],
-            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ]})
+            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+            :chronometer => false,
+            :gibbet => "",
+            :aft => "",
+            :swab => :none,
+            :mop => :clean,
+            :waggoner => 'data'
+      })
     end
 
     it "should create an instance of CsvPirate" do

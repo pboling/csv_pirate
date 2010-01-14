@@ -110,6 +110,8 @@ What's the simplest thing that will work?
 
 == Usage without ActiveRecord
 
+[ See Spec Tests for more Examples! ]
+
 Since the defaults assume an active record class you need to override some of them:
 
   class Star

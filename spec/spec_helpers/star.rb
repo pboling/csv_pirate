@@ -2,7 +2,13 @@ class Star
   extend NinthBit::PirateShip::ActMethods
   has_csv_pirate_ship :booty => [ :name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
                       :spyglasses => [:get_stars],
-                      :chart => ["spec","csv","Star"]
+                      :chart => ["spec","csv","Star"],
+                      :chronometer => false,
+                      :gibbet => "",
+                      :aft => "",
+                      :swab => :none,
+                      :mop => :clean, 
+                      :waggoner => 'data'
 
   attr_accessor :name, :distance, :spectral_type
 

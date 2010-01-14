@@ -113,7 +113,7 @@ class CsvPirate
     raise ArgumentError, ":chart is #{self.chart.inspect}, and must be an array of directory names, which will become the filepath for the csv file" if self.chart.nil? || !self.chart.is_a?(Array) || self.chart.empty?
 
     @aft = args.first[:aft] || '.csv'
-    @chronometer = args.first[:chronometer] == false ? false : args.first[:chronometer] || Date.today
+    @chronometer = args.first[:chronometer] == false ? false : (args.first[:chronometer] || Date.today)
 
     @spyglasses = (args.first[:spyglasses] || (self.respond_to?(:all) ? [:all] : nil)) if self.grub
 
