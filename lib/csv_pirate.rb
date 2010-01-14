@@ -358,18 +358,16 @@ class CsvPirate
     index = base.rindex('.')
     tail = index.nil? ? nil : base[index+1,base.length]
     # Ensure numbers
-    counter = tail.nil? ? 0 : tail[/\d*/].to_i
+    tail.nil? ? 0 : tail[/\d*/].to_i
   end
   
   def boatswain
     return self.swabbie unless self.swabbie.nil?
-    counter = 0
     bowspirit = Dir.glob(self.lantern)
     highval = 0
     bowspirit.each do |flotsam|
       counter = self.filibuster(flotsam)
       highval = ((highval <=> counter) == 1) ? highval : counter
-      counter = 0
     end
     ".#{highval + 1}"
   end
@@ -409,7 +407,7 @@ class CsvPirate
       spoils = spoils.send(east.to_sym)
       unless spoils.nil?
         if west.is_a?(Hash)
-          # Recursive nadness is here!
+          # Recursive madness is here!
           spoils = CsvPirate.marlinespike(spoils, west)
         else
           spoils = spoils.send(west.to_sym)
