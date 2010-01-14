@@ -1,26 +1,15 @@
-class Star
+class Star < GlowingGasBall
+  
   extend NinthBit::PirateShip::ActMethods
   has_csv_pirate_ship :booty => [ :name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
                       :spyglasses => [:get_stars],
                       :chart => ["spec","csv","Star"],
                       :chronometer => false,
                       :gibbet => "",
-                      :aft => "",
+                      :aft => ".csv",
                       :swab => :none,
                       :mop => :clean, 
                       :waggoner => 'data'
-
-  attr_accessor :name, :distance, :spectral_type
-
-  def initialize(*args)
-    @name = args.first[:name]
-    @distance = args.first[:distance]
-    @spectral_type = args.first[:spectral_type]
-  end
-
-  def star_vowels
-    self.name.tr('aeiou', '*')
-  end
 
   def self.get_stars
     [
@@ -36,4 +25,5 @@ class Star
     Star.new(:name => "Epsilon Eridani", :distance => "10.5 LY", :spectral_type => "K2V")
     ]
   end
+  
 end

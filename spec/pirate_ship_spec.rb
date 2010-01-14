@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe "PirateShip" do
-  describe "walk_the_plank" do
+  describe "#walk_the_plank" do
     before(:each) do
       @csv_pirate = Star.walk_the_plank
     end
@@ -11,22 +11,22 @@ describe "PirateShip" do
     end
   end
 
-  describe "blindfold" do
+  describe "#blindfold" do
     before(:each) do
       @csv_pirate = Star.blindfold
     end
 
-    it "should return the CsvPirate object" do
+    it "should return an instance of CsvPirate" do
       @csv_pirate.class.should == CsvPirate
     end
   end
 
-  describe "land_ho" do
+  describe "#land_ho" do
     before(:each) do
       @csv_pirate = Star.land_ho
     end
 
-    it "should return the CsvPirate object" do
+    it "should return an instance of CsvPirate" do
       @csv_pirate.class.should == CsvPirate
     end
   end

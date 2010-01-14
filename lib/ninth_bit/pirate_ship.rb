@@ -111,7 +111,7 @@ module NinthBit
         return { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],
-          :chronometer => args[:chronometer] == false ? false : (args[:chronometer] || Date.today),
+          :chronometer => get_chronometer(args[:chronometer]),
           :waggoner => args[:waggoner] || self.piratey_options[:waggoner] || "#{self}",
           :swag => args[:swag] || self.piratey_options[:swag],
           :swab => args[:swab] || self.piratey_options[:swab],
@@ -122,6 +122,14 @@ module NinthBit
           :booty => args[:booty] || self.piratey_options[:booty],
           :blackjack => args[:blackjack] || self.piratey_options[:blackjack],
           :bury_treasure => args[:bury_treasure] || self.piratey_options[:bury_treasure] }
+      end
+
+      def get_chronometer(chron)
+        chron == false ?
+                false :
+                (chron || (self.piratey_options[:chronometer] == false ?
+                        false :
+                        (self.piratey_options[:chronometer] || Date.today)))
       end
 
     end

@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{csv_pirate}
-  s.version = "3.4.4"
+  s.version = "4.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Boling"]
-  s.date = %q{2009-11-10}
+  s.date = %q{2010-01-14}
   s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
 It works better if you are wearing a tricorne!}
   s.email = %q{peter.boling@gmail.com}
@@ -37,7 +37,10 @@ It works better if you are wearing a tricorne!}
   s.summary = %q{Easily create CSVs of any data that can be derived from your models (using pirates!).}
   s.test_files = [
     "spec/csv_pirate_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/pirate_ship_spec.rb",
+     "spec/spec_helper.rb",
+     "spec/spec_helpers/glowing_gas_ball.rb",
+     "spec/spec_helpers/star.rb"
   ]
 
   if s.respond_to? :specification_version then
