@@ -125,8 +125,8 @@ class CsvPirate
     @bury_treasure = args.first[:astrolabe] || false
     @buried_treasure = []
 
-    #Default is different than default for has_csv_pirate because this might gem wants to be clean for use outside rails, and humanize may not always be defined for String class
-    @blackjack = args.first[:blackjack] || {:join => '_'}
+    #does not rely on rails humanize!
+    @blackjack = args.first[:blackjack] || {:humanize => '_'}
 
     #Make sure the header array is the same length as the booty columns
     if self.blackjack.keys.first == :array && (self.blackjack.values.first.length != self.booty.length)
