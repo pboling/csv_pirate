@@ -82,6 +82,86 @@ describe "CsvPirate" do
     end
   end
 
+  describe "#old_csv_dump" do
+
+    before(:each) do
+      ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
+        @csv_pirate = CsvPirate.new({
+              :grub => GlowingGasBall,
+              :spyglasses => [:get_stars],
+              :chart => ["spec","csv","GlowingGasBall","dumps"],
+              :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+              :chronometer => date,
+              :swab => :none,
+              :mop => :clean
+        })
+        @csv_pirate.hoist_mainstay
+      end
+    end
+
+    it "should find first (oldest) dump" do
+      @new_csv_pirate = CsvPirate.new({
+            :grub => GlowingGasBall,
+            :spyglasses => [:get_stars],
+            :chart => ["spec","csv","GlowingGasBall","dumps"],
+            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+            :chronometer => false,
+            :brigantine => :first,
+            :swab => :none,
+            :mop => :clean
+      })
+      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.19980101.export.csv"
+    end
+
+    it "should find last (newest) dump" do
+      @new_csv_pirate = CsvPirate.new({
+            :grub => GlowingGasBall,
+            :spyglasses => [:get_stars],
+            :chart => ["spec","csv","GlowingGasBall","dumps"],
+            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+            :chronometer => false,
+            :brigantine => :last,
+            :swab => :none,
+            :mop => :clean
+      })
+      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.20070201.export.csv"
+    end
+  end
+
+  describe "#to_memory" do
+
+    before(:each) do
+      ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
+        @csv_pirate = CsvPirate.new({
+              :grub => GlowingGasBall,
+              :spyglasses => [:get_stars],
+              :chart => ["spec","csv","GlowingGasBall","dumps"],
+              :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+              :chronometer => date,
+              :swab => :none,
+              :mop => :clean
+        })
+        @csv_pirate.hoist_mainstay
+      end
+    end
+
+    it "should return an array of 10 objects built from data in CSV" do
+      @new_csv_pirate = CsvPirate.new({
+            :grub => GlowingGasBall,
+            :spyglasses => [:get_stars],
+            :chart => ["spec","csv","GlowingGasBall","dumps"],
+            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+            :chronometer => false,
+            :brigantine => :last,
+            :swab => :none,
+            :mop => :clean
+      })
+      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.20070201.export.csv"
+      @new_csv_pirate.to_memory.class.should == Array
+      @new_csv_pirate.to_memory.length.should == 10
+    end
+  end
+
   describe ":blackjack option" do
     before(:each) do
       @csv_pirate = CsvPirate.new({

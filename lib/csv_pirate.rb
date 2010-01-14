@@ -53,6 +53,7 @@ class CsvPirate
                                   #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
   attr_accessor :brigantine       # the complete file path
+  attr_accessor :pinnacle       # the complete file path
   class << self
      attr_accessor :parlay        # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
    end
@@ -134,7 +135,9 @@ class CsvPirate
       puts "Warning: :blackjack reset to {:join => '_'} because the length of the :booty is different than the length of the array provided to :blackjack" if CsvPirate.parlance(2)
     end
 
-    # Initialize doesn't write anything to a CSV, 
+    @pinnacle = self.block_and_tackle
+
+    # Initialize doesn't write anything to a CSV,
     #   but does create the traverse_board and opens the waggoner for reading / writing
     self.northwest_passage unless self.astrolabe
 
@@ -147,6 +150,7 @@ class CsvPirate
     @brigantine = self.poop_deck(args.first[:brigantine])
     
     @nocturnal = File.basename(self.brigantine)
+
 
     # Then open the rhumb_lines
     self.rhumb_lines = File.open(File.expand_path(self.brigantine),self.astrolabe ? "r" : "a")
@@ -258,35 +262,6 @@ class CsvPirate
     end
   end
 
-  # create the header of the CSV (column/method names)
-  # returns an array of strings for CSV header based on blackjack
-  def block_and_tackle
-    self.blackjack.map do |k,v|
-      case k
-        #Joining is only relevant when the booty contains a nested hash of method calls as at least one of the booty array elements
-        #Use the booty (methods) as the column headers
-        when :join then self.binnacle(v, false)
-        #Use the humanized booty (methods) as the column headers
-        when :humanize then self.binnacle(v, true)
-        when :array then v
-      end
-    end.first
-  end
-
-  #returns an array of strings for CSV header based on booty
-  def binnacle(join_value, humanize = true)
-    self.booty.map do |compass|
-      string = compass.is_a?(Hash) ?
-        self.run_through(compass, join_value) :
-        compass.is_a?(String) ?
-          compass :
-          compass.is_a?(Symbol) ?
-            compass.to_s :
-            compass.to_s
-      humanize ? string.to_s.gsub(/_id$/, "").gsub(/_/, " ").capitalize : string
-    end
-  end
-
   #Takes a potentially nested hash element of a booty array and turns it into a string for a column header
   # hash = {:a => {:b => {:c => {:d => {"e" => "fghi"}}}}}
   # run_through(hash, '_')
@@ -307,7 +282,7 @@ class CsvPirate
     if BRIGANTINE.include?(brig)
       self.old_csv_dump(brig)
     elsif brig.is_a?(String)
-      brig
+      "#{self.analemma}#{brig}"
     else
       "#{self.analemma}#{self.swabbie}#{self.aft}"
     end
@@ -331,6 +306,35 @@ class CsvPirate
     end
   end
 
+  def to_memory(exclude_id = true)
+    return nil unless self.grub
+    buccaneers = []
+    self.scuttle do |row|
+      #puts "#{self.pinnacle.first.inspect} #{row[self.pinnacle.first].inspect}"
+      buccaneers << self.grub.new(self.data_hash_from_row(row, exclude_id))
+    end
+    buccaneers
+  end
+
+  def data_hash_from_row(row, exclude_id = true)
+    begin
+      example = self.grub.new
+    rescue Exception
+      puts "cannot instantiate instance of #{self.grub} with #{self.grub}.new.  CsvPirate#to_memory works most reliably when #{self.grub}.new works with no arguments." if CsvPirate.parlance(1)
+      example = nil
+    end
+    data_hash = {}
+    my_booty = exclude_id ? self.booty.reject {|x| x.to_sym == :id} : self.booty
+    my_booty = my_booty.reject {|x| x.is_a?(Hash)}
+    my_booty = my_booty.reject {|x| example.respond_to?("#{x}=".to_sym)} unless example.nil?
+    my_booty.each do |method|
+      #puts "#{self.pinnacle[index]}"
+      data_hash = data_hash.merge({method => row[self.pinnacle[self.booty.index(method)]]})
+    end
+    puts "#{data_hash.inspect}"
+    data_hash
+  end
+
   # Grab an old CSV dump (first or last)
   def old_csv_dump(brig)
     file = Dir.entries(self.traverse_board).reject {|x| x.match(/^\./)}.sort.send(brig)
@@ -339,6 +343,35 @@ class CsvPirate
 
   protected
 
+  # create the header of the CSV (column/method names)
+  # returns an array of strings for CSV header based on blackjack
+  def block_and_tackle
+    self.blackjack.map do |k,v|
+      case k
+        #Joining is only relevant when the booty contains a nested hash of method calls as at least one of the booty array elements
+        #Use the booty (methods) as the column headers
+        when :join then self.binnacle(v, false)
+        #Use the humanized booty (methods) as the column headers
+        when :humanize then self.binnacle(v, true)
+        when :array then v
+      end
+    end.first
+  end
+  
+  #returns an array of strings for CSV header based on booty
+  def binnacle(join_value, humanize = true)
+    self.booty.map do |compass|
+      string = compass.is_a?(Hash) ?
+        self.run_through(compass, join_value) :
+        compass.is_a?(String) ?
+          compass :
+          compass.is_a?(Symbol) ?
+            compass.to_s :
+            compass.to_s
+      humanize ? string.to_s.gsub(/_id$/, "").gsub(/_/, " ").capitalize : string
+    end
+  end
+  
   # The directory path to the csv
   def traverse_board
     #If we have rails environment then we use rails root, otherwise self.chart stands on its own as a relative path
@@ -453,9 +486,7 @@ class CsvPirate
   # Sink other ships! Or run a block of code on each row of a CSV
   def self.broadside(galley, &block)
     return false unless block_given?
-    count = 1 if report_kills
     FasterCSV.foreach(galley, {:headers => :first_row, :return_headers => false}) do |gun|
-      puts "Galleys sunk: #{count+=1}" if CsvPirate.parlance(1)
       yield gun
     end
   end
