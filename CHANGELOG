@@ -1,4 +1,8 @@
-Version 4.0.0 2010-01-14
+Version 4.0.1 2010-01-15
+- Improving import / export
+- Updating Readme to reflect 4.0.0 API
+
+Version 4.0.0 2010-01-14 (never released)
 - CSV Imports from old CsvPirate Dumps
 - Lots of refactoring
 - Lots of bug reduction

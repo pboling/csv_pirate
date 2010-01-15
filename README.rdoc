@@ -2,8 +2,10 @@
 
 Easily create CSVs of any data that can be derived from your models.
 
-CsvPirate is the easy way to create a CSV of essentially anything in Rails, in full pirate regalia.
+CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
 It works better if you are wearing a tricorne!
+
+Everything in the source that depended on Rails extensions of Ruby classes has been refactored to work in pure Ruby!
 
 My goal is to have it do EVERYTHING it possibly can for me, since almost every project I do needs CSV exports.
 
@@ -33,9 +35,9 @@ Initialize method (a.k.a new()) takes a hash of parameters:
   # :bury_treasure  should we store the csv data as it is collected in an array in Ruby form for later use (true), or just write the CSV (false)?
   # :blackjack      Specify how you want your CSV header
   #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
-  #   {:humanize =>'-'} first joins as above, then humanizes the string
+  #   {:humanize =>'-'} first joins as above, then humanizes the string (this is the default)
   #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array's length is less than the booty array's length it reverts to :humanize =>'_'
-  # check the source to see if there anything else hiding in there!
+  # check the source to see if there anything else hiding in there!  There are a few new options in the 4.0.0 release, which are as yet undocumented.
 
 The create method has the same parameters, and actually creates the CSV.
 
@@ -201,7 +203,7 @@ Assuming a Make (as in manufacturers of automobiles) model like this:
                         :bury_treasure  => true                 # Boolean: Should the array of objects in :swag be stored in the CsvPirate object for later inspection?
                         :blackjack      => {:humanize => '-'}   # Hash: Specify how you want your CSV header
                                                                 #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
-                                                                #   {:humanize => '-'} first joins as above, then humanizes the string
+                                                                #   {:humanize => '-'} first joins as above, then humanizes the string (this is the default)
                                                                 #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
     # A customized version to create a tab delimited file for this class might look like this:
@@ -407,6 +409,14 @@ This allows you to modify the csv_pirate object before creating the csv like thi
 
   csv_pirate.booty -= [:id, :name]
   csv_pirate.hoist_mainstay()
+
+== Tests
+
+The tests are run with rspec.  The test suite is expanding.  Currently there is ample coverage of basic functionality.
+
+To run tests cd to where ever you have csv_pirate installed, and do:
+
+  rake spec
 
 == BUGS (Not mine, Micrsoft's)
 
