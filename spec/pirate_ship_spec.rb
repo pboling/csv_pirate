@@ -30,4 +30,40 @@ describe "PirateShip" do
       @csv_pirate.class.should == CsvPirate
     end
   end
+
+  describe "#land_ho" do
+    before(:each) do
+      @csv_pirate = Star.land_ho
+    end
+
+    it "should return an instance of CsvPirate" do
+      @csv_pirate.class.should == CsvPirate
+    end
+  end
+
+  describe "#weigh_anchor" do
+    before(:each) do
+      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("2/1/2007")})
+    end
+
+    it "should return an instance of CsvPirate" do
+      @csv_pirate.class.should == CsvPirate
+      @csv_pirate.chart.should == ["spec","csv","Star","dumps"]
+    end
+  end
+
+  describe "#raise_anchor" do
+    before(:each) do
+      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("3/29/2002")})
+      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("6/14/2004")})
+      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("12/25/1962")})
+      @csv_pirate = Star.raise_anchor()
+    end
+
+    it "should return an array of 10 grubs built from data in CSV" do
+      @csv_pirate.class.should == Array
+      @csv_pirate.length.should == 10
+    end
+  end
+  
 end

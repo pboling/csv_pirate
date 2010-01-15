@@ -104,6 +104,29 @@ module NinthBit
         CsvPirate.new(self.piratey_args(args))
       end
 
+      def weigh_anchor(args = {})
+        pargs = self.piratey_args(args)
+        pargs.merge!({
+                :gibbet => '.dump',
+                :chart => pargs[:chart] + ["dumps"],
+        })
+        CsvPirate.create(pargs)
+      end
+
+      def raise_anchor(args = {})
+        pargs = self.piratey_args(args)
+        pargs.merge!({
+                :chart => pargs[:chart] + ["dumps"],
+                :brigantine => :last
+        })
+        csv_pirate = CsvPirate.new(pargs)
+
+        csv_pirate.to_memory.map do |obj|
+          obj.save(false) if obj.respond_to?(:save)
+          obj
+        end
+      end
+
       protected
 
       def piratey_args(args = {})

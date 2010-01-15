@@ -145,7 +145,7 @@ describe "CsvPirate" do
       end
     end
 
-    it "should return an array of 10 objects built from data in CSV" do
+    it "should return an array of 10 grubs built from data in CSV" do
       @new_csv_pirate = CsvPirate.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
