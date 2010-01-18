@@ -113,7 +113,7 @@ module NinthBit
         CsvPirate.create(pargs)
       end
 
-      def raise_anchor(args = {})
+      def raise_anchor(permanence = {:new => :new}, args = {})
         pargs = self.piratey_args(args)
         pargs.merge!({
                 :chart => pargs[:chart] + ["dumps"],
@@ -121,10 +121,7 @@ module NinthBit
         })
         csv_pirate = CsvPirate.new(pargs)
 
-        csv_pirate.to_memory.map do |obj|
-          obj.save(false) if obj.respond_to?(:save)
-          obj
-        end
+        csv_pirate.to_memory(permanence)
       end
 
       protected

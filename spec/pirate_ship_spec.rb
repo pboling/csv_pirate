@@ -54,16 +54,17 @@ describe "PirateShip" do
 
   describe "#raise_anchor" do
     before(:each) do
-      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("3/29/2002")})
-      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("6/14/2004")})
-      @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("12/25/1962")})
-      @csv_pirate = Star.raise_anchor()
+      Star.weigh_anchor({:chronometer => Date.parse("3/29/2002")})
+      Star.weigh_anchor({:chronometer => Date.parse("6/14/2004")})
+      Star.weigh_anchor({:chronometer => Date.parse("12/25/1962")})
     end
 
-    it "should return an array of 10 grubs built from data in CSV" do
+    it "should return an array of 10 Stars built from data in CSV" do
+      @csv_pirate = Star.raise_anchor({:new => :new})
       @csv_pirate.class.should == Array
       @csv_pirate.length.should == 10
     end
+    
   end
   
 end

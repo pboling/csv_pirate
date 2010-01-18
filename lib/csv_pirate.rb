@@ -306,7 +306,21 @@ class CsvPirate
     end
   end
 
-  def to_memory(exclude_id = true, exclude_timestamps = true)
+  #permanence can be any of:
+  #   {:new => :new} - only calls the initializer with data hash for each row to instantiate objects (useful with any vanilla Ruby Class)
+  #   {:new => :save} - calls the initializer with the data hash for each row and then calls save on each (useful with ActiveRecord)
+  #   {:new => :create} - calls a create method with the data hash for each row (useful with ActiveRecord)
+  #   {:find_or_new => [column names for find_by]} - see below (returns only the new objects
+  #   {:find_or_save => [column names for find_by]} - see below (returns all found or saved objects)
+  #   {:find_or_create => [column names for find_by]} - looks for existing objects using find_by_#{columns.join('_and_')}, (returns all found or created objects)
+  #       and if not found creates a new object.
+  #       The difference between the new, save and create versions are the same as the various :new hashes above.
+  #   {:update_or_new => [column names for find_by]} - see below (returns only the new objects)
+  #   {:update_or_save => [column names for find_by]} - see below (returns all updated or saved objects)
+  #   {:update_or_create => [column names for find_by]} - looks for existing objects using find_by_#{columns.join('_and_')} , (returns all updated or created objects)
+  #       and updates them with the data hash form the csv row, otherwise creates a new object.
+  #TODO: This is a nasty method.  Just a quick hack to GTD.  Needs to be rethought and refactored. --pboling
+  def to_memory(permanence = {:new => :new}, exclude_id = true, exclude_timestamps = true)
     return nil unless self.grub
     begin
       example = self.grub.new
@@ -316,8 +330,65 @@ class CsvPirate
     end
     buccaneers = []
     self.scuttle do |row|
-      #puts "#{self.pinnacle.first.inspect} #{row[self.pinnacle.first].inspect}"
-      buccaneers << self.grub.new(self.data_hash_from_row(row, exclude_id, exclude_timestamps, example))
+      data_hash = self.data_hash_from_row(row, exclude_id, exclude_timestamps, example)
+      case permanence
+        when {:new => :new} then
+          buccaneers << self.grub.new(data_hash)
+        when {:new => :save} then
+          obj = self.grub.new(data_hash)
+          buccaneers << obj.save(false)
+        when {:new => :create} then
+          buccaneers << self.grub.create(data_hash)
+      else
+        if permanence[:find_or_new]
+          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          buccaneers << self.grub.new(data_hash) if obj.nil?
+        elsif permanence[:find_or_save]
+          obj = self.grub.send("find_by_#{permanence[:find_or_save].join('_and_')}".to_sym)
+          if obj.nil?
+            obj = self.grub.new(data_hash)
+            obj.save(false) if obj.respond_to?(:save)
+          end
+          buccaneers << obj
+        elsif permanence[:find_or_create]
+          obj = self.grub.send("find_by_#{permanence[:find_or_create].join('_and_')}".to_sym)
+          buccaneers << obj || self.grub.create(data_hash)
+        elsif permanence[:update_or_new]
+          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          if obj.nil?
+            obj = self.grub.new(data_hash)
+          else
+            data_hash.each do |k,v|
+              obj.send("#{k}=".to_sym, v)
+              obj.save(false)
+            end
+          end
+          buccaneers << obj
+        elsif permanence[:update_or_save]
+          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          if obj.nil?
+            obj = self.grub.new(data_hash)
+            obj.save(false)
+          else
+            data_hash.each do |k,v|
+              obj.send("#{k}=".to_sym, v)
+              obj.save(false)
+            end
+          end
+          buccaneers << obj
+        elsif permanence[:update_or_create]
+          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          if obj.nil?
+            obj = self.grub.create(data_hash)
+          else
+            data_hash.each do |k,v|
+              obj.send("#{k}=".to_sym, v)
+              obj.save(false)
+            end
+          end
+          buccaneers << obj
+        end
+      end
     end
     buccaneers
   end
@@ -329,10 +400,8 @@ class CsvPirate
     my_booty = exclude_timestamps ? my_booty.reject {|x| a = x.to_sym; [:created_at, :updated_at, :created_on, :updated_on].include?(a)} : self.booty
     my_booty = my_booty.reject {|x| !example.respond_to?("#{x}=".to_sym)} unless example.nil?
     my_booty.each do |method|
-      #puts "#{self.pinnacle[index]}"
       data_hash = data_hash.merge({method => row[self.pinnacle[self.booty.index(method)]]})
     end
-    #puts "#{data_hash.inspect}"
     data_hash
   end
 
