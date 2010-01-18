@@ -45,7 +45,14 @@ Avast! Here be pirates! To brush up on pirate coding naming conventions:
 
   http://www.privateerdragons.com/pirate_dictionary.html
 
-Perhaps the next version will have CSV importing abilities...
+== New for version 4.x... Importing to DB or Ruby objects in memory from CSV
+
+Importing abilities are now here!  You can dump data to CSV, copy the CSV to wherever, and then import the data in the CSV.  Works very well with ActiveRecord.
+
+See the weigh_anchor method, added to models with has_csv_pirate_ship defined, for dumping.
+See the raise_anchor method, added to models with has_csv_pirate_ship defined, for importing.
+See the to_memory method to convert the data in a csv or CsvPirate instance object back into Ruby class instances
+with as many attributes as possible set equal to the data from the CSV.
 
 == On The Web
 
