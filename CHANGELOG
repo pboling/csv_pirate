@@ -1,3 +1,7 @@
+Version 4.0.2 2010-01-18
+- Improving to_memory method on CsvPirate
+- Improving raise_anchor method on PirateShip
+
 Version 4.0.1 2010-01-15
 - Improving import / export
 - Updating Readme to reflect 4.0.0 API
