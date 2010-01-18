@@ -354,7 +354,7 @@ class CsvPirate
           obj = self.grub.send("find_by_#{permanence[:find_or_create].join('_and_')}".to_sym)
           buccaneers << obj || self.grub.create(data_hash)
         elsif permanence[:update_or_new]
-          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          obj = self.grub.send("find_by_#{permanence[:update_or_new].join('_and_')}".to_sym)
           if obj.nil?
             obj = self.grub.new(data_hash)
           else
@@ -365,7 +365,7 @@ class CsvPirate
           end
           buccaneers << obj
         elsif permanence[:update_or_save]
-          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          obj = self.grub.send("find_by_#{permanence[:update_or_save].join('_and_')}".to_sym)
           if obj.nil?
             obj = self.grub.new(data_hash)
             obj.save(false)
@@ -377,7 +377,7 @@ class CsvPirate
           end
           buccaneers << obj
         elsif permanence[:update_or_create]
-          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          obj = self.grub.send("find_by_#{permanence[:update_or_create].join('_and_')}".to_sym)
           if obj.nil?
             obj = self.grub.create(data_hash)
           else
