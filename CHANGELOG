@@ -1,3 +1,6 @@
+Version 4.0.3 2010-01-18
+- Fixed typos in new to_memory method
+
 Version 4.0.2 2010-01-18
 - Improving to_memory method on CsvPirate
 - Improving raise_anchor method on PirateShip
