@@ -351,8 +351,8 @@ class CsvPirate
           end
           buccaneers << obj
         elsif permanence[:find_or_create]
-          obj = self.grub.send("find_by_#{permanence[:find_or_create].join('_and_')}".to_sym)
-          buccaneers << obj || self.grub.create(data_hash)
+          obj = self.grub.send("find_by_#{permanence[:find_or_create].join('_and_')}".to_sym) || self.grub.create(data_hash)
+          buccaneers << obj
         elsif permanence[:update_or_new]
           obj = self.grub.send("find_by_#{permanence[:update_or_new].join('_and_')}".to_sym)
           if obj.nil?
