@@ -1,3 +1,7 @@
+Version 4.0.5 2010-02-02
+- Fixed bug in check_booty
+- Improved init scripts
+
 Version 4.0.4 2010-01-18
 - Fixed bug with find_or_create param to to_memory
 
