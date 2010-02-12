@@ -1,3 +1,6 @@
+Version 4.0.6 2010-02-12
+- Fixed bug in init preventing use with rake
+
 Version 4.0.5 2010-02-02
 - Fixed bug in check_booty
 - Improved init scripts
