@@ -1,5 +1,5 @@
 #We might have rails...
-if defined?(Rails) && defined?(config) && config.respond_to?(:gems)
+if defined?(Rails) && !defined?(Rake) && defined?(config) && config.respond_to?(:gems)
 
   config.gem 'fastercsv', :lib => 'faster_csv', :version => '>=1.4.0'
 
@@ -17,7 +17,7 @@ if defined?(Rails) && defined?(config) && config.respond_to?(:gems)
     ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)
   end
 
-#And we might not...
+#And we might not... (rake needs to come hear to load the gems properly)
 else
 
   begin
@@ -26,6 +26,7 @@ else
     gem 'fastercsv', '>=1.4.0', :lib => 'faster_csv'
     require 'csv_pirate'
     require 'ninth_bit/pirate_ship'
+    ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)
 
   rescue Gem::LoadError
     puts "Install the fastercsv gem to enable CsvPirate"
