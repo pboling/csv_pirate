@@ -1,3 +1,10 @@
+Version 4.0.11 2010-03-08
+- PirateShip now respects CsvPirate.parlay setting instead of always overwriting it.
+- CsvPirate importing actually works now
+
+Version 4.0.8, 4.0.9, 4.0.10 2010-03-08
+- Trying to get a gemcutter push to work
+
 Version 4.0.7 2010-03-08
 - Fixed bug preventing use with rake db: tasks (create, reset, etc)
 

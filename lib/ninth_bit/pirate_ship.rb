@@ -57,8 +57,8 @@ module NinthBit
         begin
           defined?(ActiveRecord) && ActiveRecord::Base.connected? ?
                 self.respond_to?(:table_name) && ActiveRecord::Base.connection.tables.include?(self.table_name) :
-                false
-        #The only error that occurs here is when ActiveRecord checks for the table but the database isn't setup yet.
+                self.respond_to?(:column_names)
+         #The only error that occurs here is when ActiveRecord checks for the table but the database isn't setup yet.
          #It was preventing rake db:create from working.
          rescue
            puts "csv_pirate: failed to connect to database, or table missing"
@@ -134,7 +134,7 @@ module NinthBit
       protected
 
       def piratey_args(args = {})
-        CsvPirate.parlay = args[:parlay] || self.piratey_options[:parlay]
+        CsvPirate.parlay ||= args[:parlay] || self.piratey_options[:parlay]
         return { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],

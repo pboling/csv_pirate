@@ -342,56 +342,88 @@ class CsvPirate
           buccaneers << self.grub.create(data_hash)
       else
         if permanence[:find_or_new]
-          obj = self.grub.send("find_by_#{permanence[:find_or_new].join('_and_')}".to_sym)
+          obj = self.send_aye(data_hash, permanence[:find_or_new])
           buccaneers << self.grub.new(data_hash) if obj.nil?
         elsif permanence[:find_or_save]
-          obj = self.grub.send("find_by_#{permanence[:find_or_save].join('_and_')}".to_sym)
+          obj = self.send_aye(data_hash, permanence[:find_or_save])
           if obj.nil?
             obj = self.grub.new(data_hash)
             obj.save(false) if obj.respond_to?(:save)
           end
           buccaneers << obj
         elsif permanence[:find_or_create]
-          obj = self.grub.send("find_by_#{permanence[:find_or_create].join('_and_')}".to_sym) || self.grub.create(data_hash)
+          obj = self.send_aye(data_hash, permanence[:find_or_create])
+          if obj.nil?
+            self.grub.create(data_hash)
+          end
           buccaneers << obj
         elsif permanence[:update_or_new]
-          obj = self.grub.send("find_by_#{permanence[:update_or_new].join('_and_')}".to_sym)
+          obj = self.send_aye(data_hash, permanence[:update_or_new])
           if obj.nil?
             obj = self.grub.new(data_hash)
           else
-            data_hash.each do |k,v|
-              obj.send("#{k}=".to_sym, v)
-              obj.save(false)
-            end
+            self.save_object(obj, data_hash)
           end
           buccaneers << obj
         elsif permanence[:update_or_save]
-          obj = self.grub.send("find_by_#{permanence[:update_or_save].join('_and_')}".to_sym)
+          obj = self.send_aye(data_hash, permanence[:update_or_save])
           if obj.nil?
             obj = self.grub.new(data_hash)
             obj.save(false)
           else
-            data_hash.each do |k,v|
-              obj.send("#{k}=".to_sym, v)
-              obj.save(false)
-            end
+            self.save_object(obj, data_hash)
           end
           buccaneers << obj
         elsif permanence[:update_or_create]
-          obj = self.grub.send("find_by_#{permanence[:update_or_create].join('_and_')}".to_sym)
+          obj = self.send_aye(data_hash, permanence[:update_or_create])
           if obj.nil?
             obj = self.grub.create(data_hash)
           else
-            data_hash.each do |k,v|
-              obj.send("#{k}=".to_sym, v)
-              obj.save(false)
-            end
+            self.save_object(obj, data_hash)
           end
           buccaneers << obj
         end
       end
     end
     buccaneers
+  end
+
+  def save_object(obj, data_hash)
+    data_hash.each do |k,v|
+      obj.send("#{k}=".to_sym, v)
+    end
+    unless obj.save(false)
+      puts "Save Failed: #{obj.inspect}" if CsvPirate.parlance(1)
+    end
+  end
+
+  def send_aye(data_hash, columns)
+    obj = self.grub.send(self.find_aye(columns), self.find_aye_arr(data_hash, columns))
+    if obj
+      puts "#{self.grub}.#{find_aye(columns)}(#{self.find_aye_arr(data_hash, columns).inspect}): found id = #{obj.id}" if CsvPirate.parlance(2)
+    end
+  end
+
+  def find_aye(columns)
+    "find_by_#{columns.join('_and_')}".to_sym
+  end
+
+  def find_aye_arr(data_hash, columns)
+    columns.map do |col|
+      data_hash[col.to_s]
+    end
+  end
+
+  def data_hash_from_row(row, exclude_id = true, exclude_timestamps = true, example = nil)
+    plunder = {}
+    my_booty = self.booty.reject {|x| x.is_a?(Hash)}
+    my_booty = exclude_id ? my_booty.reject {|x| a = x.to_sym; [:id, :ID,:dbid, :DBID, :db_id, :DB_ID].include?(a)} : self.booty
+    my_booty = exclude_timestamps ? my_booty.reject {|x| a = x.to_sym; [:created_at, :updated_at, :created_on, :updated_on].include?(a)} : self.booty
+    my_booty = my_booty.reject {|x| !example.respond_to?("#{x}=".to_sym)} unless example.nil?
+    my_booty.each do |method|
+      plunder = plunder.merge({method => row[self.pinnacle[self.booty.index(method)]]})
+    end
+    plunder
   end
 
   def data_hash_from_row(row, exclude_id = true, exclude_timestamps = true, example = nil)
