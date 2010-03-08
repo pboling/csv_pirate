@@ -421,6 +421,10 @@ This allows you to modify the csv_pirate object before creating the csv like thi
 
 The tests are run with rspec.  The test suite is expanding.  Currently there is ample coverage of basic functionality.
 
+You will need these gems to run specs:
+
+gem install jeweler cucumber test-unit rspec fastercsv
+
 To run tests cd to where ever you have csv_pirate installed, and do:
 
   rake spec
