@@ -107,8 +107,9 @@ class CsvPirate
     @waggoner = args.first[:waggoner] || "#{self.grub || self.swag}"
     raise ArgumentError, ":waggoner is #{self.waggoner.inspect}, and must be a string at least one character long" if self.waggoner.nil? || self.waggoner.length < 1
 
+    # Not checking if empty here because PirateShip will send [] if the database is unavailable, to allow tasks like rake db:create to run
     @booty = args.first[:booty] || [] # would like to use Class#instance_variables for generic classes
-    raise ArgumentError, ":booty is #{self.booty.inspect}, and must be an array of methods to call on a class for CSV data" if self.booty.nil? || !self.booty.is_a?(Array) || self.booty.empty?
+    raise ArgumentError, ":booty is #{self.booty.inspect}, and must be an array of methods to call on a class for CSV data" if self.booty.nil? || !self.booty.is_a?(Array)
 
     @chart = args.first[:chart] || ['log','csv']
     raise ArgumentError, ":chart is #{self.chart.inspect}, and must be an array of directory names, which will become the filepath for the csv file" if self.chart.nil? || !self.chart.is_a?(Array) || self.chart.empty?

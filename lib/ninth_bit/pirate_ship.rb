@@ -54,10 +54,17 @@ module NinthBit
       def prevent_from_failing_pre_migration
         # If you aren't using ActiveRecord (you are outside rails) then you must declare your :booty
         # If you are using ActiveRecord then you only want ot check for booty if the table exists so it won't fail pre-migration
-        defined?(ActiveRecord) && ActiveRecord::Base.connected? ?
+        begin
+          defined?(ActiveRecord) && ActiveRecord::Base.connected? ?
                 self.respond_to?(:table_name) && ActiveRecord::Base.connection.tables.include?(self.table_name) :
-                true
-      end
+                false
+        #The only error that occurs here is when ActiveRecord checks for the table but the database isn't setup yet.
+         #It was preventing rake db:create from working.
+         rescue
+           puts "csv_pirate: failed to connect to database, or table missing"
+           return false
+         end
+       end
 
     end
 
