@@ -7,6 +7,10 @@
 #Version:  1.0
 #Project owners:
 #    peter.boling (The Cap'n)
+if RUBY_VERSION.to_f >= 1.9
+else
+  require 'faster_csv'
+end
 
 class CsvPirate
 

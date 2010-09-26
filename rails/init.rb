@@ -4,6 +4,7 @@ if defined?(Rails) && !defined?(Rake) && defined?(config) && config.respond_to?(
   if RUBY_VERSION.to_f >= 1.9
     require 'csv'
   else
+    puts "- When you upgrade to Ruby 1.9 fastercsv gem will not be a dependecy anymore"
     config.gem 'fastercsv', :lib => 'faster_csv', :version => '>=1.4.0'
   end
 
@@ -30,6 +31,7 @@ else
     if RUBY_VERSION.to_f >= 1.9
       require 'csv'
     else
+      puts "* When you upgrade to Ruby 1.9 fastercsv gem will not be a dependecy anymore"
       gem 'fastercsv', '>=1.4.0', :lib => 'faster_csv'
     end
     require 'csv_pirate'
@@ -37,7 +39,11 @@ else
     ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)
 
   rescue Gem::LoadError
-    puts "Install the fastercsv gem to enable CsvPirate"
+    if RUBY_VERSION.to_f >= 1.9
+      raise
+    else
+      puts "Install the fastercsv gem to enable CsvPirate"
+    end
   end
 
 end
