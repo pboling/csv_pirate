@@ -47,7 +47,8 @@ describe "CsvPirate" do
     end
 
     it "should store export in maroon instance variable" do
-      @csv_pirate.maroon.should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5Vc,2217454022498236852,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,-4438078664052757103,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,-2447091044748968830,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,135162902577326931,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,-1741545149301983090,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,-1931627401441254904,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,4310589218292679848,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,2634995277259851661,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,565075892908349297,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,-756971895140849939,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n"
+      @csv_pirate.maroon[0..100].should ==
+              "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5V"
     end
   end
 
@@ -72,13 +73,13 @@ describe "CsvPirate" do
     end
 
     it "should return the export as a string" do
-      @csv_pirate.hoist_mainstay.should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5Vc,-1176188012,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,1916094624,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,-1717989858,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,1260790153,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,1177502705,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,2120976706,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,2129428738,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n"
+      @csv_pirate.hoist_mainstay[0..100].should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5V"
     end
 
     it "should store export in maroon instance variable" do
       @csv_pirate.maroon.should == ""
       @csv_pirate.hoist_mainstay
-      @csv_pirate.maroon.should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5Vc,-1176188012,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,1916094624,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,-1717989858,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,1260790153,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,1177502705,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,2120976706,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,2129428738,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n"
+      @csv_pirate.maroon[0..100].should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5V"
     end
   end
 
@@ -181,14 +182,14 @@ describe "CsvPirate" do
     it "should be {humanize => '_'} by default" do
       @csv_pirate.blackjack.should == {:humanize => '_'}
       @csv_pirate.hoist_mainstay
-      @csv_pirate.maroon.should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5Vc,-1176188012,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,1916094624,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,-1717989858,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,1260790153,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,1177502705,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,2120976706,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,2129428738,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n"
+      @csv_pirate.maroon[0..100].should == "Name,Distance,Spectral type,Name hash,Name next,Name upcase,Star vowels\nProxima Centauri,4.2 LY,M5.5V"
     end
 
     it "should work as {:join => '_'}" do
       @csv_pirate.blackjack = {:join => '_'}
       @csv_pirate.blackjack.should == {:join => '_'}
       @csv_pirate.hoist_mainstay
-      @csv_pirate.maroon.should == "name,distance,spectral_type,name_hash,name_next,name_upcase,star_vowels\nProxima Centauri,4.2 LY,M5.5Vc,-1176188012,Proxima Centaurj,PROXIMA CENTAURI,Pr*x*m* C*nt**r*\nRigil Kentaurus,4.3 LY,G2V,1916094624,Rigil Kentaurut,RIGIL KENTAURUS,R*g*l K*nt**r*s\nBarnard's Star,5.9 LY,M3.8V,1003964756,Barnard's Stas,BARNARD'S STAR,B*rn*rd's St*r\nWolf 359,7.7 LY,M5.8Vc,-1717989858,Wolf 360,WOLF 359,W*lf 359\nLalande 21185,8.26 LY,M2V,466625069,Lalande 21186,LALANDE 21185,L*l*nd* 21185\nLuyten 726-8A and B,8.73 LY,M5.5 de & M6 Ve,1260790153,Luyten 726-8A and C,LUYTEN 726-8A AND B,L*yt*n 726-8A *nd B\nSirius A and B,8.6 LY,A1Vm,1177502705,Sirius A and C,SIRIUS A AND B,S*r**s A *nd B\nRoss 154,9.693 LY,M3.5,2120976706,Ross 155,ROSS 154,R*ss 154\nRoss 248,10.32 LY,M5.5V,2129428738,Ross 249,ROSS 248,R*ss 248\nEpsilon Eridani,10.5 LY,K2V,931307088,Epsilon Eridanj,EPSILON ERIDANI,Eps*l*n Er*d*n*\n"
+      @csv_pirate.maroon[0..100].should == "name,distance,spectral_type,name_hash,name_next,name_upcase,star_vowels\nProxima Centauri,4.2 LY,M5.5V"
     end
   end
 
