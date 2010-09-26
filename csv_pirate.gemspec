@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{csv_pirate}
-  s.version = "4.0.11"
+  s.version = "4.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Boling"]
-  s.date = %q{2010-03-08}
+  s.date = %q{2010-09-26}
   s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
 It works better if you are wearing a tricorne!}
   s.email = %q{peter.boling@gmail.com}
@@ -39,7 +39,7 @@ It works better if you are wearing a tricorne!}
   s.homepage = %q{http://github.com/pboling/csv_pirate}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Easily create CSVs of any data that can be derived from instance methods on your classes.}
   s.test_files = [
     "spec/csv_pirate_spec.rb",
@@ -53,7 +53,7 @@ It works better if you are wearing a tricorne!}
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<fastercsv>, [">= 0"])
     else
       s.add_dependency(%q<fastercsv>, [">= 0"])
