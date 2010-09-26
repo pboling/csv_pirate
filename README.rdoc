@@ -3,7 +3,7 @@
 Easily create CSVs of any data that can be derived from your models.
 
 CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
-It works better if you are wearing a tricorne!
+It works better if you are wearing a tricorne!  Now compatible with Ruby 1.8.7 & 1.9.2
 
 Everything in the source that depended on Rails extensions of Ruby classes has been refactored to work in pure Ruby!
 
@@ -423,7 +423,9 @@ The tests are run with rspec.  The test suite is expanding.  Currently there is 
 
 You will need these gems to run specs:
 
-gem install jeweler cucumber test-unit rspec fastercsv
+  gem install jeweler cucumber test-unit rspec
+
+If on a Ruby prior to Ruby 1.9 you will also need the fastercsv gem
 
 To run tests cd to where ever you have csv_pirate installed, and do:
 
@@ -448,4 +450,4 @@ TimePerks LLC (http://www.timeperks.com) - Many useful enhancements were request
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
-  Copyright (c) 2009 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
+  Copyright (c) 2009-2010 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
