@@ -1,7 +1,11 @@
 #We might have rails...
 if defined?(Rails) && !defined?(Rake) && defined?(config) && config.respond_to?(:gems)
 
-  config.gem 'fastercsv', :lib => 'faster_csv', :version => '>=1.4.0'
+  if RUBY_VERSION.to_f >= 1.9
+    require 'csv'
+  else
+    config.gem 'fastercsv', :lib => 'faster_csv', :version => '>=1.4.0'
+  end
 
   require 'csv_pirate'
   require 'ninth_bit/pirate_ship'
@@ -23,7 +27,11 @@ else
   begin
 
     require 'rubygems'
-    gem 'fastercsv', '>=1.4.0', :lib => 'faster_csv'
+    if RUBY_VERSION.to_f >= 1.9
+      require 'csv'
+    else
+      gem 'fastercsv', '>=1.4.0', :lib => 'faster_csv'
+    end
     require 'csv_pirate'
     require 'ninth_bit/pirate_ship'
     ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)

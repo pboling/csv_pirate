@@ -1,5 +1,3 @@
-require 'faster_csv' unless defined?(FasterCSV)
-
 module NinthBit
   module PirateShip
 

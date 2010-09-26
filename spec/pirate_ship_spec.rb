@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper' #here in this same config/ dir
 
 describe "PirateShip" do
   describe "#walk_the_plank" do
@@ -54,9 +54,9 @@ describe "PirateShip" do
 
   describe "#raise_anchor" do
     before(:each) do
-      Star.weigh_anchor({:chronometer => Date.parse("3/29/2002")})
-      Star.weigh_anchor({:chronometer => Date.parse("6/14/2004")})
-      Star.weigh_anchor({:chronometer => Date.parse("12/25/1962")})
+      Star.weigh_anchor({:chronometer => Date.parse("03.10.2002")})
+      Star.weigh_anchor({:chronometer => Date.parse("06.11.2004")})
+      Star.weigh_anchor({:chronometer => Date.parse("12.12.1962")})
     end
 
     it "should return an array of 10 Stars built from data in CSV" do

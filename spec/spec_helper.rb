@@ -2,7 +2,7 @@ require 'spec'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'init'
+require File.dirname(__FILE__) + '/../init'
 
 Spec::Runner.configure do |config|
   

@@ -13,6 +13,7 @@ class CsvPirate
   BOOKIE = [:counter, :timestamp, :none]
   MOP_HEADS = [:clean, :dirty]
   BRIGANTINE = [:first, :last]
+  CSV_CLASS = (defined?(CSV) ? CSV : FasterCSV)
 
   attr_accessor :waggoner         # First part of filename
   attr_accessor :chart            # directory, default is (['log','csv'])
@@ -235,7 +236,7 @@ class CsvPirate
   end
 
   def dead_mans_chest
-    self.maroon = FasterCSV.generate(:col_sep => self.shrouds) do |csv|
+    self.maroon = CSV_CLASS.generate(:col_sep => self.shrouds) do |csv|
       self.sounding(csv)
     end
     self.scrivener(self.maroon)
@@ -589,7 +590,7 @@ class CsvPirate
   # Sink other ships! Or run a block of code on each row of a CSV
   def self.broadside(galley, &block)
     return false unless block_given?
-    FasterCSV.foreach(galley, {:headers => :first_row, :return_headers => false}) do |gun|
+    CSV_CLASS.foreach(galley, {:headers => :first_row, :return_headers => false}) do |gun|
       yield gun
     end
   end

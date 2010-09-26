@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/spec_helper'
+require 'spec_helper' #here in this same config/ dir
 
 describe "CsvPirate" do
   describe "#initialize" do
