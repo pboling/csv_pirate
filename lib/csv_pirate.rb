@@ -8,6 +8,7 @@
 #Project owners:
 #    peter.boling (The Cap'n)
 if RUBY_VERSION.to_f >= 1.9
+  require 'csv'
 else
   require 'faster_csv'
 end
