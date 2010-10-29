@@ -578,6 +578,8 @@ class CsvPirate
         if west.is_a?(Hash)
           # Recursive madness is here!
           spoils = CsvPirate.marlinespike(spoils, west)
+        elsif west.is_a?(Array)
+          spoils << spoils.send(west[0].to_sym, *west[1..-1] )
         else
           spoils = spoils.send(west.to_sym)
         end
