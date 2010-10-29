@@ -573,7 +573,12 @@ class CsvPirate
   # so nested_hash = {:region => {:country => :name }, :state => :name }
   def self.marlinespike(spoils, navigation)
     navigation.map do |east,west|
-      spoils = spoils.send(east.to_sym)
+      # BJM: 
+      if east.is_a?(Array)
+        spoils = spoils.send(east[0].to_sym, *east[1..-1] )
+      else
+        spoils = spoils.send(east.to_sym)
+      end
       unless spoils.nil?
         if west.is_a?(Hash)
           # Recursive madness is here!
