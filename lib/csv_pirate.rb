@@ -213,6 +213,9 @@ class CsvPirate
       # Check for nestedness
       if plunder.is_a?(Hash)
         gold_doubloons << CsvPirate.marlinespike(spoils, plunder)
+      # BJM: if array, assume they are args to be sent along with the function
+      elsif plunder.is_a?(Array)
+        gold_doubloons << spoils.send(plunder[0].to_sym, *plunder[1..-1] )
       else
         gold_doubloons << spoils.send(plunder.to_sym)
       end
