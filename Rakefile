@@ -43,17 +43,17 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
-end
-
-Spec::Rake::SpecTask.new(:rcov) do |t|
-  t.libs << 'lib' << 'spec'
-  t.spec_files = FileList['spec/**/*_spec.rb']
-  t.rcov = true
-end
+# require 'spec/rake/spectask'
+# Spec::Rake::SpecTask.new(:spec) do |t|
+#   t.libs << 'lib' << 'spec'
+#   t.spec_files = FileList['spec/**/*_spec.rb']
+# end
+# 
+# Spec::Rake::SpecTask.new(:rcov) do |t|
+#   t.libs << 'lib' << 'spec'
+#   t.spec_files = FileList['spec/**/*_spec.rb']
+#   t.rcov = true
+# end
 
 begin
   require 'cucumber/rake/task'

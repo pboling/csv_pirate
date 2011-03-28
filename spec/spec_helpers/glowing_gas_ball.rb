@@ -12,6 +12,10 @@ class GlowingGasBall
     self.name.tr('aeiou', '*')
   end
 
+  def sub_name(old_letter, new_letter)
+    name.gsub(old_letter, new_letter)
+  end
+
   def self.get_stars
     [
     GlowingGasBall.new(:name => "Proxima Centauri", :distance => "4.2 LY", :spectral_type => "M5.5Vc"),

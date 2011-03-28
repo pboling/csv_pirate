@@ -52,6 +52,29 @@ describe "CsvPirate" do
     end
   end
 
+
+  describe "#create with function-arg booty" do
+    before(:each) do
+      @csv_pirate = CsvPirate.create({
+            :grub => GlowingGasBall,
+            :spyglasses => [:get_stars],
+            :chart => ["spec","csv","GlowingGasBall"],
+            :booty => [[:sub_name, 'a', 'Z'], :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+            :chronometer => false,
+            :gibbet => "",
+            :aft => ".csv",
+            :swab => :none,
+            :mop => :clean,
+            :waggoner => 'data'
+      })
+    end
+
+    it "should call instance functions with arguments an instance of CsvPirate" do
+      @csv_pirate.maroon.should =~ /ProximZ CentZuri/
+    end
+  end
+
+
   describe "#hoist_mainstay" do
     before(:each) do
       @csv_pirate = CsvPirate.new({

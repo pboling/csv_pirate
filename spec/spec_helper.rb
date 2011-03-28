@@ -1,10 +1,11 @@
-require 'spec'
+#require 'spec'
+require 'rspec/core'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require File.dirname(__FILE__) + '/../init'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   
 end
 
