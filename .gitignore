@@ -1,12 +1,15 @@
+*.gem
+.bundle
+Gemfile.lock
+pkg/*
 *.sw?
 .DS_Store
 coverage
 coverage/*
-*.gem
 doc
 doc/*
 .project
 .project/*
 .idea
 .idea/*
-spec/csv
+spec/csv/*
