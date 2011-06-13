@@ -1,3 +1,6 @@
+require 'bundler'
+Bundler::GemHelper.install_tasks
+
 require 'rake'
 
 begin
@@ -10,7 +13,6 @@ It works better if you are wearing a tricorne!}
     gemspec.email = "peter.boling@gmail.com"
     gemspec.homepage = "http://github.com/pboling/csv_pirate"
     gemspec.authors = ["Peter Boling"]
-    #gemspec.add_dependency 'fastercsv' 
     gemspec.files = ["README.rdoc",
              "csv_pirate.gemspec",
              "init.rb",
@@ -48,18 +50,18 @@ end
 #   t.libs << 'lib' << 'spec'
 #   t.spec_files = FileList['spec/**/*_spec.rb']
 # end
-# 
+#
 # Spec::Rake::SpecTask.new(:rcov) do |t|
 #   t.libs << 'lib' << 'spec'
 #   t.spec_files = FileList['spec/**/*_spec.rb']
 #   t.rcov = true
 # end
-
-begin
-  require 'cucumber/rake/task'
-  Cucumber::Rake::Task.new(:features)
-rescue LoadError
-  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
-end
+#
+#begin
+#  require 'cucumber/rake/task'
+#  Cucumber::Rake::Task.new(:features)
+#rescue LoadError
+#  puts "Cucumber is not available. In order to run features, you must: sudo gem install cucumber"
+#end
 
 task :default => :spec

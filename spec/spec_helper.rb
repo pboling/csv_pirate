@@ -1,9 +1,8 @@
 #require 'spec'
 require 'rspec/core'
+require 'csv_pirate'
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-
-require File.dirname(__FILE__) + '/../init'
 
 RSpec.configure do |config|
   

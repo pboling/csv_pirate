@@ -1,4 +1,4 @@
-module NinthBit
+module CsvPirate
   module PirateShip
 
     module ActMethods
@@ -29,8 +29,8 @@ module NinthBit
         raise ArgumentError, "must provide either :swag or :grub, not both" if !options[:swag].nil? && !options[:grub].nil?
         # if they provide neither
         raise ArgumentError, "must provide either :swag or :grub" if options[:swag].nil? && options[:grub].nil?
-        raise ArgumentError, ":swab is #{options[:swab].inspect}, but must be one of #{CsvPirate::BOOKIE.inspect}" unless CsvPirate::BOOKIE.include?(options[:swab])
-        raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{CsvPirate::MOP_HEADS.inspect}" unless CsvPirate::MOP_HEADS.include?(options[:mop])
+        raise ArgumentError, ":swab is #{options[:swab].inspect}, but must be one of #{TheCapn::BOOKIE.inspect}" unless TheCapn::BOOKIE.include?(options[:swab])
+        raise ArgumentError, ":mop is #{options[:mop].inspect}, but must be one of #{TheCapn::MOP_HEADS.inspect}" unless TheCapn::MOP_HEADS.include?(options[:mop])
         raise ArgumentError, ":gibbet is #{options[:gibbet].inspect}, and does not contain a '.' character, which is required when using iterative filenames (set :swab => :none to turn off iterative filenames)" if options[:swab] != :none && (options[:gibbet].nil? || !options[:gibbet].include?('.'))
         raise ArgumentError, ":waggoner is #{options[:waggoner].inspect}, and must be a string at least one character long" if options[:waggoner].nil? || options[:waggoner].length < 1
         raise ArgumentError, ":booty is #{options[:booty].inspect}, and must be an array of methods to call on a class for CSV data" if check_booty && (options[:booty].nil? || !options[:booty].is_a?(Array) || options[:booty].empty?)
@@ -96,7 +96,7 @@ module NinthBit
       #          :type => 'text/csv; charset=iso-8859-1; header=present',
       #          :disposition => "attachment; filename=#{csv_pirate.nocturnal}"
       def blindfold(args = {})
-        CsvPirate.create(self.piratey_args(args))
+        TheCapn.create(self.piratey_args(args))
       end
 
       # returns the csv_pirate object so you have access to everything
@@ -106,7 +106,7 @@ module NinthBit
       #   csv_pirate.booty -= [:id, :name]
       #   csv_pirate.hoist_mainstay()
       def land_ho(args = {})
-        CsvPirate.new(self.piratey_args(args))
+        TheCapn.new(self.piratey_args(args))
       end
 
       def weigh_anchor(args = {})
@@ -115,7 +115,7 @@ module NinthBit
                 :gibbet => '.dump',
                 :chart => pargs[:chart] + ["dumps"],
         })
-        CsvPirate.create(pargs)
+        TheCapn.create(pargs)
       end
 
       def raise_anchor(permanence = {:new => :new}, args = {})
@@ -124,7 +124,7 @@ module NinthBit
                 :chart => pargs[:chart] + ["dumps"],
                 :brigantine => :last
         })
-        csv_pirate = CsvPirate.new(pargs)
+        csv_pirate = TheCapn.new(pargs)
 
         csv_pirate.to_memory(permanence)
       end
@@ -132,7 +132,7 @@ module NinthBit
       protected
 
       def piratey_args(args = {})
-        CsvPirate.parlay ||= args[:parlay] || self.piratey_options[:parlay]
+        TheCapn.parlay ||= args[:parlay] || self.piratey_options[:parlay]
         return { :chart => args[:chart] || self.piratey_options[:chart],
           :aft => args[:aft] || self.piratey_options[:aft],
           :gibbet => args[:gibbet] || self.piratey_options[:gibbet],

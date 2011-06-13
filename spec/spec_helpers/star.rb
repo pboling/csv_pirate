@@ -1,6 +1,6 @@
 class Star < GlowingGasBall
   
-  extend NinthBit::PirateShip::ActMethods
+  extend CsvPirate::PirateShip::ActMethods
   has_csv_pirate_ship :booty => [ :name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
                       :spyglasses => [:get_stars],
                       :chart => ["spec","csv","Star"],

@@ -16,8 +16,8 @@ describe "PirateShip" do
       @csv_pirate = Star.blindfold
     end
 
-    it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+    it "should return an instance of CsvPirate::TheCapn" do
+      @csv_pirate.class.should == CsvPirate::TheCapn
     end
   end
 
@@ -26,8 +26,8 @@ describe "PirateShip" do
       @csv_pirate = Star.land_ho
     end
 
-    it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+    it "should return an instance of CsvPirate::TheCapn" do
+      @csv_pirate.class.should == CsvPirate::TheCapn
     end
   end
 
@@ -36,8 +36,8 @@ describe "PirateShip" do
       @csv_pirate = Star.land_ho
     end
 
-    it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+    it "should return an instance of CsvPirate::TheCapn" do
+      @csv_pirate.class.should == CsvPirate::TheCapn
     end
   end
 
@@ -46,8 +46,8 @@ describe "PirateShip" do
       @csv_pirate = Star.weigh_anchor({:chronometer => Date.parse("2/1/2007")})
     end
 
-    it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+    it "should return an instance of CsvPirate::TheCapn" do
+      @csv_pirate.class.should == CsvPirate::TheCapn
       @csv_pirate.chart.should == ["spec","csv","Star","dumps"]
     end
   end

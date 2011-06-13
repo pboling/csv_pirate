@@ -3,7 +3,7 @@ require 'spec_helper' #here in this same config/ dir
 describe "CsvPirate" do
   describe "#initialize" do
     before(:each) do
-      @csv_pirate = CsvPirate.new({
+      @csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],
@@ -18,7 +18,7 @@ describe "CsvPirate" do
     end
 
     it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+      @csv_pirate.class.should == CsvPirate::TheCapn
     end
 
     it "should not export anything" do
@@ -28,7 +28,7 @@ describe "CsvPirate" do
 
   describe "#create" do
     before(:each) do
-      @csv_pirate = CsvPirate.create({
+      @csv_pirate = CsvPirate::TheCapn.create({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],
@@ -43,7 +43,7 @@ describe "CsvPirate" do
     end
 
     it "should return an instance of CsvPirate" do
-      @csv_pirate.class.should == CsvPirate
+      @csv_pirate.class.should == CsvPirate::TheCapn
     end
 
     it "should store export in maroon instance variable" do
@@ -55,7 +55,7 @@ describe "CsvPirate" do
 
   describe "#create with function-arg booty" do
     before(:each) do
-      @csv_pirate = CsvPirate.create({
+      @csv_pirate = CsvPirate::TheCapn.create({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],
@@ -77,7 +77,7 @@ describe "CsvPirate" do
 
   describe "#hoist_mainstay" do
     before(:each) do
-      @csv_pirate = CsvPirate.new({
+      @csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],
@@ -110,7 +110,7 @@ describe "CsvPirate" do
 
     before(:each) do
       ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
-        @csv_pirate = CsvPirate.new({
+        @csv_pirate = CsvPirate::TheCapn.new({
               :grub => GlowingGasBall,
               :spyglasses => [:get_stars],
               :chart => ["spec","csv","GlowingGasBall","dumps"],
@@ -124,7 +124,7 @@ describe "CsvPirate" do
     end
 
     it "should find first (oldest) dump" do
-      @new_csv_pirate = CsvPirate.new({
+      @new_csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall","dumps"],
@@ -138,7 +138,7 @@ describe "CsvPirate" do
     end
 
     it "should find last (newest) dump" do
-      @new_csv_pirate = CsvPirate.new({
+      @new_csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall","dumps"],
@@ -156,7 +156,7 @@ describe "CsvPirate" do
 
     before(:each) do
       ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
-        @csv_pirate = CsvPirate.new({
+        @csv_pirate = CsvPirate::TheCapn.new({
               :grub => GlowingGasBall,
               :spyglasses => [:get_stars],
               :chart => ["spec","csv","GlowingGasBall","dumps"],
@@ -170,7 +170,7 @@ describe "CsvPirate" do
     end
 
     it "should return an array of 10 grubs built from data in CSV" do
-      @new_csv_pirate = CsvPirate.new({
+      @new_csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall","dumps"],
@@ -188,7 +188,7 @@ describe "CsvPirate" do
 
   describe ":blackjack option" do
     before(:each) do
-      @csv_pirate = CsvPirate.new({
+      @csv_pirate = CsvPirate::TheCapn.new({
             :grub => GlowingGasBall,
             :spyglasses => [:get_stars],
             :chart => ["spec","csv","GlowingGasBall"],

@@ -1,0 +1,11 @@
+rake version:bump:major
+rake version:bump:minor
+rake version:bump:patch
+
+git commit -a -m ""
+
+rake release
+
+rake install
+
+rake gemcutter:release
