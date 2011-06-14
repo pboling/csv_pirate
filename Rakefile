@@ -15,11 +15,12 @@ It works better if you are wearing a tricorne!}
     gemspec.authors = ["Peter Boling"]
     gemspec.files = ["README.rdoc",
              "csv_pirate.gemspec",
-             "init.rb",
-             "rails/init.rb",
              "install.rb",
+             "uninstall.rb",
              "lib/csv_pirate.rb",
-             "lib/ninth_bit/pirate_ship.rb",
+             "lib/csv_pirate/pirate_ship.rb",
+             "lib/csv_pirate/the_capn.rb",
+             "lib/csv_pirate/version.rb",
              "spec/csv_pirate_spec.rb",
              "spec/pirate_ship_spec.rb",
              "spec/spec.opts",
@@ -27,6 +28,7 @@ It works better if you are wearing a tricorne!}
              "spec/spec_helpers/glowing_gas_ball.rb",
              "spec/spec_helpers/star.rb",
              "Rakefile",
+             "Gemfile",
              "LICENSE",
              "CHANGELOG",
              "VERSION.yml"]

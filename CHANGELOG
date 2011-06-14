@@ -1,3 +1,7 @@
+Version 5.0.0 2011-06-13
+- Ruby 1.9.2p136 compatible
+- Rails 3.0.x compatible
+
 Version 4.1.0 2010-09-26
 - Ruby 1.9.2p0 compatible
 
