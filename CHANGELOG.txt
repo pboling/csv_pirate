@@ -1,3 +1,7 @@
+Version 5.0.0 2011-06-14
+- Added .txt extension to CHANGELOG and LINCENSE
+- Improved dependency declarations in Gemfile (removed from Rakefile/gemspec)
+
 Version 5.0.0 2011-06-13
 - Ruby 1.9.2p136 compatible
 - Rails 3.0.x compatible

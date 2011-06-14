@@ -1,6 +1,6 @@
 module CsvPirate
 
-  @@conf = YAML::load( File.read('VERSION.yml') )
+  @@conf = YAML::load( File.read( File.absolute_path('VERSION.yml') ) )
 
   MAJOR = @@conf[:major]
   MINOR = @@conf[:minor]

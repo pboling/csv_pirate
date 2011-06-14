@@ -45,15 +45,6 @@ Avast! Here be pirates! To brush up on pirate coding naming conventions:
 
   http://www.privateerdragons.com/pirate_dictionary.html
 
-== New for version 4.x... Importing to DB or Ruby objects in memory from CSV
-
-Importing abilities are now here!  You can dump data to CSV, copy the CSV to wherever, and then import the data in the CSV.  Works very well with ActiveRecord.
-
-See the weigh_anchor method, added to models with has_csv_pirate_ship defined, for dumping.
-See the raise_anchor method, added to models with has_csv_pirate_ship defined, for importing.
-See the to_memory method to convert the data in a csv or CsvPirate instance object back into Ruby class instances
-with as many attributes as possible set equal to the data from the CSV.
-
 == On The Web
 
 Source:
@@ -65,10 +56,6 @@ Release Announcement:
 
 == Install as a RubyGem
 
-Gemcutter is the hot new gem host, and you can use it like this (see http://gemcutter.org):
-
-  [sudo] gem install gemcutter
-  [sudo] gem tumble # makes gemcutter gem source first in line
   [sudo] gem install csv_pirate
 
 Gem Using Git building from source:
@@ -78,7 +65,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-3.4.4.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-5.0.1.gem # (Or whatever version gets built)
 
 Then in your environment.rb (if you are just going to use it from the console, you can require it as needed there, and skip the config.gem):
 
@@ -116,6 +103,15 @@ What's the simplest thing that will work?
   MyClass.blindfold       # creates the csv, and returns the CsvPirate instance
   MyClass.walk_the_plank  # creates the csv, and returns contents of the exported data (that was written into the csv) (as a string)
   MyClass.land_ho         # Does Not create the csv, sets up the CsvPirate instance.  You can manipulate it and then call .hoist_mainstay on it to create the csv
+
+== Importing to DB or Ruby objects in memory from CSV
+
+Importing abilities are now here!  You can dump data to CSV, copy the CSV to wherever, and then import the data in the CSV.  Works very well with ActiveRecord.
+
+See the weigh_anchor method, added to models with has_csv_pirate_ship defined, for dumping.
+See the raise_anchor method, added to models with has_csv_pirate_ship defined, for importing.
+See the to_memory method to convert the data in a csv or CsvPirate instance object back into Ruby class instances
+with as many attributes as possible set equal to the data from the CSV.
 
 == Usage without ActiveRecord
 
@@ -444,12 +440,24 @@ if you need to export the id field.
 Micrsoft... I loathe you.
 http://www.bradino.com/misc/sylk-file-format-is-not-valid/
 
+== Contributing to CsvPirate
+
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests, rspec preferred, for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or change log. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+
 == Thanks
 
-Thanks go to
-9thBit LLC (http://www.9thBit.net)
-Sagebit LLC (http://www.sagebit.com) - Sagebit has been very supportive of my open source efforts, thanks Ben!
-TimePerks LLC (http://www.timeperks.com) - Many useful enhancements were requested and paid for by TimePerks
+Thanks go to:
+
+* 9thBit LLC (http://www.9thBit.net) - Peter Boling, author of CsvPirate, runs the joint.
+* Sagebit LLC (http://www.sagebit.com) - Sagebit has been very supportive of my open source efforts, thanks Ben!
+* TimePerks LLC (http://www.timeperks.com) - Many useful enhancements were requested and paid for by TimePerks
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
