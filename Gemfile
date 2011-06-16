@@ -1,8 +1,8 @@
 source :rubygems
 
 #FasterCSV became the built-in CSV library in Ruby 1.9, so is only required if using Ruby 1.8
-if RUBY_VERSION =~ /^1\.8\.\d{1}$/
-  gem 'fastercsv', '~> 1.5'
+if RUBY_VERSION =~ /^1\.8\.\d*/
+  gem 'fastercsv', '>= 1.4.0'
 end
 
 group :development do
