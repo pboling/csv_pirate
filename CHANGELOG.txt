@@ -1,3 +1,6 @@
+Version 5.0.4 2011-06-16
+- File Cleanup
+
 Version 5.0.3 2011-06-16
 - Fixed Compatability with Rails 2
 

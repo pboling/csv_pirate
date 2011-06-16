@@ -65,7 +65,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-5.0.3.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-5.0.4.gem # (Or whatever version gets built)
 
 == Install as a Plugin
 

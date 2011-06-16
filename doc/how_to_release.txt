@@ -4,8 +4,8 @@ rake version:bump:patch
 
 git commit -a -m ""
 
-rake release
+rspec spec
 
 rake install
 
-rake gemcutter:release
+rake release

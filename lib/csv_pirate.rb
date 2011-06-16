@@ -37,12 +37,12 @@ module CsvPirate
       end
     else
       if !defined?(Rake) && defined?(config) && config.respond_to?(:gems)
-        puts "has Rails config!"
+        #Not sure if this is ever executed...
         config.to_prepare do
           ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
         end
       else
-        puts "probably in a rake task"
+        #This one cleans up that mess...
         ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
       end
     end
