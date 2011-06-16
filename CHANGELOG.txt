@@ -1,5 +1,9 @@
+Version 5.0.2 2011-06-16
+- Fixed Compatability with Rails
+- Added support, with deprecation warning, for pre-5.0.0 API.
+
 Version 5.0.0 2011-06-14
-- Added .txt extension to CHANGELOG and LINCENSE
+- Added .txt extension to CHANGELOG and LICENSE
 - Improved dependency declarations in Gemfile (removed from Rakefile/gemspec)
 
 Version 5.0.0 2011-06-13
