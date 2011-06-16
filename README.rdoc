@@ -3,7 +3,7 @@
 Easily create CSVs of any data that can be derived from your models.
 
 CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
-It works better if you are wearing a tricorne!  Now compatible with Ruby 1.8.7 & 1.9.2
+It works better if you are wearing a tricorne!  Now compatible with Ruby 1.8.7 & 1.9.2, and Rails 3!
 
 Everything in the source that depended on Rails extensions of Ruby classes has been refactored to work in pure Ruby!
 
@@ -54,7 +54,7 @@ Release Announcement:
   http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
 
-== Install as a RubyGem
+== Install as a RubyGem from source
 
   [sudo] gem install csv_pirate
 
@@ -65,15 +65,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-5.0.1.gem # (Or whatever version gets built)
-
-Then in your environment.rb (if you are just going to use it from the console, you can require it as needed there, and skip the config.gem):
-
-  config.gem 'csv_pirate'
-
-Then cd to your rails app to optionally freeze the gem into your app (if you roll this way):
-
-  rake gems:freeze GEM=csv_pirate
+  sudo gem install csv_pirate-5.0.2.gem # (Or whatever version gets built)
 
 == Install as a Plugin
 
@@ -83,11 +75,18 @@ Plugin using Git:
 
 == Install as a Git Submodule (plugin)
 
-  git submodule add git://github.com/pboling/sanitize_email.git vendor/plugins/sanitize_email
+  git submodule add git://github.com/pboling/csv_pirate.git vendor/plugins/csv_pirate
 
 == Upgrading
 
-  In older versions :chart was a string which indicated where you wanted to hide the loot (write the csv file)
+  From version prior to 5.0
+
+  NinthBit::PirateShip::ActMethods has been deprecated in favor of CsvPirate::PirateShip::ActMethods.
+  Old API still works for now.
+
+  From version prior to 4.0
+
+  :chart was a string which indicated where you wanted to hide the loot (write the csv file)
   Now it must be an array of directory names.  So if you want your loot in "log/csv/pirates/model_name", then chart is:
   ['log','csv','pirates','model_name']
   CsvPirate ensures that whatever you choose as your chart exists in the filesystem, and creates the directories if need be.
@@ -120,7 +119,7 @@ with as many attributes as possible set equal to the data from the CSV.
 Since the defaults assume an active record class you need to override some of them:
 
   class Star
-    extend NinthBit::PirateShip::ActMethods
+    extend CsvPirate::PirateShip::ActMethods
     has_csv_pirate_ship :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels],
                         :spyglasses => [:get_stars]
 
