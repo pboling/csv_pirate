@@ -3,7 +3,7 @@
 Easily create CSVs of any data that can be derived from your models.
 
 CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
-It works better if you are wearing a tricorne!  Now compatible with Ruby 1.8.7 & 1.9.2, and Rails 3!
+It works better if you are wearing a tricorne!  Now compatible with Ruby 1.8.7 & 1.9.2, and Rails 2 & 3!
 
 Everything in the source that depended on Rails extensions of Ruby classes has been refactored to work in pure Ruby!
 
@@ -65,7 +65,7 @@ Gem Using Git building from source:
   git clone git://github.com/pboling/csv_pirate.git
   cd csv_pirate
   gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-5.0.2.gem # (Or whatever version gets built)
+  sudo gem install csv_pirate-5.0.3.gem # (Or whatever version gets built)
 
 == Install as a Plugin
 
@@ -460,4 +460,4 @@ Thanks go to:
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
-  Copyright (c) 2009-2010 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
+  Copyright (c) 2009-2011 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.

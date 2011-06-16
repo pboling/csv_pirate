@@ -38,6 +38,7 @@ It works better if you are wearing a tricorne!}
              "spec/spec_helpers/star.rb",
              "Rakefile",
              "Gemfile",
+             "init.rb",
              "LICENSE.txt",
              "CHANGELOG.txt",
              "VERSION.yml"]

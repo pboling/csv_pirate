@@ -1,5 +1,7 @@
 #We might have rails (pre version 3)...
-if defined?(Rails) && !defined?(Rake) && !defined?(Rails::Railtie) && defined?(config) && config.respond_to?(:gems)
+puts "init.rb is loading"
+if defined?(ActiveRecord) && !defined?(Rake) && !defined?(Rails::Railtie) && defined?(config) && config.respond_to?(:gems)
+  puts "init.rb has Rails config!"
 
   require 'csv_pirate'
 
@@ -15,7 +17,8 @@ if defined?(Rails) && !defined?(Rake) && !defined?(Rails::Railtie) && defined?(c
   end
 
 #And we might not... (rake needs to come hear to load the gems properly)
-else
+elsif defined?(ActiveRecord) && !defined?(Rails::Railtie)
+  puts "init.rb probably in a rake task"
 
   require 'csv_pirate'
   ActiveRecord::Base.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(ActiveRecord)

@@ -16,27 +16,34 @@ else
 end
 
 module CsvPirate
-  if defined?(Rails::Railtie)
-    # namespace our plugin and inherit from Rails::Railtie
-    # to get our plugin into the initialization process
-    class Railtie < Rails::Railtie
+  # If you are using this on a vanilla Ruby class (no rails or active record) then extend your class like this:
+  #  MyClass.send(:extend, NinthBit::PirateShip::ActMethods) if defined?(MyClass)
+  # Alternatively you can do this inside your class definition:
+  #   class MyClass
+  #     extend NinthBit::PirateShip::ActMethods
+  #   end
+  # If you are using ActiveRecord then it is done for you :)
 
-      # configure our plugin on boot. other extension points such
-      # as configuration, rake tasks, etc, are also available
-      #initializer "csv_pirate.initialize" do |app|
-      #end
-
-      # Add a to_prepare block which is executed once in production
-      # and before each request in development
-      config.to_prepare do
-        # If you are using this on a vanilla Ruby class (no rails or active record) then extend your class like this:
-        #  MyClass.send(:extend, CsvPirate::PirateShip::ActMethods) if defined?(MyClass)
-        # Alternatively you can do this inside your class definition:
-        #   class MyClass
-        #     extend CsvPirate::PirateShip::ActMethods
-        #   end
-        # If you are using ActiveRecord then it is done for you :)
-        ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods) if defined?(ActiveRecord)
+  if defined?(Rails) && defined?(ActiveRecord)
+    if defined?(Rails::Railtie)
+      # namespace our plugin and inherit from Rails::Railtie
+      # to get our plugin into the initialization process
+      class Railtie < Rails::Railtie
+        # Add a to_prepare block which is executed once in production
+        # and before each request in development
+        config.to_prepare do
+          ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
+        end
+      end
+    else
+      if !defined?(Rake) && defined?(config) && config.respond_to?(:gems)
+        puts "has Rails config!"
+        config.to_prepare do
+          ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
+        end
+      else
+        puts "probably in a rake task"
+        ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
       end
     end
   end

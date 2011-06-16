@@ -1,5 +1,8 @@
+Version 5.0.3 2011-06-16
+- Fixed Compatability with Rails 2
+
 Version 5.0.2 2011-06-16
-- Fixed Compatability with Rails
+- Fixed Compatability with Rails 3
 - Added support, with deprecation warning, for pre-5.0.0 API.
 
 Version 5.0.0 2011-06-14
