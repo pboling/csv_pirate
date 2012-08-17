@@ -1,4 +1,4 @@
-== CsvPirate
+== CsvPirate {<img src="https://secure.travis-ci.org/pboling/csv_pirate.png?branch=master" alt="Build Status" />}[http://travis-ci.org/pboling/csv_pirate]
 
 Easily create CSVs of any data that can be derived from your models.
 
@@ -460,4 +460,4 @@ Thanks go to:
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
-  Copyright (c) 2009-2011 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
+  Copyright (c) 2008-2012 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
