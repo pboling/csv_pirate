@@ -1,11 +1,12 @@
 module CsvPirate
 
-  @@conf = YAML::load( File.read( File.join( File.dirname(__FILE__), '..', '..', 'VERSION.yml') ) )
+  VERSION = "5.0.5"
 
-  MAJOR = @@conf[:major]
-  MINOR = @@conf[:minor]
-  PATCH = @@conf[:patch]
-  BUILD = @@conf[:build]
+  VERSION_ARRAY = VERSION.split('.')
 
-  VERSION = [MAJOR, MINOR, PATCH, BUILD].compact.join('.')
+  MAJOR = VERSION_ARRAY[0]
+  MINOR = VERSION_ARRAY[2]
+  PATCH = VERSION_ARRAY[3]
+  BUILD = VERSION_ARRAY[4]
+
 end
