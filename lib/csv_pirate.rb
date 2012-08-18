@@ -1,12 +1,11 @@
 # CsvPirate
-#Copyright ©2009 Peter H. Boling of 9thBit LLC, released under the MIT license
-#Gem / Plugin for Rails / Active Record: Easily make CSVs of anything that can be derived from your models
-#Language: Ruby (written by a pirate)
-#License:  MIT License
-#Labels:   Ruby, Rails, Gem, Plugin
-#Version:  1.0
-#Project owners:
-#    peter.boling (The Cap'n)
+# Copyright ©2008-2012 Peter H. Boling of 9thBit LLC, released under the MIT license
+# Gem / Plugin for Rails / Active Record: Easily make CSVs of anything that can be derived from your models
+# Language: Ruby (written by a pirate)
+# License:  MIT License
+# Labels:   Ruby, Rails, Gem, Plugin
+# Project owners:
+#    Peter Boling (The Cap'n)
 require 'yaml'
 
 if RUBY_VERSION.to_f >= 1.9
@@ -14,6 +13,10 @@ if RUBY_VERSION.to_f >= 1.9
 else
   require 'faster_csv'
 end
+
+require 'csv_pirate/version.rb'
+require 'csv_pirate/the_capn.rb'
+require 'csv_pirate/pirate_ship.rb'
 
 module CsvPirate
   # If you are using this on a vanilla Ruby class (no rails or active record) then extend your class like this:
@@ -23,35 +26,15 @@ module CsvPirate
   #     extend NinthBit::PirateShip::ActMethods
   #   end
   # If you are using ActiveRecord then it is done for you :)
-
+puts "parsing CsvPirate"
   if defined?(Rails) && defined?(ActiveRecord)
     if defined?(Rails::Railtie)
-      # namespace our plugin and inherit from Rails::Railtie
-      # to get our plugin into the initialization process
-      class Railtie < Rails::Railtie
-        # Add a to_prepare block which is executed once in production
-        # and before each request in development
-        config.to_prepare do
-          ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
-        end
-      end
+      require 'csv_pirate/railtie'
     else
-      if !defined?(Rake) && defined?(config) && config.respond_to?(:gems)
-        #Not sure if this is ever executed...
-        config.to_prepare do
-          ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
-        end
-      else
-        #This one cleans up that mess...
-        ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
-      end
+      ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
     end
   end
 end
-
-require 'csv_pirate/version.rb'
-require 'csv_pirate/the_capn.rb'
-require 'csv_pirate/pirate_ship.rb'
 
 # Support the old (< v5.0.0) API
 module NinthBit
