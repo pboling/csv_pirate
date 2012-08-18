@@ -1,4 +1,4 @@
-== CsvPirate {<img src="https://secure.travis-ci.org/pboling/csv_pirate.png?branch=master" alt="Build Status" />}[http://travis-ci.org/pboling/csv_pirate]
+== CsvPirate {<img src="https://secure.travis-ci.org/pboling/csv_pirate.png?branch=master" alt="Build Status" />}[http://travis-ci.org/pboling/csv_pirate] <= This cake is a lie.  I am not sure why Travis is failing me.
 
 Easily create CSVs of any data that can be derived from your models.
 
