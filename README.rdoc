@@ -53,29 +53,9 @@ Source:
 Release Announcement:
   http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
-
 == Install as a RubyGem from source
 
   [sudo] gem install csv_pirate
-
-Gem Using Git building from source:
-
-  mkdir -p ~/src
-  cd ~/src
-  git clone git://github.com/pboling/csv_pirate.git
-  cd csv_pirate
-  gem build csv_pirate.gemspec
-  sudo gem install csv_pirate-5.0.4.gem # (Or whatever version gets built)
-
-== Install as a Plugin
-
-Plugin using Git:
-
-  ruby script/plugin install git://github.com/pboling/csv_pirate.git
-
-== Install as a Git Submodule (plugin)
-
-  git submodule add git://github.com/pboling/csv_pirate.git vendor/plugins/csv_pirate
 
 == Upgrading
 
