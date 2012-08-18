@@ -32,4 +32,5 @@ It works better if you are wearing a tricorne!}
   s.add_development_dependency(%q<rdoc>, [">= 3.12"])
   s.add_development_dependency(%q<reek>, [">= 1.2.8"])
   s.add_development_dependency(%q<roodi>, [">= 2.1.0"])
+  s.add_development_dependency(%q<rake>, [">= 0"])
 end
