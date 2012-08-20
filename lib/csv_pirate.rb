@@ -26,7 +26,6 @@ module CsvPirate
   #     extend NinthBit::PirateShip::ActMethods
   #   end
   # If you are using ActiveRecord then it is done for you :)
-puts "parsing CsvPirate"
   if defined?(Rails) && defined?(ActiveRecord)
     if defined?(Rails::Railtie)
       require 'csv_pirate/railtie'
