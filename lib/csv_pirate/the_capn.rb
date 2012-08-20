@@ -45,7 +45,7 @@ module CsvPirate
                                     #   {:array => ['col1',col2','col3'] Uses the column names provided in the array.  If the array provided is too short defaults to :humanize =>'_'
 
     attr_accessor :brigantine       # the complete file path
-    attr_accessor :pinnacle       # the complete file path
+    attr_accessor :pinnacle         # an array of strings for CSV header based on blackjack
     class << self
        attr_accessor :parlay        # verbosity on a scale of 0 - 3 (0=:none, 1=:error, 2=:info, 3=:debug, 0 being no screen output, 1 is default
      end
