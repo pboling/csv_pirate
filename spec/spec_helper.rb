@@ -2,7 +2,10 @@ require 'csv_pirate'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+#Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+# The above does not require the files in the right order on travis-ci, so:
+require 'support/glowing_gas_ball'
+require 'support/star'
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

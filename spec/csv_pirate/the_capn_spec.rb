@@ -1,5 +1,4 @@
 require 'spec_helper' #here in this same config/ dir
-require 'support/glowing_gas_ball'
 
 describe CsvPirate::TheCapn do
   describe "#initialize" do

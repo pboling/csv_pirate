@@ -1,5 +1,4 @@
 require 'spec_helper' #here in this same config/ dir
-require 'support/star'
 
 describe "PirateShip" do
   describe "#walk_the_plank" do

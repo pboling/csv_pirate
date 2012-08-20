@@ -1,3 +1,5 @@
+require 'support/glowing_gas_ball'
+
 class Star < GlowingGasBall
   
   extend CsvPirate::PirateShip::ActMethods
