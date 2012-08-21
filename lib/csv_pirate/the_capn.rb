@@ -131,7 +131,7 @@ module CsvPirate
       @pinnacle = self.block_and_tackle
 
       # Initialize doesn't write anything to a CSV,
-      #   but does create the traverse_board and opens the waggoner for reading / writing
+      #   but does create the traverse_board (file) and opens it for reading / writing
       self.northwest_passage unless self.astrolabe
 
       # This will contain the text of the csv from this particular execution
@@ -214,6 +214,7 @@ module CsvPirate
     end
 
     # Sail through your db looking for buried treasure!
+    # Creates the CSV file and returns the text of the CSV
     # - restricted to loot that can be seen through spyglasses (if provided)!
     def hoist_mainstay
 
@@ -584,6 +585,8 @@ module CsvPirate
       end
     end
 
+    # !!!EXPERIMENTAL!!!
+    #
     # During a mutiny things are a little different!
     # Essentially you are using an existing CSV to drive queries to create a second CSV cased on the first
     # The capn hash is:

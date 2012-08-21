@@ -55,7 +55,7 @@ Source:
 Release Announcement:
   http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
-== Install as a RubyGem from source
+== Install
 
   [sudo] gem install csv_pirate
 
