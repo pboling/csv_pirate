@@ -1,9 +1,12 @@
-Version 5.0.5 2012-08-18
+Version 5.0.5 2012-08-20
 - Updated to tests to latest rspec
+- Fixed specs to be able to run on other machines that don't have y cruft (like travis-ci!)
 - Moved railtie to it's own file
 - Switched configuration hook to :before_initialize so it will work with rake tasks
 - Switched from jeweler to gem-release
 - Updated version.rb to work with gem-release, and maintain previous functionality
+- Added new specs
+- refactored some bits of logic
 
 Version 5.0.4 2011-06-16
 - File Cleanup

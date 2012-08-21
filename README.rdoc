@@ -13,7 +13,7 @@ My goal is to have it do EVERYTHING it possibly can for me, since almost every p
 
 CsvPirate only works for commissions of swag OR grub!
 
-Initialize method (a.k.a new()) takes a hash of parameters:
+Initialize method (a.k.a new()) takes a hash of parameters, and creates the blank CSV file, and the instance can be modified prior to writing out to CSV:
 
   # CsvPirate only works for commissions of swag OR grub!
   # :swag           the ARrr collection of swag to work on (optional)
@@ -39,21 +39,14 @@ Initialize method (a.k.a new()) takes a hash of parameters:
   #   {:join => '-'}    joins the method names called to get hte data for that column with '_' underscores.
   #   {:humanize =>'-'} first joins as above, then humanizes the string (this is the default)
   #   {:array => ['col1',col2','col3'] Uses the column names provided.  If the array's length is less than the booty array's length it reverts to :humanize =>'_'
-  # check the source to see if there anything else hiding in there!  There are a few new options in the 4.0.0 release, which are as yet undocumented.
 
-The create method has the same parameters, and actually creates the CSV.
+Check the source to see if there anything else hiding in there!  (HINT: There a bunch more undocumented options)
+
+The create method has the same parameters, and actually writes the data to the CSV.
 
 Avast! Here be pirates! To brush up on pirate coding naming conventions:
 
   http://www.privateerdragons.com/pirate_dictionary.html
-
-== On The Web
-
-Source:
-  http://github.com/pboling/csv_pirate
-
-Release Announcement:
-  http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
 == Install
 
@@ -401,10 +394,6 @@ This allows you to modify the csv_pirate object before creating the csv like thi
 
 The tests are run with rspec.  The test suite is expanding.  Currently there is ample coverage of basic functionality.
 
-You will need these gems to run specs:
-
-  gem install jeweler cucumber test-unit rspec
-
 If on a Ruby prior to Ruby 1.9 you will also need the fastercsv gem
 
 To run tests cd to where ever you have csv_pirate installed, and do:
@@ -431,6 +420,13 @@ http://www.bradino.com/misc/sylk-file-format-is-not-valid/
 * Make sure to add tests, rspec preferred, for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or change log. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
+== On The Web
+
+Source:
+  http://github.com/pboling/csv_pirate
+
+Release Announcement:
+  http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
 == Thanks
 
