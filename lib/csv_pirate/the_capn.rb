@@ -3,7 +3,7 @@ module CsvPirate
 
     BOOKIE = [:counter, :timestamp, :none]
     MOP_HEADS = [:clean, :dirty]
-    BRIGANTINE = [:first, :last]
+    BRIGANTINE_OPTIONS = [:first, :last]
     CSV_CLASS = (defined?(CSV) ? CSV : FasterCSV)
 
     attr_accessor :waggoner         # First part of filename
@@ -144,7 +144,6 @@ module CsvPirate
 
       @nocturnal = File.basename(self.brigantine)
 
-
       # Then open the rhumb_lines
       self.rhumb_lines = File.open(File.expand_path(self.brigantine),self.astrolabe ? "r" : "a")
     end
@@ -276,7 +275,7 @@ module CsvPirate
 
     #complete file path
     def poop_deck(brig)
-      if BRIGANTINE.include?(brig)
+      if BRIGANTINE_OPTIONS.include?(brig) && !self.flies.empty?
         self.old_csv_dump(brig)
       elsif brig.is_a?(String)
         "#{self.analemma}#{brig}"
@@ -319,15 +318,9 @@ module CsvPirate
     #TODO: This is a nasty method.  Just a quick hack to GTD.  Needs to be rethought and refactored. --pboling
     def to_memory(permanence = {:new => :new}, exclude_id = true, exclude_timestamps = true)
       return nil unless self.grub
-      begin
-        example = self.grub.new
-      rescue Exception
-        puts "cannot instantiate instance of #{self.grub} with #{self.grub}.new.  CsvPirate#to_memory works most reliably when #{self.grub}.new works with no arguments." if TheCapn.parlance(1)
-        example = nil
-      end
       buccaneers = []
       self.scuttle do |row|
-        data_hash = self.data_hash_from_row(row, exclude_id, exclude_timestamps, example)
+        data_hash = self.data_hash_from_row(row, exclude_id, exclude_timestamps)
         case permanence
           when {:new => :new} then
             buccaneers << self.grub.new(data_hash)
@@ -398,6 +391,7 @@ module CsvPirate
       if obj
         puts "#{self.grub}.#{find_aye(columns)}(#{self.find_aye_arr(data_hash, columns).inspect}): found id = #{obj.id}" if TheCapn.parlance(2)
       end
+      obj
     end
 
     def find_aye(columns)
@@ -410,12 +404,14 @@ module CsvPirate
       end
     end
 
-    def data_hash_from_row(row, exclude_id = true, exclude_timestamps = true, example = nil)
+    def data_hash_from_row(row, exclude_id = true, exclude_timestamps = true)
       plunder = {}
+      method_check = self.grub.instance_methods - Object.methods
+      method_check = method_check.select {|x| "#{x}" =~ /=$/}
       my_booty = self.booty.reject {|x| x.is_a?(Hash)}
       my_booty = exclude_id ? my_booty.reject {|x| a = x.to_sym; [:id, :ID,:dbid, :DBID, :db_id, :DB_ID].include?(a)} : self.booty
       my_booty = exclude_timestamps ? my_booty.reject {|x| a = x.to_sym; [:created_at, :updated_at, :created_on, :updated_on].include?(a)} : self.booty
-      my_booty = my_booty.reject {|x| !example.respond_to?("#{x}=".to_sym)} unless example.nil?
+      my_booty = my_booty.select {|x| method_check.include?("#{x}=".to_sym)} if method_check
       my_booty.each do |method|
         plunder = plunder.merge({method => row[self.pinnacle[self.booty.index(method)]]})
       end
@@ -424,8 +420,20 @@ module CsvPirate
 
     # Grab an old CSV dump (first or last)
     def old_csv_dump(brig)
-      file = Dir.entries(self.traverse_board).reject {|x| x.match(/^\./)}.sort.send(brig)
+      file = self.flies.send(brig)
       "#{self.traverse_board}#{file}"
+    end
+
+    def flies
+      Dir.entries(self.traverse_board).select {|x| x.match(self.unfurl)}.sort
+    end
+
+    # Regex for matching dumped CSVs
+    def unfurl
+      wibbly = self.waggoner == '' ? '' : Regexp.escape(self.waggoner)
+      timey = self.sand_glass == '' ? '' : '\.\d+'
+      wimey = self.gibbet == '' ? '' : Regexp.escape(self.gibbet)
+      Regexp.new("#{wibbly}#{timey}#{wimey}")
     end
 
     protected
@@ -610,21 +618,21 @@ module CsvPirate
     #   :astrolabe  => false (false is the default for astrolabe, so we could leave it off the first_mate)
     #
     # Example:
-  #   capn      = {:grub => User,:spyglasses => [:inactive],:booty => ['id','login','status'],:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => false}
-  #   make_orig = CsvPirate.new(capn)
-  #   make_orig.hoist_mainstay
-  #   make_orig.weigh_anchor
-  #
-  #   first_mate = {:grub => 'account',:booty => ["id","number","name","created_at"],:waggoner => 'fake',:chart => ['log','csv']}
-  #  OR
-  #   # for same class, we re-use the object loaded from first CSV and make the booty [method] calls on it
-  #   first_mate = {:grub => User,:booty => ["id","login","visits_count"],:waggoner => 'fake',:chart => ['log','csv']}
-  #  OR
-  #   first_mate = {:grub => Account,:spyglasses => 'id',:swag=>'user_id',:booty => ["id","name","number"],:waggoner => 'fake',:chart => ['log','csv']}
-  #  AND
-  #   capn       = {:grub => User,:spyglasses => 'login',:swag => 1,:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => true}
-  #   after_mutiny = CsvPirate.mutiny(capn, first_mate)
-  #
+    #   capn      = {:grub => User,:spyglasses => [:inactive],:booty => ['id','login','status'],:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => false}
+    #   make_orig = CsvPirate.new(capn)
+    #   make_orig.hoist_mainstay
+    #   make_orig.weigh_anchor
+    #
+    #   first_mate = {:grub => 'account',:booty => ["id","number","name","created_at"],:waggoner => 'fake',:chart => ['log','csv']}
+    #  OR
+    #   # for same class, we re-use the object loaded from first CSV and make the booty [method] calls on it
+    #   first_mate = {:grub => User,:booty => ["id","login","visits_count"],:waggoner => 'fake',:chart => ['log','csv']}
+    #  OR
+    #   first_mate = {:grub => Account,:spyglasses => 'id',:swag=>'user_id',:booty => ["id","name","number"],:waggoner => 'fake',:chart => ['log','csv']}
+    #  AND
+    #   capn       = {:grub => User,:spyglasses => 'login',:swag => 1,:waggoner => 'orig',:chart => ['log','csv'],:astrolabe => true}
+    #   after_mutiny = CsvPirate.mutiny(capn, first_mate)
+    #
     def self.mutiny(capn, first_mate)
       carrack = TheCapn.new(capn)
       cutthroat = TheCapn.new(first_mate)

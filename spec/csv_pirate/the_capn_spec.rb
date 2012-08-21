@@ -106,10 +106,10 @@ describe CsvPirate::TheCapn do
     end
   end
 
-  describe "#old_csv_dump" do
-
+  describe "dated dumps" do
     before(:each) do
-      ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
+      ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].each do |x|
+        date = Date.parse(x)
         @csv_pirate = CsvPirate::TheCapn.new({
               :grub => GlowingGasBall,
               :spyglasses => [:get_stars],
@@ -123,66 +123,89 @@ describe CsvPirate::TheCapn do
       end
     end
 
-    it "should find first (oldest) dump" do
-      @new_csv_pirate = CsvPirate::TheCapn.new({
-            :grub => GlowingGasBall,
-            :spyglasses => [:get_stars],
-            :chart => ["spec","csv","GlowingGasBall","dumps"],
-            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
-            :chronometer => false,
-            :brigantine => :first,
-            :swab => :none,
-            :mop => :clean
-      })
-      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.19980101.export.csv"
+    describe "#flies" do
+      it "should list exported files" do
+        @csv_pirate.flies.include?("GlowingGasBall.19980101.export.csv").should be_true
+        @csv_pirate.flies.include?("GlowingGasBall.20010203.export.csv").should be_true
+        @csv_pirate.flies.include?("GlowingGasBall.20020202.export.csv").should be_true
+        @csv_pirate.flies.include?("GlowingGasBall.20030201.export.csv").should be_true
+        @csv_pirate.flies.include?("GlowingGasBall.20070102.export.csv").should be_true
+      end
     end
 
-    it "should find last (newest) dump" do
-      @new_csv_pirate = CsvPirate::TheCapn.new({
-            :grub => GlowingGasBall,
-            :spyglasses => [:get_stars],
-            :chart => ["spec","csv","GlowingGasBall","dumps"],
-            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
-            :chronometer => false,
-            :brigantine => :last,
-            :swab => :none,
-            :mop => :clean
-      })
-      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.20070201.export.csv"
-    end
-  end
-
-  describe "#to_memory" do
-
-    before(:each) do
-      ["1/1/1998","2/2/2002","1/2/2003","3/2/2001","2/1/2007"].map {|x| Date.parse(x)}.each do |date|
-        @csv_pirate = CsvPirate::TheCapn.new({
+    describe "#old_csv_dump" do
+      it "should find first (oldest) dump" do
+        @new_csv_pirate = CsvPirate::TheCapn.new({
               :grub => GlowingGasBall,
               :spyglasses => [:get_stars],
               :chart => ["spec","csv","GlowingGasBall","dumps"],
               :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
-              :chronometer => date,
+              :chronometer => Date.parse('18/4/2011'),
+              :brigantine => :first,
               :swab => :none,
               :mop => :clean
         })
-        @csv_pirate.hoist_mainstay
+        @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.19980101.export.csv"
+      end
+
+      it "should find last (newest) dump" do
+        @new_csv_pirate = CsvPirate::TheCapn.new({
+              :grub => GlowingGasBall,
+              :spyglasses => [:get_stars],
+              :chart => ["spec","csv","GlowingGasBall","dumps"],
+              :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+              :chronometer => nil,
+              :brigantine => :last,
+              :swab => :none,
+              :mop => :clean
+        })
+        @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.20070102.export.csv"
       end
     end
 
-    it "should return an array of 10 grubs built from data in CSV" do
-      @new_csv_pirate = CsvPirate::TheCapn.new({
-            :grub => GlowingGasBall,
-            :spyglasses => [:get_stars],
-            :chart => ["spec","csv","GlowingGasBall","dumps"],
-            :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
-            :chronometer => false,
-            :brigantine => :last,
-            :swab => :none,
-            :mop => :clean
-      })
-      @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.20070201.export.csv"
-      @new_csv_pirate.to_memory.class.should == Array
-      @new_csv_pirate.to_memory.length.should == 10
+    describe "#to_memory" do
+      it "should return an array of 10 grubs built from data in CSV" do
+        @new_csv_pirate = CsvPirate::TheCapn.new({
+              :grub => GlowingGasBall,
+              :spyglasses => [:get_stars],
+              :chart => ["spec","csv","GlowingGasBall","dumps"],
+              :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+              :chronometer => false,
+              :brigantine => :last,
+              :swab => :none,
+              :mop => :clean
+        })
+        @new_csv_pirate.brigantine.should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.export.csv"
+        @new_csv_pirate.to_memory.class.should == Array
+        @new_csv_pirate.hoist_mainstay
+        # After the CSV is written we should have an array of stuff
+        @new_csv_pirate.to_memory.length.should == 10
+      end
+    end
+
+    context "protected methods" do
+      before(:each) do
+        @new_csv_pirate = CsvPirate::TheCapn.new({
+              :grub => GlowingGasBall,
+              :spyglasses => [:get_stars],
+              :chart => ["spec","csv","GlowingGasBall","dumps"],
+              :booty => [:name, :distance, :spectral_type, {:name => :hash}, {:name => :next}, {:name => :upcase}, :star_vowels ],
+              :chronometer => false,
+              :swab => :none,
+              :mop => :clean
+        })
+      end
+
+      describe "#lantern" do
+        it "should be a glob" do
+          @new_csv_pirate.send(:lantern).should == "spec/csv/GlowingGasBall/dumps/GlowingGasBall.export.*"
+        end
+      end
+      describe "#merchantman" do
+        it "should be" do
+          @new_csv_pirate.send(:merchantman).should == "GlowingGasBall.export"
+        end
+      end
     end
   end
 
