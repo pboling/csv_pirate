@@ -1,6 +1,6 @@
 module CsvPirate
 
-  VERSION = "5.0.5"
+  VERSION = "5.0.6.pre1"
 
   VERSION_ARRAY = VERSION.split('.')
 
