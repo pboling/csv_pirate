@@ -30,4 +30,28 @@ describe CsvPirate do
     end
   end
 
+  describe "#new" do
+    it "should support the old < v5 syntax" do
+      # Similar to example from the readme
+      CsvPirate.new({
+        :swag => [Struct.new(:first_name, :last_name, :birthday).new('Joe','Smith','12/24/1805')],
+        :waggoner => 'active_users_logged_in',
+        :booty => [:first_name, :last_name],
+        :chart => ['log','csv']
+      }).class.should == CsvPirate::TheCapn
+    end
+  end
+
+  describe "#create" do
+    it "should support the old < v5 syntax" do
+      # Similar to example from the readme
+      CsvPirate.create({
+        :swag => [Struct.new(:first_name, :last_name, :birthday).new('Joe','Smith','12/24/1805')],
+        :waggoner => 'active_users_logged_in',
+        :booty => [:first_name, :last_name],
+        :chart => ['log','csv']
+      }).class.should == CsvPirate::TheCapn
+    end
+  end
+
 end
