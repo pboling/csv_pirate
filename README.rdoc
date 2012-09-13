@@ -174,7 +174,7 @@ Assuming a Make (as in manufacturers of automobiles) model like this:
                         :spyglasses     => [:all]               # Array of symbols/strings: Methods that will be chained together and called on :grub in order to get the :swag records which will become the rows of the CSV.
                         :booty          => Make.column_names    # Array of symbols/strings or nested hashes of symbols/strings: Methods to call on each object in :swag.  These become the columns of the CSV.  The method names become the CSV column headings.  Methods can be chained to dig deep (e.g. traverse several ActiveRecord associations) to get at a value for the CSV. To call instance methods that include arguments, pass a booty element of an array such as [:method_name, arg1, arg2...].
 
-                        :swab           => :counter             # Symbol: What kind of file counter to use to avoid overwtiting the CSV file, :counter is Integer, :timestamp is HHMMSS, :none is no file counter, increasing the liklihood of duplicate filenames on successive csv exports.
+                        :swab           => :counter             # Symbol: What kind of file counter to use to avoid overwriting the CSV file, :counter is Integer, :timestamp is HHMMSS, :none is no file counter, increasing the likelihood of duplicate filenames on successive csv exports.
                         :mop            => :clean               # Symbol: If we DO end up writing to a preexisting file (by design or accident) should we overwrite (:clean) or append (:dirty)?
                         :shrouds        => ','                  # String: Delimiter for CSV.  '\t' will create a tab delimited file (tsv), '|' will create a pipe delimited file.
                         :bury_treasure  => true                 # Boolean: Should the array of objects in :swag be stored in the CsvPirate object for later inspection?
@@ -213,7 +213,7 @@ What if you want the file name to be always the same and to always append to the
   Make.walk_the_plank({:chronometer => false, :gibbet => "", :aft => "", :swab => :none, :waggoner => 'data'})
   Make.blindfold(:chronometer => false, :gibbet => "", :aft => "", :swab => :none, :waggoner => 'data')
 
-All of the options to has_csv_pirate_ship are available to walk_the_plank, land_ho, and blindfold, as well as to the raw class methods CsvPirate.new and CsvPirate.create, but not neccessarily the other way around.
+All of the options to has_csv_pirate_ship are available to walk_the_plank, land_ho, and blindfold, as well as to the raw class methods CsvPirate::TheCapn.new and CsvPirate::TheCapn.create, but not necessarily the other way around.
 
 You can also customize the CSV, for example if you want to customize which columns are in the csv:
 
@@ -260,7 +260,7 @@ You can also use the raw CsvPirate class itself directly wherever you want.
 
 The following two sets of code are identical:
 
-  csv_pirate = CsvPirate.new({
+  csv_pirate = CsvPirate::TheCapn.new({
     :grub => User,
     :spyglasses => [:active,:logged_in],
     :waggoner => 'active_users_logged_in',
@@ -269,7 +269,7 @@ The following two sets of code are identical:
   })
   csv_pirate.hoist_mainstay() # creates CSV file and writes out the rows
 
-  CsvPirate.create({
+  CsvPirate::TheCapn.create({
     :grub => User,
     :spyglasses => [:active,:logged_in],
     :waggoner => 'active_users_logged_in',
@@ -280,7 +280,7 @@ The following two sets of code are identical:
 Another example using swag instead of grub:
 
   users = User.logged_out.inactive
-  csv_pirate = CsvPirate.new({
+  csv_pirate = CsvPirate::TheCapn.new({
     :swag => users,
     :waggoner => 'inactive_users_not_logged_in',
     :booty => ["id","number","login","created_at"],
@@ -294,11 +294,11 @@ Then if you want to get your hands on the loot immediately:
 
 For those who can't help but copy/paste into console and then edit:
 
-  csv_pirate = CsvPirate.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
+  csv_pirate = CsvPirate::TheCapn.new({:grub => User,:spyglasses => [:active,:logged_in],:waggoner => 'active_users_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
 
 OR
 
-  csv_pirate = CsvPirate.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
+  csv_pirate = CsvPirate::TheCapn.new({:swag => users,:waggoner => 'inactive_users_not_logged_in',:booty => ["id","number","login","created_at"],:chart => ['log','csv']})
 
 
 == Downloading the CSV

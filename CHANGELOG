@@ -1,3 +1,7 @@
+HEAD
+
+- Updated Readme to not advertise deprecated usage as much.
+
 Version 5.0.6 2012-09-13
 - Added back more support for pre v5 syntax with deprecation warnings.  CsvPirate.new & create now work again. (Issue 2)
 
