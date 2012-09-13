@@ -1,4 +1,7 @@
-Version 5.0.5 2012-08-20
+Version 5.0.6 2012-09-13
+- Added back more support for pre v5 syntax with deprecation warnings.  CsvPirate.new & create now work again. (Issue 2)
+
+Version 5.0.6.pre1 2012-08-20
 - Updated to tests to latest rspec
 - Fixed specs to be able to run on other machines that don't have y cruft (like travis-ci!)
 - Moved railtie to it's own file
