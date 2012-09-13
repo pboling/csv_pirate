@@ -33,6 +33,18 @@ module CsvPirate
       ActiveRecord::Base.send(:extend, CsvPirate::PirateShip::ActMethods)
     end
   end
+
+  # Support the old (< v5.0.0) API
+  def self.new(*args)
+    warn "[DEPRECATION] \"CsvPirate.new\" is deprecated.  Use \"CsvPirate::TheCapn.new\" instead.  Called from: #{caller.first}"
+    CsvPirate::TheCapn.new(*args)
+  end
+
+  def self.create(*args)
+    warn "[DEPRECATION] \"CsvPirate.create\" is deprecated.  Use \"CsvPirate::TheCapn.create\" instead.  Called from: #{caller.first}"
+    CsvPirate::TheCapn.new(*args)
+  end
+
 end
 
 # Support the old (< v5.0.0) API
@@ -44,7 +56,7 @@ module NinthBit
       has_csv_pirate = ActMethods.instance_method(:has_csv_pirate_ship)
 
       define_method(:has_csv_pirate_ship) do |args|
-        warn "[DEPRECATION] \"NinthBit::PirateShip::ActMethods\" module is deprecated.  Use \"include CsvPirate::PirateShip::ActMethods\" instead.  Called from: #{Kernel.caller.first}"
+        warn "[DEPRECATION] \"NinthBit::PirateShip::ActMethods\" module is deprecated.  Use \"include CsvPirate::PirateShip::ActMethods\" instead.  Called from: #{caller.first}"
         has_csv_pirate.bind(self).call(args)
       end
 
