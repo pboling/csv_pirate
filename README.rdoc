@@ -22,7 +22,7 @@ Initialize method (a.k.a new()) takes a hash of parameters, and creates the blan
   #                   and order them according to the order of the spyglasses (optional)
   # :booty          booty (columns/methods) on your model that you want printed in the CSV, also used to create the figurehead (CSV header)
   # :chart          array of directory names (relative to rails root if using rails) which will be the filepath where you want to hide your loot
-  # :wagonner       name of document where you will give detailed descriptions of the loot
+  # :waggoner       name of document where you will give detailed descriptions of the loot
   # :aft            filename extention ('.csv')
   # :shrouds        CSV column separator, default is ','. For tsv, tab-delimited, "\t"
   # :chronometer    keeps track of when you hunt for treasure
