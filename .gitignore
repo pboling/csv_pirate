@@ -61,3 +61,4 @@ pkg
 spec/csv/*
 
 log
+.rvmrc
