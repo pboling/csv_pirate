@@ -239,4 +239,40 @@ describe CsvPirate::TheCapn do
     end
   end
 
+  describe ":bury_treasure option" do
+    describe "when true" do
+      before(:each) do
+        # Similar to example from the readme
+        @csv_pirate = CsvPirate::TheCapn.create({
+                                                  :swag => [Struct.new(:first_name, :last_name, :birthday).new('Joe','Smith','12/24/1805')],
+                                                  :waggoner => 'active_users_logged_in',
+                                                  :booty => [:first_name, :last_name],
+                                                  :chart => ['log','csv'],
+                                                  :bury_treasure => true
+                                                })
+      end
+      it "should bury treasure in buried_treasure as array" do
+        @csv_pirate.buried_treasure.class.should == Array
+      end
+      it "should have buried treasure" do
+        @csv_pirate.buried_treasure.first.should == %w(Joe Smith)
+      end
+    end
+    describe "when false" do
+      before(:each) do
+        # Similar to example from the readme
+        @csv_pirate = CsvPirate::TheCapn.create({
+                                                  :swag => [Struct.new(:first_name, :last_name, :birthday).new('Joe','Smith','12/24/1805')],
+                                                  :waggoner => 'active_users_logged_in',
+                                                  :booty => [:first_name, :last_name],
+                                                  :chart => ['log','csv'],
+                                                  :bury_treasure => false
+                                                })
+      end
+      it "should not bury any treasure in the buried_treasure array" do
+        @csv_pirate.buried_treasure.should == []
+      end
+    end
+  end
+
 end
