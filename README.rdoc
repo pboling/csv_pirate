@@ -103,7 +103,7 @@ Since the defaults assume an active record class you need to override some of th
       @distance = args.first[:distance]
       @spectral_type = args.first[:spectral_type]
     end
-    
+
     def star_vowels
       self.name.tr('aeiou', '*')
     end
