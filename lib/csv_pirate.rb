@@ -42,7 +42,7 @@ module CsvPirate
 
   def self.create(*args)
     warn "[DEPRECATION] \"CsvPirate.create\" is deprecated.  Use \"CsvPirate::TheCapn.create\" instead.  Called from: #{caller.first}"
-    CsvPirate::TheCapn.new(*args)
+    CsvPirate::TheCapn.create(*args)
   end
 
 end
