@@ -116,7 +116,7 @@ module CsvPirate
 
       @astrolabe = args.first[:astrolabe] || false
 
-      @bury_treasure = args.first[:astrolabe] || false
+      @bury_treasure = args.first[:bury_treasure] || false
       @buried_treasure = []
 
       #does not rely on rails humanize!
