@@ -1,5 +1,9 @@
-HEAD
+Version 5.0.7 2012-12-28
 
+- BUGFIX - Corrected implementation of :bury_treasure option, which allows storage of results as an array in buried_treasure
+- BUGFIX - Corrected implementation of CsvPirate.create (v5 compatibility) to use CsvPirate::TheCapn.create
+- SPECS - Added tests for :bury_treasure option
+- SPECS - Improved tests for v5 compatibility
 - Updated Readme to not advertise deprecated usage as much.
 
 Version 5.0.6 2012-09-13
