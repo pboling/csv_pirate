@@ -426,6 +426,22 @@ Source:
 Release Announcement:
   http://galtzo.blogspot.com/2009/03/csv-pirate.html
 
+== Versioning
+
+This library aims to adhere to {Semantic Versioning 2.0.0}[http://semver.org/].
+Violations of this scheme should be reported as bugs. Specifically, 
+if a minor or patch version is released that breaks backward 
+compatibility, a new version should be immediately released that
+restores compatibility. Breaking changes to the public API will 
+only be introduced with new major versions.
+
+As a result of this policy, you can (and should) specify a 
+dependency on this gem using the {Pessimistic Version Constraint}[http://docs.rubygems.org/read/chapter/16#page74] with two digits of precision.
+
+For example:
+
+    spec.add_dependency 'twitter', '~> 4.0'
+
 == Thanks
 
 Thanks go to:
