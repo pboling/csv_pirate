@@ -20,7 +20,6 @@ It works better if you are wearing a tricorne!}
   s.homepage = %q{http://github.com/pboling/csv_pirate}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Easily create CSVs of any data that can be derived from instance methods on your classes.}
 
   #FasterCSV became the built-in CSV library in Ruby 1.9, so is only required if using Ruby 1.8

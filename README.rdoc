@@ -50,6 +50,11 @@ Avast! Here be pirates! To brush up on pirate coding naming conventions:
 
   [sudo] gem install csv_pirate
 
+  If you are still using Ruby < 1.9 then you will need to add fastercsv to your project.
+  FasterCSV became the built-in CSV library in Ruby 1.9, so is *only* required if using an older Ruby.
+
+  gem 'faster_csv', '>= 1.4.0'
+
 == Upgrading
 
   From version prior to 5.0
