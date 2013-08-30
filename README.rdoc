@@ -7,7 +7,8 @@ It works better if you are wearing a tricorne!
 
 Compatible with:
 
-Ruby 1.8.7, 1.9.2, 1.9.3, and 2.0.0
+Ruby 1.8.7 (Must also install/require 'faster_csv')
+Ruby 1.9.2, 1.9.3, and 2.0.0
 Rails 2, 3, and 4
 
 Everything in the source that depended on Rails extensions of Ruby classes has been refactored to work in pure Ruby!
