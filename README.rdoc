@@ -429,27 +429,26 @@ Release Announcement:
 == Versioning
 
 This library aims to adhere to {Semantic Versioning 2.0.0}[http://semver.org/].
-Violations of this scheme should be reported as bugs. Specifically, 
-if a minor or patch version is released that breaks backward 
+Violations of this scheme should be reported as bugs. Specifically,
+if a minor or patch version is released that breaks backward
 compatibility, a new version should be immediately released that
-restores compatibility. Breaking changes to the public API will 
+restores compatibility. Breaking changes to the public API will
 only be introduced with new major versions.
 
-As a result of this policy, you can (and should) specify a 
+As a result of this policy, you can (and should) specify a
 dependency on this gem using the {Pessimistic Version Constraint}[http://docs.rubygems.org/read/chapter/16#page74] with two digits of precision.
 
 For example:
 
-    spec.add_dependency 'csv_pirate', '~> 4.0'
+    spec.add_dependency 'csv_pirate', '~> 5.0'
 
 == Thanks
 
 Thanks go to:
 
-* 9thBit LLC (http://www.9thBit.net) - Peter Boling, author of CsvPirate, runs the joint.
-* Sagebit LLC (http://www.sagebit.com) - Sagebit has been very supportive of my open source efforts, thanks Ben!
+* [Peter Boling](http://railsbling.com), author of CsvPirate, runs the joint.
 * TimePerks LLC (http://www.timeperks.com) - Many useful enhancements were requested and paid for by TimePerks
 
 ----------------------------------------------------------------------------------
   Author: Peter Boling, peter.boling at gmail dot com
-  Copyright (c) 2008-2012 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
+  Copyright (c) 2008-2013 Peter H. Boling of 9thBit LLC, released under the MIT license.  See LICENSE for details.
