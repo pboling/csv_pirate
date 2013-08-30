@@ -5,7 +5,6 @@ Gem::Specification.new do |s|
   s.name = %q{csv_pirate}
   s.version = CsvPirate::VERSION
 
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Peter Boling"]
   s.description = %q{CsvPirate is the easy way to create a CSV of essentially anything in Ruby, in full pirate regalia.
 It works better if you are wearing a tricorne!}
@@ -19,13 +18,10 @@ It works better if you are wearing a tricorne!}
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.homepage = %q{http://github.com/pboling/csv_pirate}
   s.licenses = ["MIT"]
+  s.platform = Gem::Platform::RUBY
   s.require_paths = ["lib"]
   s.summary = %q{Easily create CSVs of any data that can be derived from instance methods on your classes.}
 
-  #FasterCSV became the built-in CSV library in Ruby 1.9, so is only required if using Ruby 1.8
-  if RUBY_VERSION =~ /^1\.8\.\d*/
-    s.add_runtime_dependency(%q<fastercsv>, [">= 1.4.0"])
-  end
   s.add_development_dependency(%q<rspec>, [">= 2.11.0"])
   s.add_development_dependency(%q<shoulda>, [">= 0"])
   s.add_development_dependency(%q<rdoc>, [">= 3.12"])
