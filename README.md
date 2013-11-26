@@ -23,7 +23,7 @@ It works better if you are wearing a tricorne!
 
 ## Compatibility
 
-* Ruby 1.8.7 (Must also install/require 'faster_csv')
+* Ruby 1.8.7 (Must also `gem install fastercsv` and `require 'faster_csv'`)
 * Ruby 1.9.2, 1.9.3, and 2.0.0
 * Rails (ActiveRecord) 2, 3, and 4
 
@@ -73,10 +73,10 @@ Avast! Here be pirates! Brush up on [pirate coding naming conventions](http://ww
 
     gem install csv_pirate
 
-If you are still using Ruby < 1.9 then you will need to add fastercsv to your project.
+If you are still using Ruby < 1.9 then you will need to add `fastercsv` to your project.
 FasterCSV became the built-in CSV library in Ruby 1.9, so is *only* required if using an older Ruby.
 
-    gem 'faster_csv', '>= 1.4.0'
+    gem 'fastercsv', '>= 1.4.0'
 
 
 ## Upgrading
@@ -426,7 +426,7 @@ This allows you to modify the csv_pirate object before creating the csv like thi
 
 The tests are run with rspec.  The test suite is expanding.  Currently there is ample coverage of basic functionality.
 
-If on a Ruby prior to Ruby 1.9 you will also need the fastercsv gem
+If on a Ruby prior to Ruby 1.9 you will also need the `fastercsv` gem
 
 To run tests cd to where ever you have csv_pirate installed, and do:
 
