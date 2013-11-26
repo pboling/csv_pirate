@@ -23,9 +23,9 @@ It works better if you are wearing a tricorne!
 
 ## Compatibility
 
-Ruby 1.8.7 (Must also install/require 'faster_csv')
-Ruby 1.9.2, 1.9.3, and 2.0.0
-Rails (ActiveRecord) 2, 3, and 4
+* Ruby 1.8.7 (Must also install/require 'faster_csv')
+* Ruby 1.9.2, 1.9.3, and 2.0.0
+* Rails (ActiveRecord) 2, 3, and 4
 
 ## Usage
 
@@ -430,7 +430,21 @@ If on a Ruby prior to Ruby 1.9 you will also need the fastercsv gem
 
 To run tests cd to where ever you have csv_pirate installed, and do:
 
-    rake spec
+    bundle exec rake spec
+
+
+## How you can help!
+
+This code was written in 2008, as one of my first gems, and is aging well, but can certainly be improved.
+
+Take a look at the `reek` list, which is the file called `REEK`, and stat fixing things.  Once you complete a change, run the tests.  See "Running the gem tests".
+
+If the tests pass refresh the `reek` list:
+
+    bundle exec rake reek > REEK
+
+Follow the instructions for "Contributing" below.
+
 
 ## Compatibility with Micrsoft Excel
 
@@ -440,6 +454,7 @@ in rails starts with an id column.  So buyer beware... make your first column lo
 if you need to export the id field.
 
 http://www.bradino.com/misc/sylk-file-format-is-not-valid/
+
 
 ## Contributing to CsvPirate
 
