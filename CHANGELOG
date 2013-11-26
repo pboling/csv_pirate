@@ -1,7 +1,9 @@
-Version 5.0.8 2013-08-30
-- BUGFIX - Fixed MINOR/PATCH/BUILD version values
-- Removed Ruby 1.8.7 hand holding, added instructions for installation of 'faster_csv' when on 1.8.7
-- Updated travis builds (Rbx-2.1.1, Ruby 1.8.7, 1.9.2 added back)
+Version 5.0.9 2013-11-26
+- Added back travis builds for 1.8.7, 1.9.2, and updated to rbx-2.1.1
+- Added coveralls, and badges
+- Updated readme, converted to markdown
+- Added the reek list
+- Tested against ActiveRecord 2.3 - 4.0
 
 Version 5.0.8 2013-08-30
 - BUGFIX - Fixed MINOR/PATCH/BUILD version values
