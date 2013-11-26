@@ -4,8 +4,9 @@ Easily create CSVs of any data that can be derived from any Ruby object (PORO).
 
 | Project                 |  Sanitize Email   |
 |------------------------ | ----------------- |
-| gem name                |  csv_pirate    |
+| gem name                |  csv_pirate       |
 | license                 |  MIT              |
+| moldiness               |  [![Maintainer Status](http://stillmaintained.com/pboling/csv_pirate.png)](http://stillmaintained.com/pboling/csv_pirate) |
 | version                 |  [![Gem Version](https://badge.fury.io/rb/csv_pirate.png)](http://badge.fury.io/rb/csv_pirate) |
 | dependencies            |  [![Dependency Status](https://gemnasium.com/pboling/csv_pirate.png)](https://gemnasium.com/pboling/csv_pirate) |
 | code quality            |  [![Code Climate](https://codeclimate.com/github/pboling/csv_pirate.png)](https://codeclimate.com/github/pboling/csv_pirate) |
