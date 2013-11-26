@@ -1,5 +1,5 @@
 # CsvPirate
-# Copyright ©2008-2012 Peter H. Boling of 9thBit LLC, released under the MIT license
+# Copyright ©2008-2013 Peter H. Boling of RailsBling.com, released under the MIT license
 # Gem / Plugin for Rails / Active Record: Easily make CSVs of anything that can be derived from your models
 # Language: Ruby (written by a pirate)
 # License:  MIT License

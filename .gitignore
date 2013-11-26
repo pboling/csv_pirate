@@ -1,4 +1,4 @@
-# rcov generated
+# rcov/simplecov/coveralls generated
 coverage
 
 # rdoc generated
@@ -62,3 +62,6 @@ spec/csv/*
 
 log
 .rvmrc
+
+# Continuous Integration Artifacts
+gemfiles/*.lock

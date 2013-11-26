@@ -11,7 +11,7 @@ It works better if you are wearing a tricorne!}
   s.email = %q{peter.boling@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE",
-    "README.rdoc"
+    "README.md"
   ]
   s.files         = `git ls-files`.split($\)
   s.executables   = s.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -28,4 +28,6 @@ It works better if you are wearing a tricorne!}
   s.add_development_dependency(%q<reek>, [">= 1.2.8"])
   s.add_development_dependency(%q<roodi>, [">= 2.1.0"])
   s.add_development_dependency(%q<rake>, [">= 0"])
+  s.add_development_dependency "coveralls"
+
 end

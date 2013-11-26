@@ -1,3 +1,9 @@
+# For code coverage, must be required before all application / gem / library code.
+unless ENV['NOCOVER']
+  require 'coveralls'
+  Coveralls.wear!
+end
+
 require 'csv_pirate'
 
 # Requires supporting files with custom matchers and macros, etc,
