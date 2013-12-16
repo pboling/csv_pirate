@@ -506,3 +506,7 @@ Copyright (c) 2008-2013 [Peter H. Boling][peterboling] of [RailsBling.com][rails
 [peterboling]: http://www.peterboling.com
 [documentation]: http://rdoc.info/github/pboling/flag_shih_tzu/frames
 [homepage]: https://github.com/pboling/flag_shih_tzu
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/pboling/csv_pirate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
