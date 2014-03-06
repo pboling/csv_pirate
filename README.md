@@ -10,6 +10,7 @@ Easily create CSVs of any data that can be derived from any Ruby object (PORO).
 | version                 |  [![Gem Version](https://badge.fury.io/rb/csv_pirate.png)](http://badge.fury.io/rb/csv_pirate) |
 | dependencies            |  [![Dependency Status](https://gemnasium.com/pboling/csv_pirate.png)](https://gemnasium.com/pboling/csv_pirate) |
 | code quality            |  [![Code Climate](https://codeclimate.com/github/pboling/csv_pirate.png)](https://codeclimate.com/github/pboling/csv_pirate) |
+| inline documenation     |  [![Inline docs](http://inch-pages.github.io/github/pboling/csv_pirate.png)](http://inch-pages.github.io/github/pboling/csv_pirate) |
 | continuous integration  |  [![Build Status](https://secure.travis-ci.org/pboling/csv_pirate.png?branch=master)](https://travis-ci.org/pboling/csv_pirate) |
 | test coverage           |  [![Coverage Status](https://coveralls.io/repos/pboling/csv_pirate/badge.png)](https://coveralls.io/r/pboling/csv_pirate) |
 | homepage                |  [https://github.com/pboling/csv_pirate][homepage] |
