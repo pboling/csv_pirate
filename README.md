@@ -2,21 +2,31 @@
 
 Easily create CSVs of any data that can be derived from any Ruby object (PORO).
 
-| Project                 |  Sanitize Email   |
+| Project                 |  CsvPirate    |
 |------------------------ | ----------------- |
-| gem name                |  csv_pirate       |
+| gem name                |  csv_pirate   |
 | license                 |  MIT              |
-| moldiness               |  [![Maintainer Status](http://stillmaintained.com/pboling/csv_pirate.png)](http://stillmaintained.com/pboling/csv_pirate) |
+| expert support          |  [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github) |
+| download rank               |  [![Total Downloads](https://img.shields.io/gem/rt/csv_pirate.svg)](https://rubygems.org/gems/csv_pirate) |
 | version                 |  [![Gem Version](https://badge.fury.io/rb/csv_pirate.png)](http://badge.fury.io/rb/csv_pirate) |
 | dependencies            |  [![Dependency Status](https://gemnasium.com/pboling/csv_pirate.png)](https://gemnasium.com/pboling/csv_pirate) |
 | code quality            |  [![Code Climate](https://codeclimate.com/github/pboling/csv_pirate.png)](https://codeclimate.com/github/pboling/csv_pirate) |
 | inline documenation     |  [![Inline docs](http://inch-ci.org/github/pboling/csv_pirate.png)](http://inch-ci.org/github/pboling/csv_pirate) |
 | continuous integration  |  [![Build Status](https://secure.travis-ci.org/pboling/csv_pirate.png?branch=master)](https://travis-ci.org/pboling/csv_pirate) |
 | test coverage           |  [![Coverage Status](https://coveralls.io/repos/pboling/csv_pirate/badge.png)](https://coveralls.io/r/pboling/csv_pirate) |
-| homepage                |  [https://github.com/pboling/csv_pirate][homepage] |
-| documentation           |  [http://rdoc.info/github/pboling/csv_pirate/frames][documentation] |
-| author                  |  [Peter Boling](https://coderbits.com/pboling) |
-| Spread ~♡ⓛⓞⓥⓔ♡~      |  [![Endorse Me](https://api.coderwall.com/pboling/endorsecount.png)](http://coderwall.com/pboling) |
+| homepage                |  [on Github.com][homepage] |
+| documentation           |  [on Rdoc.info][documentation] |
+| live chat               |  [![Join the chat at https://gitter.im/pboling/csv_pirate](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/pboling/csv_pirate?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) |
+| Spread ~♡ⓛⓞⓥⓔ♡~      |  [on Coderbits][coderbits], [on Coderwall][coderwall] |
+
+[semver]: http://semver.org/
+[pvc]: http://docs.rubygems.org/read/chapter/16#page74
+[railsbling]: http://www.railsbling.com
+[peterboling]: http://www.peterboling.com
+[coderbits]: https://coderbits.com/pboling
+[coderwall]: http://coderwall.com/pboling
+[documentation]: http://rdoc.info/github/pboling/csv_pirate/frames
+[homepage]: https://github.com/pboling/csv_pirate
 
 ## Summary
 
@@ -500,14 +510,3 @@ Thanks go to:
 Author: Peter Boling, peter.boling at gmail dot com
 
 Copyright (c) 2008-2013 [Peter H. Boling][peterboling] of [RailsBling.com][railsbling], released under the MIT license.  See LICENSE for details.
-
-[semver]: http://semver.org/
-[pvc]: http://docs.rubygems.org/read/chapter/16#page74
-[railsbling]: http://www.railsbling.com
-[peterboling]: http://www.peterboling.com
-[documentation]: http://rdoc.info/github/pboling/flag_shih_tzu/frames
-[homepage]: https://github.com/pboling/flag_shih_tzu
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/pboling/csv_pirate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
